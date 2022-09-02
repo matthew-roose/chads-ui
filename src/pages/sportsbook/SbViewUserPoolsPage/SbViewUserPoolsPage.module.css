@@ -1,0 +1,17 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dropdown {
+  width: 200px;
+  margin: 30px auto;
+}

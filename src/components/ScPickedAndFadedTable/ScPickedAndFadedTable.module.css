@@ -1,0 +1,21 @@
+.table {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.row {
+  font-weight: bold;
+}
+
+.logo {
+  height: 3rem;
+  width: 3rem;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}

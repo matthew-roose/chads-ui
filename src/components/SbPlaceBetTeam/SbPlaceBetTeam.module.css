@@ -1,0 +1,75 @@
+.choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.choice > * {
+  text-align: center;
+}
+
+.logo {
+  height: 7rem;
+  width: 7rem;
+  margin-top: 1rem;
+}
+
+.started:hover {
+  cursor: not-allowed;
+}
+
+.betOption:hover {
+  cursor: pointer;
+}
+
+.betOption.started:hover {
+  cursor: not-allowed;
+}
+
+.teamName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 10px 0;
+  height: 40px;
+  padding: 0 5px;
+}
+
+.betOption {
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.betOption:hover {
+  cursor: pointer;
+}
+
+.score {
+  border: 1px solid black;
+  border-radius: 8px;
+  font-size: 40px;
+  font-weight: bold;
+  padding: 5px 15px;
+  margin: 10px 0 20px;
+}
+
+.selected {
+  background-color: gray;
+}
+
+@media only screen and (min-width: 1300px) {
+  .betOption.notStarted {
+    transition: transform 0.2s;
+  }
+
+  .betOption.notStarted:hover {
+    transform: scale(1.1);
+  }
+}

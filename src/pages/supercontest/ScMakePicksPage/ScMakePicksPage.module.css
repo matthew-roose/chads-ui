@@ -1,0 +1,41 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.notSignedIn {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 8rem;
+  text-align: center;
+}
+
+.currentPickLogo {
+  height: 3rem;
+  width: 3rem;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.win {
+  background-color: lightgreen;
+}
+
+.loss {
+  background-color: crimson;
+}
+
+.push {
+  background-color: gold;
+}
+
+.currentPickLogoGroup {
+  margin: 40px 0;
+}
+
+.submitButton {
+  margin: 1rem auto;
+  display: block;
+  width: 10rem;
+  font-size: large;
+  font-weight: bold;
+}

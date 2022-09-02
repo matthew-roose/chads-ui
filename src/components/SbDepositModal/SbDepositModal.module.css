@@ -1,0 +1,38 @@
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.totalBalance {
+  font-weight: bold;
+}
+
+.balance {
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.warningAndDepositButton {
+  margin-top: 50px;
+}
+
+.warning {
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
+.depositButton {
+  display: block;
+  margin: 20px auto;
+  font-weight: bold;
+}
+
+.image {
+  margin-top: 50px;
+}

@@ -1,0 +1,27 @@
+.table {
+  margin: 40px auto;
+  max-width: 1000px;
+}
+
+.leaderboardRow {
+  font-weight: bold;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+.logo {
+  height: 2rem;
+  width: 2rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

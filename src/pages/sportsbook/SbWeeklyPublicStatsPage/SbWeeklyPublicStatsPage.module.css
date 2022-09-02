@@ -1,0 +1,48 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dropdown {
+  width: 200px;
+  margin: 30px auto;
+}
+
+.table {
+  margin: 40px auto;
+  max-width: 1000px;
+}
+
+.leaderboardRow {
+  font-weight: bold;
+}
+
+.leaderboardRow a {
+  color: black;
+}
+
+.leaderboardRow a:link {
+  text-decoration: underline;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

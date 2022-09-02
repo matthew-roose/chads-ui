@@ -1,0 +1,58 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.notSignedIn {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 8rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.totalBalance {
+  font-weight: bold;
+}
+
+.balance {
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.buttons {
+  max-width: 500px;
+  margin: 50px auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons > * {
+  width: 10rem;
+  font-size: 18px;
+  margin: auto;
+}
+
+.image {
+  margin: auto;
+  max-width: 30rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons > * {
+    margin-top: 20px;
+  }
+}

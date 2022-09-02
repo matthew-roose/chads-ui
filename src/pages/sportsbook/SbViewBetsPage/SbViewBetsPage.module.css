@@ -1,0 +1,81 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dropdown {
+  width: 200px;
+  margin: 30px auto;
+}
+
+.noBets {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin: 80px 0;
+}
+
+.table {
+  margin: 40px auto;
+  max-width: 1000px;
+}
+
+.viewBetLogoAndText {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.viewBetLogo {
+  height: 2rem;
+  width: 2rem;
+}
+
+.hiddenBet {
+  margin: 5px 0;
+}
+
+.viewBetText {
+  margin-left: 10px;
+}
+
+.win {
+  color: green;
+  font-weight: bold;
+}
+
+.loss {
+  color: red;
+  font-weight: bold;
+}
+
+.push {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 1100px) {
+  .hideFirstForMobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .hideSecondForMobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .hideThirdForMobile {
+    display: none;
+  }
+}

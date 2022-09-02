@@ -1,0 +1,30 @@
+.table {
+  margin: 40px auto;
+  max-width: 1000px;
+}
+
+.leaderboardRow {
+  font-weight: bold;
+}
+
+.leaderboardRow a {
+  color: black;
+}
+
+.leaderboardRow a:link {
+  text-decoration: underline;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

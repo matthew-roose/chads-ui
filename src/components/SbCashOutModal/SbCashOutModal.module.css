@@ -1,0 +1,29 @@
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.totalBalance {
+  font-weight: bold;
+}
+
+.balance {
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.input {
+  margin: 50px auto;
+  width: 60%;
+}
+
+.cashOutButton {
+  display: block;
+  margin: 50px auto;
+  font-weight: bold;
+}

@@ -1,0 +1,61 @@
+.pool {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.pool:hover {
+  cursor: pointer;
+}
+
+.pool > * {
+  width: 250px;
+}
+
+.poolName {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.creator {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.joinType {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.alreadyJoined {
+  margin-top: 10px;
+  font-style: italic;
+  color: crimson;
+}
+
+.buyIn {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: green;
+}
+
+.prizePct {
+  margin-top: 5px;
+  text-align: center;
+  font-style: italic;
+  color: green;
+}
+
+@media only screen and (min-width: 1300px) {
+  .pool {
+    transition: transform 0.2s;
+  }
+
+  .pool:hover {
+    transform: scale(1.1);
+  }
+}

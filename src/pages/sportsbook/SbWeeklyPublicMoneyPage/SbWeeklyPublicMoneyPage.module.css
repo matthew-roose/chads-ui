@@ -1,0 +1,38 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.table {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo {
+  height: 2rem;
+  width: 2rem;
+}
+
+.xMargin {
+  margin: 0 5px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .hideForMobile {
+    display: none;
+  }
+}

@@ -1,0 +1,72 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.table {
+  margin: 3rem auto;
+  max-width: 800px;
+}
+
+.matchup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.matchupLogo {
+  height: 2rem;
+  width: 2rem;
+}
+
+.xMargin {
+  margin: 0 5px;
+}
+
+.viewBetText {
+  margin-left: 10px;
+}
+
+.viewPickText {
+  margin-left: 10px;
+}
+
+.win {
+  color: green;
+  font-weight: bold;
+}
+
+.loss {
+  color: red;
+  font-weight: bold;
+}
+
+.push {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+.week1Message {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 5rem;
+}
+
+.divider {
+  margin-top: 100px;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

@@ -1,0 +1,17 @@
+.dropdowns > * {
+  width: 200px;
+  margin: 10px auto;
+}
+
+@media only screen and (min-width: 600px) {
+  .dropdowns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dropdowns > * {
+    margin: 20px;
+  }
+}

@@ -1,0 +1,53 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.table {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.leaderboardRow {
+  font-weight: bold;
+}
+
+.leaderboardRow a {
+  color: black;
+}
+
+.leaderboardRow a:link {
+  text-decoration: underline;
+}
+
+.loggedInRow {
+  background-color: lightgreen;
+}
+
+.parlayOdds {
+  color: green;
+}
+
+@media only screen and (min-width: 1300px) {
+  .loggedInRow:hover {
+    background-color: limegreen;
+  }
+
+  .otherRow:hover {
+    background-color: lightgray;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

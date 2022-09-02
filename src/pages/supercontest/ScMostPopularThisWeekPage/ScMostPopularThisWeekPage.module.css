@@ -1,0 +1,49 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dropdown {
+  width: 200px;
+  margin: 30px auto;
+}
+
+.table {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.row {
+  font-weight: bold;
+}
+
+.logo {
+  height: 3rem;
+  width: 3rem;
+}
+
+.win {
+  color: green;
+}
+
+.loss {
+  color: red;
+}
+
+.push {
+  color: goldenrod;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}
