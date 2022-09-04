@@ -4,5 +4,5 @@ export interface SbPoolCreate {
   winLossPrizePct: number;
   bestParlayPrizePct: number;
   joinType: string;
-  password?: string;
+  password: string;
 }

@@ -10,8 +10,8 @@ interface ScMakePicksTeamProps {
   spread: number;
   isPickedTeam: boolean;
   hasStarted: boolean;
-  score?: number;
-  result?: Result;
+  score: number | null;
+  result?: Result | null;
   onPickTeam: (newPick: ScPickCreate) => void;
 }
 

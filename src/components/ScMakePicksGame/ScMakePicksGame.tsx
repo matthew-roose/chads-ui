@@ -13,9 +13,9 @@ interface ScMakePicksGameProps {
   homeTeam: keyof typeof AllTeamLogos;
   awayTeam: keyof typeof AllTeamLogos;
   homeSpread: number;
-  homeScore?: number;
-  awayScore?: number;
-  result?: Result;
+  homeScore: number | null;
+  awayScore: number | null;
+  result?: Result | null;
   onPickTeam: (newPick: ScPickCreate) => void;
 }
 

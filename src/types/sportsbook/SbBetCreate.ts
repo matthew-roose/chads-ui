@@ -1,9 +1,4 @@
-import { SbBetLegType } from "./SbBetLegType";
-
-export interface SbBetLegCreate {
-  gameId: number;
-  betLegType: SbBetLegType;
-}
+import { SbBetLegCreate } from "./SbBetLegCreate";
 
 export interface SbBetCreate {
   wager: number;

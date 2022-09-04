@@ -19,17 +19,12 @@ import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
 export const HomePage = () => {
   const { data: gameLinesData } = useGetCurrentGameLines();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
-  const { data: prevWeekBestParlay } =
+  const { data: prevWeekBestParlayData } =
     useSbGetPrevWeekBestParlay(currentWeekNumber);
-  const { data: prevWeekBestPicks } =
+  const { data: prevWeekBestPicksData } =
     useScGetPrevWeekBestPicks(currentWeekNumber);
 
-  if (
-    !currentWeekNumber ||
-    !gameLinesData ||
-    !prevWeekBestParlay ||
-    !prevWeekBestPicks
-  ) {
+  if (!currentWeekNumber || !gameLinesData) {
     return null;
   }
 
@@ -62,6 +57,9 @@ export const HomePage = () => {
     );
   });
 
+  const prevWeekBestParlay = prevWeekBestParlayData
+    ? prevWeekBestParlayData
+    : [];
   const bestParlayRows = prevWeekBestParlay.map((parlay) => {
     const { username, effectiveOdds, wager, effectiveToWinAmount, betLegs } =
       parlay;
@@ -165,6 +163,7 @@ export const HomePage = () => {
     );
   });
 
+  let prevWeekBestPicks = prevWeekBestPicksData ? prevWeekBestPicksData : [];
   const bestPicksRows = prevWeekBestPicks.map((entryWeek) => {
     const { username, weekScore, weekWins, weekLosses, weekPushes, picks } =
       entryWeek;

@@ -17,7 +17,7 @@ export const SbViewUserPoolsPage = () => {
   }
 
   if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
+    return <div className={classes.message}>Invalid username in URL.</div>;
   }
 
   const pools = userPoolsData.pools
@@ -58,7 +58,11 @@ export const SbViewUserPoolsPage = () => {
         {formatUsernamePossessiveForm(username)} Sportsbook Pools
       </div>
       {pools}
-      {pools.length === 0 && <div>{username} hasn't joined any pools yet.</div>}
+      {pools.length === 0 && (
+        <div className={classes.message}>
+          {username} hasn't joined any pools yet.
+        </div>
+      )}
     </div>
   );
 };

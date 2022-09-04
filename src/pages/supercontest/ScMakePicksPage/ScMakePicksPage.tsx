@@ -130,9 +130,17 @@ export const ScMakePicksPage = () => {
     );
   });
 
+  const existingPicks = existingEntryWeekData.picks.map((pick) => {
+    return {
+      gameId: pick.gameId,
+      pickedTeam: pick.pickedTeam,
+      result: pick.result,
+    };
+  });
+
   const submitButton = (
     <Button
-      disabled={existingEntryWeekData.picks === currentPicks}
+      disabled={JSON.stringify(existingPicks) === JSON.stringify(currentPicks)}
       variant="gradient"
       gradient={{ from: "teal", to: "lime" }}
       className={classes.submitButton}

@@ -1,6 +1,6 @@
 import { Paper } from "@mantine/core";
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
-import { SbBetLegCreate } from "../../types/sportsbook/SbBetCreate";
+import { SbBetLegCreate } from "../../types/sportsbook/SbBetLegCreate";
 import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
 import { formatTimestamp } from "../../util/format";
 import { SbPlaceBetTeam } from "../SbPlaceBetTeam/SbPlaceBetTeam";
@@ -15,8 +15,8 @@ interface SbPlaceBetGameProps {
   homeMoneyline: number;
   awayMoneyline: number;
   gameTotal: number;
-  homeScore?: number;
-  awayScore?: number;
+  homeScore: number | null;
+  awayScore: number | null;
   selected?: SbBetLegType;
   addBetLeg: ({ gameId, betLegType }: SbBetLegCreate) => void;
 }

@@ -4,12 +4,12 @@ import { formatEnum } from "../../util/format";
 import classes from "./PoolCard.module.css";
 
 interface PoolCardProps {
-  contest: "supercontest" | "sportsbook";
+  contest: string;
   poolName: string;
   creatorUsername: string;
   buyIn: number;
-  winLossPrizePct?: number;
-  bestParlayPrizePct?: number;
+  winLossPrizePct: number;
+  bestParlayPrizePct: number;
   joinType: string;
   alreadyJoined?: boolean;
 }

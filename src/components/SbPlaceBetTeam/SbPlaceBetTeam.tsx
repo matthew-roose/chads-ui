@@ -1,5 +1,5 @@
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
-import { SbBetLegCreate } from "../../types/sportsbook/SbBetCreate";
+import { SbBetLegCreate } from "../../types/sportsbook/SbBetLegCreate";
 import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
 import {
   convertOddsFromDecimal,
@@ -17,7 +17,7 @@ interface SbPlaceBetTeamProps {
   moneyline: number;
   total: number;
   hasStarted: boolean;
-  score?: number;
+  score: number | null;
   selected?: SbBetLegType;
   addBetLeg: ({ gameId, betLegType }: SbBetLegCreate) => void;
 }
@@ -98,7 +98,7 @@ export const SbPlaceBetTeam = ({
           ? `O${total.toFixed(1)} ${pickEmOddsString}`
           : `U${total.toFixed(1)} ${pickEmOddsString}`}
       </div>
-      {score && <div className={classes.score}>{score}</div>}
+      {score !== null && <div className={classes.score}>{score}</div>}
     </div>
   );
 };

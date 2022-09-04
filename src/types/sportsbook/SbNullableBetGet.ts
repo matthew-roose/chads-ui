@@ -1,8 +1,8 @@
 import { Result } from "../Result";
-import { SbBetLegGet } from "./SbBetLegGet";
 import { SbBetType } from "./SbBetType";
+import { SbNullableBetLegGet } from "./SbNullableBetLegGet";
 
-export interface SbBetGet {
+export interface SbNullableBetGet {
   id: number;
   username: string;
   placedTimestamp: number;
@@ -14,5 +14,5 @@ export interface SbBetGet {
   toWinAmount: number;
   effectiveToWinAmount: number;
   result: Result | null;
-  betLegs: SbBetLegGet[];
+  betLegs: SbNullableBetLegGet[];
 }

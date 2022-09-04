@@ -8,7 +8,7 @@ export interface ScPublicPick {
   homeTeam: keyof typeof AllTeamLogos;
   timesPicked: number;
   homeSpread: number;
-  homeScore?: number;
-  awayScore?: number;
-  result?: Result;
+  homeScore: number | null;
+  awayScore: number | null;
+  result: Result | null;
 }

@@ -10,6 +10,6 @@ export interface GameLine {
   homeMoneyline: number;
   awayMoneyline: number;
   gameTotal: number;
-  homeScore: number;
-  awayScore: number;
+  homeScore: number | null;
+  awayScore: number | null;
 }

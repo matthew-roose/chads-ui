@@ -138,6 +138,10 @@ export const SbPoolDetailPage = () => {
             placeholder="Password"
             onChange={(event) => setPasswordValue(event.currentTarget.value)}
             className={classes.password}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              innerInput: { fontSize: "16px" },
+            })}
           />
         )}
       <Divider className={classes.divider} />
@@ -151,6 +155,8 @@ export const SbPoolDetailPage = () => {
         onChange={(newWeek) => setViewingWeek(newWeek || "")}
         data={allWeekNumbers}
         styles={() => ({
+          label: { fontSize: "16px" },
+          input: { fontSize: "16px" },
           itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
         })}
       />

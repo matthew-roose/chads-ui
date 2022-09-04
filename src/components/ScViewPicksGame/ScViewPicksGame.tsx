@@ -7,14 +7,14 @@ import { ScViewPicksTeam } from "../ScViewPicksTeam/ScViewPicksTeam";
 import classes from "./ScViewPicksGame.module.css";
 
 interface ScViewPicksGameProps {
-  timestamp?: number;
-  pickedTeam?: keyof typeof AllTeamLogos;
-  homeTeam?: keyof typeof AllTeamLogos;
-  awayTeam?: keyof typeof AllTeamLogos;
-  homeSpread?: number;
-  homeScore?: number;
-  awayScore?: number;
-  result?: Result;
+  timestamp: number | null;
+  pickedTeam: keyof typeof AllTeamLogos | null;
+  homeTeam: keyof typeof AllTeamLogos | null;
+  awayTeam: keyof typeof AllTeamLogos | null;
+  homeSpread: number | null;
+  homeScore: number | null;
+  awayScore: number | null;
+  result: Result | null;
 }
 
 export const ScViewPicksGame = ({

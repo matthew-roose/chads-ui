@@ -7,8 +7,8 @@ interface ScViewPicksTeamProps {
   teamName: keyof typeof AllTeamLogos;
   spread: number;
   isPickedTeam: boolean;
-  score?: number;
-  result?: Result;
+  score: number | null;
+  result: Result | null;
 }
 
 export const ScViewPicksTeam = ({
@@ -38,7 +38,7 @@ export const ScViewPicksTeam = ({
       />
       <div className={classes.spread}>{formatSpread(spread)}</div>
       <div className={classes.teamName}>{formatTeamName(teamName)}</div>
-      {score && <div className={classes.score}>{score}</div>}
+      {score !== null && <div className={classes.score}>{score}</div>}
     </div>
   );
 };

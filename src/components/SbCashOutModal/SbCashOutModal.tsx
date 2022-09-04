@@ -57,6 +57,10 @@ export const SbCashOutModal = ({
         error={cashOutErrorMessage}
         label="Cash Out Amount"
         onChange={(value) => setCashOutAmount(value || 0)}
+        styles={() => ({
+          label: { fontSize: "16px" },
+          input: { fontSize: "16px" },
+        })}
       />
       <Button
         className={classes.cashOutButton}

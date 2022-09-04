@@ -11,6 +11,13 @@
   text-align: center;
 }
 
+.message {
+  font-size: 32;
+  font-weight: bold;
+  margin: 5rem;
+  text-align: center;
+}
+
 .dropdown {
   width: 200px;
   margin: 30px auto;

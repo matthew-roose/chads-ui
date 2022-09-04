@@ -14,8 +14,6 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { IconHome } from "@tabler/icons";
-import { useGetAllUsernames } from "./hooks/useGetAllUsernames";
-import { useGetCurrentWeekNumber } from "./hooks/useGetCurrentWeekNumber";
 import { AuthContext } from "./store/auth-context";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { SportsbookLinks, SupercontestLinks } from "./navigation/ChadNavLinks";
@@ -26,15 +24,11 @@ import { ChadNavLink } from "./navigation/ChadNavLink";
 declare var google: any;
 
 const App = () => {
+  const { isLoggedIn, username, login, logout } = useContext(AuthContext);
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const { isLoggedIn, username, login, logout } = useContext(AuthContext);
-
   const theme = useMantineTheme();
-
-  const { data: allUsernames } = useGetAllUsernames();
-  const { data: currentWeekNumber } = useGetCurrentWeekNumber();
 
   useEffect(() => {
     if (!isGoogleLoaded) {
@@ -47,12 +41,15 @@ const App = () => {
         const callbackFunction = async (googleResponse: {
           credential: string;
         }) => {
-          const chadResponse = await fetch("http://localhost:8080/login", {
-            method: "PUT",
-            headers: {
-              Authorization: googleResponse.credential,
-            },
-          });
+          const chadResponse = await fetch(
+            `${process.env.REACT_APP_API_URL}/login`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: googleResponse.credential,
+              },
+            }
+          );
           if (chadResponse.ok) {
             const userInfo = await chadResponse.json();
             login(googleResponse.credential, userInfo);
@@ -81,10 +78,6 @@ const App = () => {
     setOpen(false);
   };
 
-  if (!allUsernames || !currentWeekNumber) {
-    return null;
-  }
-
   return (
     <AppShell
       styles={{
@@ -94,15 +87,7 @@ const App = () => {
       }}
       header={
         <Header height={100} p="md">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: "100%",
-              width: "100%",
-            }}
-          >
+          <div className="header">
             <div
               style={{
                 display: "flex",
@@ -121,18 +106,13 @@ const App = () => {
               <Link to="/">
                 <img src={require("./assets/gigachad.png")} alt="logo" />
               </Link>
-              <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-                <Text
-                  ml="xl"
-                  style={{
-                    fontStyle: "italic",
-                    fontWeight: "bold",
-                    fontSize: "2rem",
-                  }}
-                >
-                  Chad's SuperBook&#8482;
-                </Text>
-              </MediaQuery>
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+                  <Text ml="xl" className="chadsText">
+                    Chad's SuperBook
+                  </Text>
+                </MediaQuery>
+              </Link>
             </div>
             {!isLoggedIn && <div id="signInDiv" />}
             {isLoggedIn && (
@@ -158,12 +138,9 @@ const App = () => {
           hiddenBreakpoint="sm"
           hidden={!open}
           width={{ sm: 220, lg: 300 }}
+          style={{ zIndex: 101 }}
         >
-          <Navbar.Section
-            style={{ marginBottom: "1rem" }}
-            grow
-            component={ScrollArea}
-          >
+          <Navbar.Section grow component={ScrollArea} type="never">
             <ChadNavLink
               to="/"
               label="Home"
@@ -172,6 +149,7 @@ const App = () => {
             />
             <SportsbookLinks closeNavbar={closeNavbarHandler} />
             <SupercontestLinks closeNavbar={closeNavbarHandler} />
+            <div style={{ height: "10rem" }}></div>
           </Navbar.Section>
         </Navbar>
       }

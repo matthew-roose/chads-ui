@@ -92,7 +92,17 @@ export const SbViewBetsPage = () => {
                 : "";
             let logoToShow;
             let textToShow;
-            if (betLegType === SbBetLegType.HOME_SPREAD) {
+            if (
+              betLegType === null ||
+              homeTeam === null ||
+              awayTeam === null ||
+              homeSpread === null ||
+              gameTotal === null ||
+              odds === null
+            ) {
+              logoToShow = "mystery";
+              textToShow = "Hidden";
+            } else if (betLegType === SbBetLegType.HOME_SPREAD) {
               logoToShow = "home";
               textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
                 homeSpread
@@ -122,40 +132,40 @@ export const SbViewBetsPage = () => {
               textToShow = `Under ${gameTotal.toFixed(
                 1
               )} ${convertOddsFromDecimal(odds)}`;
-            } else {
-              logoToShow = "mystery";
-              textToShow = "Hidden";
             }
+
             return (
               <div key={id} className={classes.viewBetLogoAndText}>
-                {logoToShow === "home" && (
+                {logoToShow === "home" && homeTeam !== null && (
                   <img
                     className={classes.viewBetLogo}
                     src={AllTeamLogos[homeTeam] as unknown as string}
                     alt={homeTeam}
                   />
                 )}
-                {logoToShow === "away" && (
+                {logoToShow === "away" && awayTeam !== null && (
                   <img
                     className={classes.viewBetLogo}
                     src={AllTeamLogos[awayTeam] as unknown as string}
                     alt={awayTeam}
                   />
                 )}
-                {logoToShow === "both" && (
-                  <>
-                    <img
-                      className={classes.viewBetLogo}
-                      src={AllTeamLogos[awayTeam] as unknown as string}
-                      alt={awayTeam}
-                    />
-                    <img
-                      className={classes.viewBetLogo}
-                      src={AllTeamLogos[homeTeam] as unknown as string}
-                      alt={homeTeam}
-                    />
-                  </>
-                )}
+                {logoToShow === "both" &&
+                  homeTeam !== null &&
+                  awayTeam !== null && (
+                    <>
+                      <img
+                        className={classes.viewBetLogo}
+                        src={AllTeamLogos[awayTeam] as unknown as string}
+                        alt={awayTeam}
+                      />
+                      <img
+                        className={classes.viewBetLogo}
+                        src={AllTeamLogos[homeTeam] as unknown as string}
+                        alt={homeTeam}
+                      />
+                    </>
+                  )}
                 {logoToShow === "mystery" && (
                   <img
                     className={`${classes.viewBetLogo} ${classes.hiddenBet}`}

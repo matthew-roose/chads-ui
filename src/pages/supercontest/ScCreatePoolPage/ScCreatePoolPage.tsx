@@ -58,6 +58,10 @@ export const ScCreatePoolPage = () => {
             description="Pool name should be 5-20 characters."
             placeholder="Pool name"
             onChange={(event) => setPoolName(event.currentTarget.value)}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              input: { fontSize: "16px" },
+            })}
           />
         </form>
         <NumberInput
@@ -66,14 +70,33 @@ export const ScCreatePoolPage = () => {
           error={buyIn > 100 ? "Max buy-in is $100." : undefined}
           label="Buy in"
           onChange={(value) => setBuyIn(value || 0)}
+          styles={() => ({
+            label: { fontSize: "16px" },
+            input: { fontSize: "16px" },
+          })}
         />
         <Radio.Group
           value={joinType}
           onChange={setJoinType}
           label="Choose access type for your pool"
+          styles={() => ({
+            label: { fontSize: "16px" },
+          })}
         >
-          <Radio value="PUBLIC" label="Public" />
-          <Radio value="PRIVATE" label="Private" />
+          <Radio
+            value="PUBLIC"
+            label="Public"
+            styles={() => ({
+              label: { fontSize: "16px" },
+            })}
+          />
+          <Radio
+            value="PRIVATE"
+            label="Private"
+            styles={() => ({
+              label: { fontSize: "16px" },
+            })}
+          />
         </Radio.Group>
         {joinType === "PRIVATE" && (
           <PasswordInput
@@ -82,6 +105,10 @@ export const ScCreatePoolPage = () => {
             description="Password should be 5-20 characters."
             placeholder="Password"
             onChange={(event) => setPassword(event.currentTarget.value)}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              innerInput: { fontSize: "16px" },
+            })}
           />
         )}
         <Button

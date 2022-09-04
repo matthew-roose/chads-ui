@@ -25,6 +25,8 @@ export const UserSelect = ({
         searchable
         nothingFound="No users found"
         styles={() => ({
+          label: { fontSize: "16px" },
+          input: { fontSize: "16px" },
           itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
         })}
       />

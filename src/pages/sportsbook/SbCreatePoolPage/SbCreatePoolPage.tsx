@@ -62,6 +62,10 @@ export const SbCreatePoolPage = () => {
             description="Pool name should be 5-20 characters."
             placeholder="Pool name"
             onChange={(event) => setPoolName(event.currentTarget.value)}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              input: { fontSize: "16px" },
+            })}
           />
         </form>
         <NumberInput
@@ -70,6 +74,10 @@ export const SbCreatePoolPage = () => {
           error={buyIn > 100 ? "Max buy-in is $100." : undefined}
           label="Buy in"
           onChange={(value) => setBuyIn(value || 0)}
+          styles={() => ({
+            label: { fontSize: "16px" },
+            input: { fontSize: "16px" },
+          })}
         />
         {buyIn > 0 && (
           <NumberInput
@@ -81,6 +89,10 @@ export const SbCreatePoolPage = () => {
               setWinLossPrizePct(value || 0);
               setBestParlayPrizePct(value ? 100 - value : 100);
             }}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              input: { fontSize: "16px" },
+            })}
           />
         )}
         {buyIn > 0 && (
@@ -93,15 +105,34 @@ export const SbCreatePoolPage = () => {
               setBestParlayPrizePct(value || 0);
               setWinLossPrizePct(value ? 100 - value : 100);
             }}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              input: { fontSize: "16px" },
+            })}
           />
         )}
         <Radio.Group
           value={joinType}
           onChange={setJoinType}
           label="Choose access type for your pool"
+          styles={() => ({
+            label: { fontSize: "16px" },
+          })}
         >
-          <Radio value="PUBLIC" label="Public" />
-          <Radio value="PRIVATE" label="Private" />
+          <Radio
+            value="PUBLIC"
+            label="Public"
+            styles={() => ({
+              label: { fontSize: "16px" },
+            })}
+          />
+          <Radio
+            value="PRIVATE"
+            label="Private"
+            styles={() => ({
+              label: { fontSize: "16px" },
+            })}
+          />
         </Radio.Group>
         {joinType === "PRIVATE" && (
           <PasswordInput
@@ -110,6 +141,10 @@ export const SbCreatePoolPage = () => {
             description="Password should be 5-20 characters."
             placeholder="Password"
             onChange={(event) => setPassword(event.currentTarget.value)}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              innerInput: { fontSize: "16px" },
+            })}
           />
         )}
         <Button

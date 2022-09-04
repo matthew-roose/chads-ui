@@ -8,12 +8,12 @@ import {
   ScrollArea,
   SimpleGrid,
 } from "@mantine/core";
-import classes from "./SbPlaceBetsPage.module.css";
+import { IconTrash } from "@tabler/icons";
+import { toast } from "react-toastify";
 import { useGetCurrentGameLines } from "../../../hooks/useGetCurrentGameLines";
 import { SbPlaceBetGame } from "../../../components/SbPlaceBetGame/SbPlaceBetGame";
-import { toast } from "react-toastify";
 import { useSbPlaceBet } from "../../../hooks/sportsbook/useSbPlaceBet";
-import { SbBetLegCreate } from "../../../types/sportsbook/SbBetCreate";
+import { SbBetLegCreate } from "../../../types/sportsbook/SbBetLegCreate";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { SbBetLegType } from "../../../types/sportsbook/SbBetLegType";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
@@ -22,11 +22,11 @@ import {
   formatCurrency,
   formatSpread,
 } from "../../../util/format";
-import { IconTrash } from "@tabler/icons";
+import classes from "./SbPlaceBetsPage.module.css";
 
 export const SbPlaceBetsPage = () => {
   const { googleJwt, username } = useContext(AuthContext);
-  // always shown on screens >992px
+  // only used for screens <993px
   const [showBetSlip, setShowBetSlip] = useState(false);
   const [wager, setWager] = useState(0);
   const [betLegs, setBetLegs] = useState<SbBetLegCreate[]>([]);
@@ -291,6 +291,51 @@ export const SbPlaceBetsPage = () => {
       ? "The max win is $1M."
       : undefined;
 
+  const betSlip = (
+    <Aside className={hideBetSlip} p="md" width={{ md: 300 }}>
+      <Aside.Section grow component={ScrollArea} type="never">
+        {closeBetSlipButton}
+        <div className={classes.betSlip}>BET SLIP</div>
+        {betLegs.length === 0 && (
+          <div className={classes.noBets}>No bets selected.</div>
+        )}
+        <div className={classes.betSlipOdds}>
+          {betOdds > 1 &&
+            `${
+              betLegs.length === 1 ? "Straight" : "Parlay"
+            } Bet: ${convertOddsFromDecimal(betOdds)}`}
+        </div>
+        <div>{betSlipItems}</div>
+        {betLegs.length > 0 && clearBetSlipButton}
+        <div className={classes.availableBalance}>
+          Available balance: $
+          {currentAccountBalance.availableBalance.toFixed(2)}
+        </div>
+        <div className={classes.keepHeight}>
+          {availableBalance >= 1 && wager !== availableBalance && allInButton}
+          <NumberInput
+            className={classes.wager}
+            value={wagerDisplayValue}
+            label="Wager"
+            precision={2}
+            error={wagerErrorMessage}
+            min={0}
+            onChange={(newValue) => setWager(newValue || 0)}
+            styles={() => ({
+              label: { fontSize: "16px" },
+              input: { fontSize: "16px" },
+            })}
+          />
+        </div>
+        {toWinAmount > 0 && (
+          <div className={classes.toWin}>To win: ${toWinAmount.toFixed(2)}</div>
+        )}
+        {placeBetButton}
+        <div style={{ height: "10rem" }}></div>
+      </Aside.Section>
+    </Aside>
+  );
+
   return (
     <div className={classes.page}>
       <Helmet>
@@ -306,45 +351,7 @@ export const SbPlaceBetsPage = () => {
         {gameElements}
       </SimpleGrid>
       {showBetSlipButton}
-      <Aside className={hideBetSlip} p="md" width={{ md: 300 }}>
-        <Aside.Section grow component={ScrollArea} type="never">
-          {closeBetSlipButton}
-          <div className={classes.betSlip}>BET SLIP</div>
-          {betLegs.length === 0 && (
-            <div className={classes.noBets}>No bets selected.</div>
-          )}
-          <div className={classes.betSlipOdds}>
-            {betOdds > 1 &&
-              `${
-                betLegs.length === 1 ? "Straight" : "Parlay"
-              } Bet: ${convertOddsFromDecimal(betOdds)}`}
-          </div>
-          <div>{betSlipItems}</div>
-          {betLegs.length > 0 && clearBetSlipButton}
-          <div className={classes.availableBalance}>
-            Available balance: $
-            {currentAccountBalance.availableBalance.toFixed(2)}
-          </div>
-          <div className={classes.keepHeight}>
-            {availableBalance >= 1 && wager !== availableBalance && allInButton}
-            <NumberInput
-              className={classes.wager}
-              value={wagerDisplayValue}
-              label="Wager"
-              precision={2}
-              error={wagerErrorMessage}
-              min={0}
-              onChange={(newValue) => setWager(newValue || 0)}
-            />
-          </div>
-          {toWinAmount > 0 && (
-            <div className={classes.toWin}>
-              To win: ${toWinAmount.toFixed(2)}
-            </div>
-          )}
-          {placeBetButton}
-        </Aside.Section>
-      </Aside>
+      {betSlip}
     </div>
   );
 };
