@@ -8,8 +8,8 @@ interface PoolCardProps {
   poolName: string;
   creatorUsername: string;
   buyIn: number;
-  winLossPrizePct: number;
-  bestParlayPrizePct: number;
+  winLossPrizePct?: number;
+  bestParlayPrizePct?: number;
   joinType: string;
   alreadyJoined?: boolean;
 }
