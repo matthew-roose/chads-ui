@@ -3,7 +3,7 @@ import { SbBestParlaysPage } from "../pages/sportsbook/SbBestParlaysPage/SbBestP
 import { SbWorstWeeksPage } from "../pages/sportsbook/SbWorstWeeksPage/SbWorstWeeksPage";
 import { SbBestWeeksPage } from "../pages/sportsbook/SbBestWeeksPage/SbBestWeeksPage";
 import { SbCashierPage } from "../pages/sportsbook/SbCashierPage/SbCashierPage";
-import { SbCreatePoolPage } from "../pages/sportsbook/SbCreatePoolPage/SbCreatePoolPage";
+// import { SbCreatePoolPage } from "../pages/sportsbook/SbCreatePoolPage/SbCreatePoolPage";
 import { SbViewAllPoolsPage } from "../pages/sportsbook/SbViewAllPoolsPage/SbViewAllPoolsPage";
 import { SbViewUserPoolsPage } from "../pages/sportsbook/SbViewUserPoolsPage/SbViewUserPoolsPage";
 import { SbPlaceBetsPage } from "../pages/sportsbook/SbPlaceBetsPage/SbPlaceBetsPage";
@@ -14,7 +14,7 @@ import { SbViewBetsPage } from "../pages/sportsbook/SbViewBetsPage/SbViewBetsPag
 import { SbWeeklyLeaderboardPage } from "../pages/sportsbook/SbWeeklyLeaderboardPage/SbWeeklyLeaderboardPage";
 import { SbWeeklyPublicMoneyPage } from "../pages/sportsbook/SbWeeklyPublicMoneyPage/SbWeeklyPublicMoneyPage";
 import { SbWeeklyUserStatsPage } from "../pages/sportsbook/SbWeeklyUserStatsPage/SbWeeklyUserStatsPage";
-import { ScCreatePoolPage } from "../pages/supercontest/ScCreatePoolPage/ScCreatePoolPage";
+// import { ScCreatePoolPage } from "../pages/supercontest/ScCreatePoolPage/ScCreatePoolPage";
 import { ScViewAllPoolsPage } from "../pages/supercontest/ScViewAllPoolsPage/ScViewAllPoolsPage";
 import { ScMakePicksPage } from "../pages/supercontest/ScMakePicksPage/ScMakePicksPage";
 import { ScMostFadedTeamsPage } from "../pages/supercontest/ScMostFadedTeamsPage/ScMostFadedTeamsPage";
@@ -50,11 +50,11 @@ export const sportsbookRoutes = [
     key="sb-view-all-pools"
     element={<SbViewAllPoolsPage />}
   />,
-  <Route
-    path="/sportsbook/create-pool"
-    key="sb-create-pool"
-    element={<SbCreatePoolPage />}
-  />,
+  // <Route
+  //   path="/sportsbook/create-pool"
+  //   key="sb-create-pool"
+  //   element={<SbCreatePoolPage />}
+  // />,
   <Route
     path="/sportsbook/pool/:poolName"
     key="sb-pool-detail"
@@ -133,11 +133,11 @@ export const supercontestRoutes = [
     key="sc-view-all-pools"
     element={<ScViewAllPoolsPage />}
   />,
-  <Route
-    path="/supercontest/create-pool"
-    key="sc-create-pool"
-    element={<ScCreatePoolPage />}
-  />,
+  // <Route
+  //   path="/supercontest/create-pool"
+  //   key="sc-create-pool"
+  //   element={<ScCreatePoolPage />}
+  // />,
   <Route
     path="/supercontest/pool/:poolName"
     key="sc-pool-detail"

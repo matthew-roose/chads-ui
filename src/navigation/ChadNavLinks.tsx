@@ -68,12 +68,12 @@ const getSportsbookLinkData = (
         label: "View All Pools",
         to: "/sportsbook/pools",
       },
-      {
-        icon: <IconCirclePlus size={24} color="green" />,
-        label: "Create Pool",
-        to: "/sportsbook/create-pool",
-        privateChild: true,
-      },
+      // {
+      //   icon: <IconCirclePlus size={24} color="green" />,
+      //   label: "Create Pool",
+      //   to: "/sportsbook/create-pool",
+      //   privateChild: true,
+      // },
     ],
   },
   {
@@ -223,12 +223,12 @@ const getSupercontestLinkData = (
         label: "View All Pools",
         to: "/supercontest/pools",
       },
-      {
-        icon: <IconCirclePlus size={24} color="green" />,
-        label: "Create Pool",
-        to: "/supercontest/create-pool",
-        privateChild: true,
-      },
+      // {
+      //   icon: <IconCirclePlus size={24} color="green" />,
+      //   label: "Create Pool",
+      //   to: "/supercontest/create-pool",
+      //   privateChild: true,
+      // },
     ],
   },
   {

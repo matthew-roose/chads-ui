@@ -56,6 +56,12 @@ export const ScMakePicksPage = () => {
   }
 
   const addPickHandler = (newPick: ScPickCreate) => {
+    const game = gameLinesData.find(
+      (gameLine) => gameLine.gameId === newPick.gameId
+    );
+    if (game && game.timestamp <= Date.now()) {
+      return;
+    }
     // was either team previously picked?
     const prevPickedGamePick = currentPicks.find(
       (pick) => pick.gameId === newPick.gameId
