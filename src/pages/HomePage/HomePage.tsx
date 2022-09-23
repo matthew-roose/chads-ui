@@ -52,7 +52,7 @@ export const HomePage = () => {
         <td>
           {homeTeam.split("_").pop()} {formatSpread(homeSpread)}
         </td>
-        <td>{homeScore !== null ? `${awayScore}-${homeScore}` : ""}</td>
+        <td>{homeScore !== null ? `${homeScore}-${awayScore}` : ""}</td>
       </tr>
     );
   });
