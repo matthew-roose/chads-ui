@@ -9,7 +9,7 @@ export interface ScPickGet {
   homeTeam: keyof typeof AllTeamLogos;
   awayTeam: keyof typeof AllTeamLogos;
   homeSpread: number;
-  homeTeamScore: number | null;
-  awayTeamScore: number | null;
+  homeScore: number | null;
+  awayScore: number | null;
   result: Result | null;
 }

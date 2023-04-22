@@ -41,7 +41,7 @@ export const ScWeeklyUserStatsPage = () => {
         ? classes.negative
         : "";
     return (
-      <tr key={weekNumber} className={classes.leaderboardRow}>
+      <tr key={weekNumber} className={classes.row}>
         <td>
           <Link
             to={`/supercontest/pick-history/${username}/week/${weekNumber}`}

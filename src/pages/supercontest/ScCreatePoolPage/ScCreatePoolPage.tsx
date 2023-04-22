@@ -21,17 +21,12 @@ export const ScCreatePoolPage = () => {
   const [joinType, setJoinType] = useState("PUBLIC");
   const [password, setPassword] = useState("");
 
-  const { mutateAsync: createPool } = useScCreatePool(googleJwt, {
-    poolName: poolName.trim(),
-    buyIn,
-    joinType,
-    password: password.trim(),
-  });
+  const createPool = useScCreatePool();
 
   if (!isLoggedIn) {
     return (
       <div className={classes.notSignedIn}>
-        Please sign in to create a supercontest pool.
+        Please sign in to create a Supercontest pool.
       </div>
     );
   }
@@ -118,11 +113,22 @@ export const ScCreatePoolPage = () => {
           gradient={{ from: "teal", to: "lime" }}
           onClick={() =>
             toast
-              .promise(createPool(), {
-                pending: "Creating your pool...",
-                success: "Successfully created your pool!",
-                error: "Error creating your pool!",
-              })
+              .promise(
+                createPool.mutateAsync({
+                  googleJwt,
+                  pool: {
+                    poolName: poolName.trim(),
+                    buyIn,
+                    joinType,
+                    password: password.trim(),
+                  },
+                }),
+                {
+                  pending: "Creating your pool...",
+                  success: "Successfully created your pool!",
+                  error: "Error creating your pool!",
+                }
+              )
               .then(() => navigate("/supercontest/pools"))
           }
         >

@@ -31,7 +31,7 @@ export const ScMakePicksGame = ({
   result,
   onPickTeam,
 }: ScMakePicksGameProps) => {
-  const hasStarted = timestamp < Date.now();
+  const hasStarted = timestamp <= Date.now();
 
   return (
     <Paper
@@ -46,7 +46,7 @@ export const ScMakePicksGame = ({
           teamName={awayTeam}
           spread={homeSpread * -1}
           isPickedTeam={pickedTeam === awayTeam}
-          hasStarted={timestamp < Date.now()}
+          hasStarted={timestamp <= Date.now()}
           score={awayScore}
           result={result}
           onPickTeam={onPickTeam}
@@ -57,7 +57,7 @@ export const ScMakePicksGame = ({
           teamName={homeTeam}
           spread={homeSpread}
           isPickedTeam={pickedTeam === homeTeam}
-          hasStarted={timestamp < Date.now()}
+          hasStarted={timestamp <= Date.now()}
           score={homeScore}
           result={result}
           onPickTeam={onPickTeam}

@@ -1,0 +1,65 @@
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.table {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.row {
+  font-weight: bold;
+}
+
+.winFill {
+  background-color: lightgreen;
+}
+
+.lossFill {
+  background-color: crimson;
+}
+
+.pushFill {
+  background-color: gold;
+}
+
+.logoBackdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 4px;
+}
+
+.hiddenLogo {
+  margin: 5px 0;
+}
+
+.logo {
+  height: 2rem;
+  width: 2rem;
+}
+
+.winText {
+  color: green;
+}
+
+.lossText {
+  color: red;
+}
+
+.pushText {
+  color: goldenrod;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

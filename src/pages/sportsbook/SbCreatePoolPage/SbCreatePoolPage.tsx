@@ -23,14 +23,7 @@ export const SbCreatePoolPage = () => {
   const [joinType, setJoinType] = useState("PUBLIC");
   const [password, setPassword] = useState("");
 
-  const { mutateAsync: createPool } = useSbCreatePool(googleJwt, {
-    poolName: poolName.trim(),
-    buyIn,
-    winLossPrizePct,
-    bestParlayPrizePct,
-    joinType,
-    password: password.trim(),
-  });
+  const createPool = useSbCreatePool();
 
   if (!isLoggedIn) {
     return (
@@ -154,11 +147,24 @@ export const SbCreatePoolPage = () => {
           gradient={{ from: "teal", to: "lime" }}
           onClick={() =>
             toast
-              .promise(createPool(), {
-                pending: "Creating your pool...",
-                success: "Successfully created your pool!",
-                error: "Error creating your pool!",
-              })
+              .promise(
+                createPool.mutateAsync({
+                  googleJwt,
+                  pool: {
+                    poolName: poolName.trim(),
+                    buyIn,
+                    winLossPrizePct,
+                    bestParlayPrizePct,
+                    joinType,
+                    password: password.trim(),
+                  },
+                }),
+                {
+                  pending: "Creating your pool...",
+                  success: "Successfully created your pool!",
+                  error: "Error creating your pool!",
+                }
+              )
               .then(() => navigate("/sportsbook/pools"))
           }
         >

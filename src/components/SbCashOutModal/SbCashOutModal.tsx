@@ -24,8 +24,9 @@ export const SbCashOutModal = ({
 }: SbCashOutModalProps) => {
   const { googleJwt, username } = useContext(AuthContext);
   const [cashOutAmount, setCashOutAmount] = useState(0);
-  const { mutateAsync: cashOut } = useSbCashOut(googleJwt, cashOutAmount);
   const { refetch: refetchUserBalances } = useSbGetUserPools(username);
+
+  const cashOut = useSbCashOut();
 
   const cashOutDisplayValue = cashOutAmount !== 0 ? cashOutAmount : undefined;
 
@@ -67,7 +68,7 @@ export const SbCashOutModal = ({
         disabled={cashOutAmount < 1 || cashOutAmount > availableBalance}
         onClick={() =>
           toast
-            .promise(cashOut(), {
+            .promise(cashOut.mutateAsync({ googleJwt, cashOutAmount }), {
               pending: "Cashing out...",
               success: `Successfully cashed out $${cashOutAmount}!`,
               error: "Error cashing out!",

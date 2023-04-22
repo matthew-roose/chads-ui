@@ -1,0 +1,59 @@
+.button {
+  margin: 2rem auto;
+  display: block;
+  width: 15rem;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.table {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.leaderboardRow {
+  font-weight: bold;
+  height: 65px;
+}
+
+.leaderboardRow a {
+  color: black;
+}
+
+.leaderboardRow a:link {
+  text-decoration: underline;
+}
+
+.loggedInRow {
+  background-color: lightgray;
+}
+
+.win {
+  background-color: lightgreen;
+}
+
+.loss {
+  background-color: crimson;
+}
+
+.push {
+  background-color: gold;
+}
+
+.logoBackdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 4px;
+}
+
+.hiddenLogo {
+  margin: 5px 0;
+}
+
+.logo {
+  height: 2rem;
+  width: 2rem;
+}

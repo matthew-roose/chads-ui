@@ -1,0 +1,93 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.secondTitle {
+  margin-top: 100px;
+}
+
+.dropdowns {
+  margin-top: 50px;
+}
+
+.dropdowns > * {
+  width: 200px;
+  margin: 30px auto;
+}
+
+.invalidSelections {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 8rem;
+  text-align: center;
+}
+
+.table {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.row {
+  font-weight: bold;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo {
+  height: 3rem;
+  width: 3rem;
+}
+
+.spread {
+  margin-left: 5px;
+}
+
+.win {
+  color: green;
+}
+
+.loss {
+  color: red;
+}
+
+.push {
+  color: goldenrod;
+}
+
+@media only screen and (min-width: 600px) {
+  .dropdowns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dropdowns > * {
+    margin: 20px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hideFirstForMobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .hideSecondForMobile {
+    display: none;
+  }
+}

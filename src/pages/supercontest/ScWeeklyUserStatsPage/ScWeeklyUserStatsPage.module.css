@@ -23,15 +23,15 @@
   font-weight: bold;
 }
 
-.leaderboardRow {
+.row {
   font-weight: bold;
 }
 
-.leaderboardRow a {
+.row a {
   color: black;
 }
 
-.leaderboardRow a:link {
+.row a:link {
   text-decoration: underline;
 }
 

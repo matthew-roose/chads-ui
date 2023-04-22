@@ -11,6 +11,10 @@
   text-align: center;
 }
 
+.row {
+  font-weight: bold;
+}
+
 .table {
   margin: 3rem auto;
   max-width: 800px;

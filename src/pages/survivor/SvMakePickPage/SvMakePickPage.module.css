@@ -1,0 +1,132 @@
+.page {
+  margin-bottom: 150px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.win {
+  background-color: lightgreen;
+}
+
+.loss {
+  background-color: crimson;
+}
+
+.push {
+  background-color: gold;
+}
+
+.pending {
+  background-color: gray;
+}
+
+.row {
+  font-weight: bold;
+}
+
+.teams {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
+  width: 7rem;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.notStarted.teamDiv:hover {
+  cursor: pointer;
+}
+
+.score {
+  font-size: 28px;
+  text-align: center;
+}
+
+.at {
+  font-size: 30px;
+  font-weight: bold;
+  font-style: italic;
+  margin: 0 2rem;
+}
+
+.logoBackdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 4px;
+}
+
+.logo {
+  margin: 0 auto;
+  height: 4rem;
+  width: 4rem;
+}
+
+.prevPickedLogo {
+  height: 2rem;
+  width: 2rem;
+}
+
+.prevPickedGrid {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.prevPickedGrid > * {
+  margin: 0 auto;
+}
+
+.submitButton {
+  margin: 2rem auto 1rem;
+  display: block;
+  width: 10rem;
+  font-size: large;
+  font-weight: bold;
+}
+
+.table {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.started {
+  opacity: 40%;
+}
+
+.started:hover {
+  cursor: not-allowed;
+}
+
+@media only screen and (min-width: 1300px) {
+  .notStarted img {
+    transition: transform 0.2s;
+  }
+
+  .notStarted:hover img {
+    transform: scale(1.2);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

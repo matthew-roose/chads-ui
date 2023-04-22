@@ -12,17 +12,21 @@ export const ScSeasonLeaderboardPage = () => {
     return null;
   }
 
-  const seasonLeaderboardRows = seasonLeaderboardData.map((entry) => {
-    const { username, seasonScore, seasonWins, seasonLosses, seasonPushes } =
-      entry;
-    return {
-      username,
-      score: seasonScore,
-      wins: seasonWins,
-      losses: seasonLosses,
-      pushes: seasonPushes,
-    };
-  });
+  const seasonLeaderboardRows = seasonLeaderboardData
+    .sort((a, b) => a.username.localeCompare(b.username))
+    .sort((a, b) => a.seasonLosses - b.seasonLosses)
+    .sort((a, b) => b.seasonScore - a.seasonScore)
+    .map((entry) => {
+      const { username, seasonScore, seasonWins, seasonLosses, seasonPushes } =
+        entry;
+      return {
+        username,
+        score: seasonScore,
+        wins: seasonWins,
+        losses: seasonLosses,
+        pushes: seasonPushes,
+      };
+    });
 
   return (
     <div className={classes.page}>

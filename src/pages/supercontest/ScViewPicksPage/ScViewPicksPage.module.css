@@ -17,3 +17,26 @@
   margin: 5rem;
   text-align: center;
 }
+
+.pickLogo {
+  height: 3rem;
+  width: 3rem;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.win {
+  background-color: lightgreen;
+}
+
+.loss {
+  background-color: crimson;
+}
+
+.push {
+  background-color: gold;
+}
+
+.pickLogoGroup {
+  margin: 40px 0;
+}

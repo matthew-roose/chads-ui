@@ -25,16 +25,21 @@ export const ScWeeklyLeaderboardPage = () => {
     return <div>Invalid week number in URL.</div>;
   }
 
-  const weeklyLeaderboardRows = weeklyLeaderboardData.map((entryWeek) => {
-    const { username, weekScore, weekWins, weekLosses, weekPushes } = entryWeek;
-    return {
-      username,
-      score: weekScore,
-      wins: weekWins,
-      losses: weekLosses,
-      pushes: weekPushes,
-    };
-  });
+  const weeklyLeaderboardRows = weeklyLeaderboardData
+    .sort((a, b) => a.username.localeCompare(b.username))
+    .sort((a, b) => a.weekLosses - b.weekLosses)
+    .sort((a, b) => b.weekScore - a.weekScore)
+    .map((entryWeek) => {
+      const { username, weekScore, weekWins, weekLosses, weekPushes } =
+        entryWeek;
+      return {
+        username,
+        score: weekScore,
+        wins: weekWins,
+        losses: weekLosses,
+        pushes: weekPushes,
+      };
+    });
 
   const getNavigateUrl = (weekNumber: string | null) => {
     if (!weekNumber) {

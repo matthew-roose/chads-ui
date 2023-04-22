@@ -50,7 +50,7 @@ export const ScMakePicksTeam = ({
       />
       <div className={classes.spread}>{formatSpread(spread)}</div>
       <div className={classes.teamName}>{formatTeamName(teamName)}</div>
-      {score && <div className={classes.score}>{score}</div>}
+      {score !== null && <div className={classes.score}>{score}</div>}
     </div>
   );
 };

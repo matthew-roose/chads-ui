@@ -26,10 +26,7 @@ export const ScMakePicksPage = () => {
   const { data: existingEntryWeekData, refetch: refetchExistingEntryWeekData } =
     useScGetUserEntryWeekAndPicks(googleJwt, username, currentWeekNumber);
 
-  const { mutateAsync: submitPicks } = useScSubmitPicks(
-    googleJwt,
-    currentPicks
-  );
+  const submitPicks = useScSubmitPicks();
 
   useEffect(() => {
     if (existingEntryWeekData) {
@@ -152,11 +149,14 @@ export const ScMakePicksPage = () => {
       className={classes.submitButton}
       onClick={() =>
         toast
-          .promise(submitPicks(), {
-            pending: "Saving your picks...",
-            success: "Successfully saved your picks!",
-            error: "Error saving your picks!",
-          })
+          .promise(
+            submitPicks.mutateAsync({ googleJwt, picks: currentPicks }),
+            {
+              pending: "Saving your picks...",
+              success: "Successfully saved your picks!",
+              error: "Error saving your picks!",
+            }
+          )
           .then(() => refetchExistingEntryWeekData())
       }
     >

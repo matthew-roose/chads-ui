@@ -28,11 +28,8 @@ export const SbPoolDetailPage = () => {
   const { data: weeklyLeaderboardData } = useSbGetWeeklyLeaderboard(
     viewingWeek ? +viewingWeek : currentWeekNumber
   );
-  const { mutateAsync: joinPool } = useSbJoinPool(
-    googleJwt,
-    poolName,
-    passwordValue
-  );
+
+  const joinPool = useSbJoinPool();
 
   if (
     !poolName ||
@@ -67,15 +64,15 @@ export const SbPoolDetailPage = () => {
   const winLossPurse = (winLossPrizePct / 100) * purse;
   const bestParlayPurse = (bestParlayPrizePct / 100) * purse;
 
-  const seasonHasStarted = Date.now() > 1662682800000;
+  const seasonHasStarted = Date.now() > 1707780600000;
   const alreadyInPool = accounts.find(
     (account) => account.username === loggedInUsername
   );
-  const seasonLeadersRows = accounts.sort(
+  const seasonLeaderboardRows = accounts.sort(
     (a, b) => b.winLossTotal - a.winLossTotal
   );
   const allMembers = accounts.map((account) => account.username);
-  const weeklyLeadersRows = weeklyLeaderboardData.filter((userWeek) =>
+  const weeklyLeaderboardRows = weeklyLeaderboardData.filter((userWeek) =>
     allMembers.includes(userWeek.username)
   );
 
@@ -119,11 +116,18 @@ export const SbPoolDetailPage = () => {
           className={classes.joinButton}
           onClick={() =>
             toast
-              .promise(joinPool(), {
-                pending: "Joining this pool...",
-                success: "Successfully joined this pool!",
-                error: "Error joining this pool!",
-              })
+              .promise(
+                joinPool.mutateAsync({
+                  googleJwt,
+                  poolName,
+                  password: passwordValue,
+                }),
+                {
+                  pending: "Joining this pool...",
+                  success: "Successfully joined this pool!",
+                  error: "Error joining this pool!",
+                }
+              )
               .then(() => refetchPoolDetailData())
           }
         >
@@ -145,8 +149,8 @@ export const SbPoolDetailPage = () => {
           />
         )}
       <Divider className={classes.divider} />
-      <div className={classes.leaderboardTitle}>Season Leaders</div>
-      <SbSeasonLeaderboard rows={seasonLeadersRows} />
+      <div className={classes.leaderboardTitle}>Season Leaderboard</div>
+      <SbSeasonLeaderboard rows={seasonLeaderboardRows} />
       <Divider className={classes.divider} />
       <Select
         className={classes.dropdown}
@@ -160,9 +164,11 @@ export const SbPoolDetailPage = () => {
           itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
         })}
       />
-      <div className={classes.leaderboardTitle}>Week {viewingWeek} Leaders</div>
+      <div className={classes.leaderboardTitle}>
+        Week {viewingWeek} Leaderboard
+      </div>
       <SbWeeklyLeaderboard
-        rows={weeklyLeadersRows}
+        rows={weeklyLeaderboardRows}
         showWeekColumn={false}
         showParlayColumn
       />

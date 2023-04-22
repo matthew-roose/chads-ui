@@ -1,6 +1,8 @@
 export const formatTeamName = (teamName: string) =>
   teamName.replaceAll("_", " ");
 
+export const formatTeamMascot = (teamName: string) => teamName.split("_").pop();
+
 export const formatTimestamp = (timestamp: number, showWeekday: boolean) =>
   new Date(timestamp).toLocaleTimeString([], {
     year: "numeric",

@@ -34,10 +34,8 @@ export const SbPlaceBetsPage = () => {
   const { data: currentWeekGameLines } = useGetCurrentGameLines();
   const { data: currentAccountBalance, refetch: refetchAccountBalance } =
     useSbGetUserPools(username);
-  const { mutateAsync: placeBet } = useSbPlaceBet(googleJwt, {
-    wager,
-    betLegs,
-  });
+
+  const placeBet = useSbPlaceBet();
 
   if (!googleJwt || !username) {
     return (
@@ -53,52 +51,96 @@ export const SbPlaceBetsPage = () => {
 
   const hideBetSlip = showBetSlip ? "" : classes.hideBetSlip;
 
-  const addBetLeg = ({ gameId, betLegType }: SbBetLegCreate) => {
+  const isBetLegOnATeam = (betLegType: SbBetLegType) =>
+    betLegType === SbBetLegType.HOME_SPREAD ||
+    betLegType === SbBetLegType.AWAY_SPREAD ||
+    betLegType === SbBetLegType.HOME_MONEYLINE ||
+    betLegType === SbBetLegType.AWAY_MONEYLINE;
+
+  const isBetLegOnATotal = (betLegType: SbBetLegType) =>
+    betLegType === SbBetLegType.OVER_TOTAL ||
+    betLegType === SbBetLegType.UNDER_TOTAL;
+
+  const areBothBetLegsOnATeam = (
+    oldBetLegType: SbBetLegType,
+    newBetLegType: SbBetLegType
+  ) => isBetLegOnATeam(oldBetLegType) && isBetLegOnATeam(newBetLegType);
+
+  const areBothBetLegsOnATotal = (
+    oldBetLegType: SbBetLegType,
+    newBetLegType: SbBetLegType
+  ) => isBetLegOnATotal(oldBetLegType) && isBetLegOnATotal(newBetLegType);
+
+  const addBetLeg = ({ gameId, betLegType: newBetLegType }: SbBetLegCreate) => {
     const gameLine = currentWeekGameLines.find(
       (game) => game.gameId === gameId
     );
     if (!gameLine) {
       return;
     }
-    if (gameLine.timestamp < Date.now()) {
+    if (gameLine.timestamp <= Date.now()) {
       return;
     }
-    // if defined, user is only un-selecting bet leg
-    const existingBetLeg = betLegs.find(
-      (betLeg) => betLeg.gameId === gameId && betLeg.betLegType === betLegType
+    const existingBetLegs = betLegs.filter(
+      (betLeg) => betLeg.gameId === gameId
     );
-    // either way, existing bet legs for this game should be removed
-    setBetLegs((prevBetLegs) =>
-      prevBetLegs.filter((betLeg) => betLeg.gameId !== gameId)
+    // only remove existing bet leg if it's in the same category as the new one
+    const betLegToRemove = existingBetLegs.find(
+      (oldBetLeg) =>
+        areBothBetLegsOnATeam(oldBetLeg.betLegType, newBetLegType) ||
+        areBothBetLegsOnATotal(oldBetLeg.betLegType, newBetLegType)
     );
-    // if new bet leg was selected, add it
-    if (!existingBetLeg) {
-      setBetLegs((prevBetLegs) => [...prevBetLegs, { gameId, betLegType }]);
+    if (betLegToRemove) {
+      setBetLegs((prevBetLegs) =>
+        prevBetLegs.filter(
+          (betLeg) =>
+            !(
+              betLeg.gameId === betLegToRemove.gameId &&
+              betLeg.betLegType === betLegToRemove.betLegType
+            )
+        )
+      );
+    }
+    if (!betLegToRemove || !(betLegToRemove.betLegType === newBetLegType)) {
+      setBetLegs((prevBetLegs) => [
+        ...prevBetLegs,
+        { gameId, betLegType: newBetLegType },
+      ]);
     }
   };
 
-  const gameElements = currentWeekGameLines.map((line) => {
-    let selectedBet;
-    const existingBetLeg = betLegs.find(
-      (betLeg) => betLeg.gameId === line.gameId
-    );
-    if (existingBetLeg) {
-      selectedBet = existingBetLeg.betLegType;
-    }
-    return (
-      <SbPlaceBetGame
-        key={line.gameId}
-        {...line}
-        selected={selectedBet}
-        addBetLeg={addBetLeg}
-      />
-    );
-  });
+  const gameElements = currentWeekGameLines
+    .filter((line) => line.timestamp > Date.now())
+    .map((line) => {
+      let selectedBets;
+      const existingBetLegs = betLegs.filter(
+        (betLeg) => betLeg.gameId === line.gameId
+      );
+      if (existingBetLegs) {
+        selectedBets = existingBetLegs.map((betLeg) => betLeg.betLegType);
+      }
+      return (
+        <SbPlaceBetGame
+          key={line.gameId}
+          {...line}
+          selected={selectedBets}
+          addBetLeg={addBetLeg}
+        />
+      );
+    });
 
-  const pickEmOdds = 1.9090909;
+  const pickEmOdds = 1.90909;
   const pickEmOddsString = convertOddsFromDecimal(pickEmOdds);
   let betOdds = 1;
+  const getBetLegTypeSortValue = (betLegType: SbBetLegType) =>
+    isBetLegOnATeam(betLegType) ? 1 : 2;
+
   const betSlipItems = betLegs
+    .sort(
+      (a, b) =>
+        getBetLegTypeSortValue(a.betLegType) -
+        getBetLegTypeSortValue(b.betLegType)
+    )
     .sort((a, b) => a.gameId - b.gameId)
     .map((betLeg) => {
       const gameLine = currentWeekGameLines.find(
@@ -154,7 +196,7 @@ export const SbPlaceBetsPage = () => {
       }
 
       return (
-        <div key={gameId} className={classes.betSlipItem}>
+        <div key={`${gameId}${betLegType}`} className={classes.betSlipItem}>
           <div className={classes.betSlipItemLogoAndText}>
             {logoToShow === "home" && (
               <img
@@ -263,11 +305,20 @@ export const SbPlaceBetsPage = () => {
       className={classes.button}
       onClick={() =>
         toast
-          .promise(placeBet(), {
-            pending: "Placing your bet...",
-            success: "Successfully placed your bet!",
-            error: "Error placing your bet!",
-          })
+          .promise(
+            placeBet.mutateAsync({
+              googleJwt,
+              bet: {
+                wager,
+                betLegs,
+              },
+            }),
+            {
+              pending: "Placing your bet...",
+              success: "Successfully placed your bet!",
+              error: "Error placing your bet!",
+            }
+          )
           .then(() => refetchAccountBalance())
           .then(() => setWager(0))
           .then(() => setBetLegs([]))

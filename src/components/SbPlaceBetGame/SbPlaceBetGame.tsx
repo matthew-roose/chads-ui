@@ -17,7 +17,7 @@ interface SbPlaceBetGameProps {
   gameTotal: number;
   homeScore: number | null;
   awayScore: number | null;
-  selected?: SbBetLegType;
+  selected?: SbBetLegType[];
   addBetLeg: ({ gameId, betLegType }: SbBetLegCreate) => void;
 }
 
@@ -35,7 +35,7 @@ export const SbPlaceBetGame = ({
   selected,
   addBetLeg,
 }: SbPlaceBetGameProps) => {
-  const hasStarted = timestamp < Date.now();
+  const hasStarted = timestamp <= Date.now();
   return (
     <Paper
       radius="xl"
@@ -52,7 +52,7 @@ export const SbPlaceBetGame = ({
           spread={homeSpread * -1}
           moneyline={awayMoneyline}
           total={gameTotal}
-          hasStarted={timestamp < Date.now()}
+          hasStarted={timestamp <= Date.now()}
           score={awayScore}
           selected={selected}
           addBetLeg={addBetLeg}
@@ -66,7 +66,7 @@ export const SbPlaceBetGame = ({
           spread={homeSpread}
           moneyline={homeMoneyline}
           total={gameTotal}
-          hasStarted={timestamp < Date.now()}
+          hasStarted={timestamp <= Date.now()}
           score={homeScore}
           selected={selected}
           addBetLeg={addBetLeg}

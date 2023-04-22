@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { SimpleGrid } from "@mantine/core";
+import { Group, SimpleGrid } from "@mantine/core";
 import { ScViewPicksGame } from "../../../components/ScViewPicksGame/ScViewPicksGame";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
@@ -13,6 +13,8 @@ import {
 } from "../../../util/format";
 import classes from "./ScViewPicksPage.module.css";
 import { UserAndWeekSelects } from "../../../components/UserAndWeekSelects/UserAndWeekSelects";
+import { AllTeamLogos } from "../../../assets/AllTeamLogos";
+import { Result } from "../../../types/Result";
 
 export const ScViewPicksPage = () => {
   const { googleJwt } = useContext(AuthContext);
@@ -43,8 +45,35 @@ export const ScViewPicksPage = () => {
     return <div>Invalid week number in URL.</div>;
   }
 
+  const picksLogos = entryWeekData.picks
+    .filter((pick) => pick.pickedTeam)
+    .map((pick) => {
+      const picksLogoClasses = `${classes.pickLogo} ${
+        pick.result
+          ? pick.result === Result.WIN
+            ? classes.win
+            : pick.result === Result.LOSS
+            ? classes.loss
+            : pick.result === Result.PUSH
+            ? classes.push
+            : ""
+          : ""
+      }`;
+      if (!pick.pickedTeam) {
+        return null;
+      }
+      return (
+        <img
+          key={pick.pickedTeam}
+          className={picksLogoClasses}
+          src={AllTeamLogos[pick.pickedTeam] as unknown as string}
+          alt={pick.pickedTeam}
+        />
+      );
+    });
+
   const picks = entryWeekData.picks.map((pick) => (
-    <ScViewPicksGame key={pick.gameId} {...pick} />
+    <ScViewPicksGame key={pick.gameId || Math.random()} {...pick} />
   ));
   const { weekWins, weekLosses, weekPushes } = entryWeekData;
   const getNavigateUrl = (
@@ -71,6 +100,9 @@ export const ScViewPicksPage = () => {
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
+      <Group className={classes.pickLogoGroup} position="center">
+        {picksLogos}
+      </Group>
       {entryWeekData.picks.length > 0 && (
         <div className={classes.title}>
           Week {weekNumber}: {formatRecord(weekWins, weekLosses, weekPushes)}

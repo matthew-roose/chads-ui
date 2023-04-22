@@ -9,12 +9,14 @@ import {
   formatCurrency,
   formatRecord,
   formatSpread,
+  formatTeamMascot,
   formatTimestamp,
 } from "../../util/format";
 import { useSbGetPrevWeekBestParlay } from "../../hooks/sportsbook/useSbGetPrevWeekBestParlay";
 import { useScGetPrevWeekBestPicks } from "../../hooks/supercontest/useScGetPrevWeekBestPicks";
 import { Result } from "../../types/Result";
 import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
+import { useSvGetPrevWeekLosses } from "../../hooks/survivor/useSvGetPrevWeekLosses";
 
 export const HomePage = () => {
   const { data: gameLinesData } = useGetCurrentGameLines();
@@ -23,6 +25,8 @@ export const HomePage = () => {
     useSbGetPrevWeekBestParlay(currentWeekNumber);
   const { data: prevWeekBestPicksData } =
     useScGetPrevWeekBestPicks(currentWeekNumber);
+  const { data: prevWeekSurvivorLosersData } =
+    useSvGetPrevWeekLosses(currentWeekNumber);
 
   if (!currentWeekNumber || !gameLinesData) {
     return null;
@@ -31,8 +35,17 @@ export const HomePage = () => {
   const gameRows = gameLinesData.map((gameLine) => {
     const { timestamp, homeTeam, awayTeam, homeSpread, homeScore, awayScore } =
       gameLine;
+    let displayScore;
+    if (homeScore !== null && awayScore !== null) {
+      displayScore =
+        homeScore > awayScore
+          ? `${homeScore}-${awayScore} ${formatTeamMascot(homeTeam)}`
+          : homeScore < awayScore
+          ? `${awayScore}-${homeScore} ${formatTeamMascot(awayTeam)}`
+          : `${homeScore}-${awayScore} Tie`;
+    }
     return (
-      <tr key={homeTeam}>
+      <tr className={classes.row} key={homeTeam}>
         <td className={classes.hideForMobile}>
           {formatTimestamp(timestamp, true)}
         </td>
@@ -52,7 +65,7 @@ export const HomePage = () => {
         <td>
           {homeTeam.split("_").pop()} {formatSpread(homeSpread)}
         </td>
-        <td>{homeScore !== null ? `${homeScore}-${awayScore}` : ""}</td>
+        <td>{displayScore}</td>
       </tr>
     );
   });
@@ -64,7 +77,7 @@ export const HomePage = () => {
     const { username, effectiveOdds, wager, effectiveToWinAmount, betLegs } =
       parlay;
     return (
-      <tr key={username}>
+      <tr className={classes.row} key={username}>
         <td>{username}</td>
         <td>
           {betLegs.map((betLeg) => {
@@ -163,12 +176,12 @@ export const HomePage = () => {
     );
   });
 
-  let prevWeekBestPicks = prevWeekBestPicksData ? prevWeekBestPicksData : [];
+  const prevWeekBestPicks = prevWeekBestPicksData ? prevWeekBestPicksData : [];
   const bestPicksRows = prevWeekBestPicks.map((entryWeek) => {
     const { username, weekScore, weekWins, weekLosses, weekPushes, picks } =
       entryWeek;
     return (
-      <tr key={username}>
+      <tr className={classes.row} key={username}>
         <td>{username}</td>
         <td>
           {picks.map((pick) => {
@@ -208,6 +221,47 @@ export const HomePage = () => {
     );
   });
 
+  const prevWeekSurvivorLosers = prevWeekSurvivorLosersData
+    ? prevWeekSurvivorLosersData
+    : [];
+  const losersRows = prevWeekSurvivorLosers.map((loser) => {
+    const {
+      username,
+      pickedTeam,
+      homeTeam,
+      awayTeam,
+      homeScore,
+      awayScore,
+      result,
+    } = loser;
+    const opposingTeam = pickedTeam === homeTeam ? awayTeam : homeTeam;
+    const score =
+      pickedTeam === homeTeam
+        ? `${homeScore}-${awayScore}`
+        : `${awayScore}-${homeScore}`;
+    return (
+      <tr className={classes.row} key={username}>
+        <td>{username}</td>
+        <td>
+          <img
+            className={classes.matchupLogo}
+            src={AllTeamLogos[pickedTeam] as unknown as string}
+            alt={pickedTeam}
+          />
+        </td>
+        <td>
+          <img
+            className={classes.matchupLogo}
+            src={AllTeamLogos[opposingTeam] as unknown as string}
+            alt={opposingTeam}
+          />
+        </td>
+        <td>{score}</td>
+        <td className={classes.loss}>{result}</td>
+      </tr>
+    );
+  });
+
   return (
     <div className={classes.page}>
       <Helmet>
@@ -232,7 +286,7 @@ export const HomePage = () => {
           Come back next week to see Week 1's best parlay!
         </div>
       )}
-      {currentWeekNumber !== 1 && (
+      {bestParlayRows.length > 0 && (
         <Table className={classes.table}>
           <thead>
             <tr>
@@ -245,6 +299,11 @@ export const HomePage = () => {
           </thead>
           <tbody>{bestParlayRows}</tbody>
         </Table>
+      )}
+      {bestParlayRows.length === 0 && currentWeekNumber !== 1 && (
+        <div className={classes.week1Message}>
+          No one hit a parlay last week!
+        </div>
       )}
       <Divider className={classes.divider} />
       <div className={classes.title}>Last Week's Best Picks</div>
@@ -265,6 +324,30 @@ export const HomePage = () => {
           </thead>
           <tbody>{bestPicksRows}</tbody>
         </Table>
+      )}
+      <Divider className={classes.divider} />
+      <div className={classes.title}>Last Week's Survivor Losers</div>
+      {currentWeekNumber === 1 && (
+        <div className={classes.week1Message}>
+          Come back next week to see Week 1's losers!
+        </div>
+      )}
+      {losersRows.length > 0 && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Pick</th>
+              <th>Opponent</th>
+              <th className={classes.hideForMobile}>Score</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>{losersRows}</tbody>
+        </Table>
+      )}
+      {losersRows.length === 0 && currentWeekNumber !== 1 && (
+        <div className={classes.week1Message}>No one lost last week!</div>
       )}
     </div>
   );

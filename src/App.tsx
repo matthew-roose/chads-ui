@@ -16,10 +16,19 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { IconHome } from "@tabler/icons";
 import { AuthContext } from "./store/auth-context";
 import { HomePage } from "./pages/HomePage/HomePage";
-import { SportsbookLinks, SupercontestLinks } from "./navigation/ChadNavLinks";
-import { sportsbookRoutes, supercontestRoutes } from "./navigation/ChadRoutes";
+import { ChadNavLinks } from "./navigation/ChadNavLinks";
+import {
+  sportsbookRoutes,
+  supercontestRoutes,
+  survivorRoutes,
+} from "./navigation/ChadRoutes";
 import "./App.css";
 import { ChadNavLink } from "./navigation/ChadNavLink";
+import {
+  getSportsbookLinkData,
+  getSupercontestLinkData,
+  getSurvivorLinkData,
+} from "./navigation/ChadLinkData";
 
 declare var google: any;
 
@@ -147,8 +156,21 @@ const App = () => {
               icon={<IconHome size={24} color="green" />}
               closeNavbar={closeNavbarHandler}
             />
-            <SportsbookLinks closeNavbar={closeNavbarHandler} />
-            <SupercontestLinks closeNavbar={closeNavbarHandler} />
+            <ChadNavLinks
+              closeNavbar={closeNavbarHandler}
+              getLinkData={getSportsbookLinkData}
+              displayText="Sportsbook"
+            />
+            <ChadNavLinks
+              closeNavbar={closeNavbarHandler}
+              getLinkData={getSupercontestLinkData}
+              displayText="Supercontest"
+            />
+            <ChadNavLinks
+              closeNavbar={closeNavbarHandler}
+              getLinkData={getSurvivorLinkData}
+              displayText="Survivor"
+            />
             <div style={{ height: "10rem" }}></div>
           </Navbar.Section>
         </Navbar>
@@ -159,11 +181,14 @@ const App = () => {
         autoClose={3000}
         newestOnTop
         closeOnClick
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
       />
       <Routes>
         <Route path="/" element={<HomePage />} />
         {sportsbookRoutes}
         {supercontestRoutes}
+        {survivorRoutes}
       </Routes>
     </AppShell>
   );

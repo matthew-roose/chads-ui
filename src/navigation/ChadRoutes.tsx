@@ -3,7 +3,7 @@ import { SbBestParlaysPage } from "../pages/sportsbook/SbBestParlaysPage/SbBestP
 import { SbWorstWeeksPage } from "../pages/sportsbook/SbWorstWeeksPage/SbWorstWeeksPage";
 import { SbBestWeeksPage } from "../pages/sportsbook/SbBestWeeksPage/SbBestWeeksPage";
 import { SbCashierPage } from "../pages/sportsbook/SbCashierPage/SbCashierPage";
-// import { SbCreatePoolPage } from "../pages/sportsbook/SbCreatePoolPage/SbCreatePoolPage";
+import { SbCreatePoolPage } from "../pages/sportsbook/SbCreatePoolPage/SbCreatePoolPage";
 import { SbViewAllPoolsPage } from "../pages/sportsbook/SbViewAllPoolsPage/SbViewAllPoolsPage";
 import { SbViewUserPoolsPage } from "../pages/sportsbook/SbViewUserPoolsPage/SbViewUserPoolsPage";
 import { SbPlaceBetsPage } from "../pages/sportsbook/SbPlaceBetsPage/SbPlaceBetsPage";
@@ -14,7 +14,7 @@ import { SbViewBetsPage } from "../pages/sportsbook/SbViewBetsPage/SbViewBetsPag
 import { SbWeeklyLeaderboardPage } from "../pages/sportsbook/SbWeeklyLeaderboardPage/SbWeeklyLeaderboardPage";
 import { SbWeeklyPublicMoneyPage } from "../pages/sportsbook/SbWeeklyPublicMoneyPage/SbWeeklyPublicMoneyPage";
 import { SbWeeklyUserStatsPage } from "../pages/sportsbook/SbWeeklyUserStatsPage/SbWeeklyUserStatsPage";
-// import { ScCreatePoolPage } from "../pages/supercontest/ScCreatePoolPage/ScCreatePoolPage";
+import { ScCreatePoolPage } from "../pages/supercontest/ScCreatePoolPage/ScCreatePoolPage";
 import { ScViewAllPoolsPage } from "../pages/supercontest/ScViewAllPoolsPage/ScViewAllPoolsPage";
 import { ScMakePicksPage } from "../pages/supercontest/ScMakePicksPage/ScMakePicksPage";
 import { ScMostFadedTeamsPage } from "../pages/supercontest/ScMostFadedTeamsPage/ScMostFadedTeamsPage";
@@ -28,6 +28,17 @@ import { ScWeeklyLeaderboardPage } from "../pages/supercontest/ScWeeklyLeaderboa
 import { ScWeeklyUserStatsPage } from "../pages/supercontest/ScWeeklyUserStatsPage/ScWeeklyUserStatsPage";
 import { ScPoolDetailPage } from "../pages/supercontest/ScPoolDetailPage/ScPoolDetailPage";
 import { SbPoolDetailPage } from "../pages/sportsbook/SbPoolDetailPage/SbPoolDetailPage";
+import { SvMakePickPage } from "../pages/survivor/SvMakePickPage/SvMakePickPage";
+import { SvViewPicksPage } from "../pages/survivor/SvViewPicksPage/SvViewPicksPage";
+import { SvViewUserPoolsPage } from "../pages/survivor/SvViewUserPoolsPage/SvViewUserPoolsPage";
+import { SvViewAllPoolsPage } from "../pages/survivor/SvViewAllPoolsPage/SvViewAllPoolsPage";
+import { SvCreatePoolPage } from "../pages/survivor/SvCreatePoolPage/SvCreatePoolPage";
+import { SvPoolDetailPage } from "../pages/survivor/SvPoolDetailPage/SvPoolDetailPage";
+import { SvMostPopularThisWeekPage } from "../pages/survivor/SvMostPopularThisWeekPage/SvMostPopularThisWeekPage";
+import { SvMostPopularThisSeasonPage } from "../pages/survivor/SvMostPopularThisSeasonPage/SvMostPopularThisSeasonPage";
+import { SvLeaderboardPage } from "../pages/survivor/SvLeaderboardPage/SvLeaderboardPage";
+import { ScPublicRecordPage } from "../pages/supercontest/ScPublicRecordPage/ScPublicRecordPage";
+import { ScHeadToHeadStatsPage } from "../pages/supercontest/ScHeadToHeadStatsPage/ScHeadToHeadStatsPage";
 
 export const sportsbookRoutes = [
   <Route
@@ -50,11 +61,11 @@ export const sportsbookRoutes = [
     key="sb-view-all-pools"
     element={<SbViewAllPoolsPage />}
   />,
-  // <Route
-  //   path="/sportsbook/create-pool"
-  //   key="sb-create-pool"
-  //   element={<SbCreatePoolPage />}
-  // />,
+  <Route
+    path="/sportsbook/create-pool"
+    key="sb-create-pool"
+    element={<SbCreatePoolPage />}
+  />,
   <Route
     path="/sportsbook/pool/:poolName"
     key="sb-pool-detail"
@@ -133,11 +144,11 @@ export const supercontestRoutes = [
     key="sc-view-all-pools"
     element={<ScViewAllPoolsPage />}
   />,
-  // <Route
-  //   path="/supercontest/create-pool"
-  //   key="sc-create-pool"
-  //   element={<ScCreatePoolPage />}
-  // />,
+  <Route
+    path="/supercontest/create-pool"
+    key="sc-create-pool"
+    element={<ScCreatePoolPage />}
+  />,
   <Route
     path="/supercontest/pool/:poolName"
     key="sc-pool-detail"
@@ -159,6 +170,16 @@ export const supercontestRoutes = [
     element={<ScMostFadedTeamsPage />}
   />,
   <Route
+    path="/supercontest/public-picks/record"
+    key="sc-public-record"
+    element={<ScPublicRecordPage />}
+  />,
+  <Route
+    path="/supercontest/h2h-stats"
+    key="sc-h2h-stats"
+    element={<ScHeadToHeadStatsPage />}
+  />,
+  <Route
     path="/supercontest/public-picks/week/:weekNumber"
     key="sc-public-weekly"
     element={<ScMostPopularThisWeekPage />}
@@ -177,5 +198,53 @@ export const supercontestRoutes = [
     path="/supercontest/leaderboard/season"
     key="sc-season-leaderboard"
     element={<ScSeasonLeaderboardPage />}
+  />,
+];
+
+export const survivorRoutes = [
+  <Route
+    path="/survivor/make-pick"
+    key="sv-make-pick"
+    element={<SvMakePickPage />}
+  />,
+  <Route
+    path="/survivor/pick-history/:username"
+    key="sv-pick-history"
+    element={<SvViewPicksPage />}
+  />,
+  <Route
+    path="/survivor/:username/pools"
+    key="sv-my-pools"
+    element={<SvViewUserPoolsPage />}
+  />,
+  <Route
+    path="/survivor/pools"
+    key="sv-view-all-pools"
+    element={<SvViewAllPoolsPage />}
+  />,
+  <Route
+    path="/survivor/create-pool"
+    key="sv-create-pool"
+    element={<SvCreatePoolPage />}
+  />,
+  <Route
+    path="/survivor/pool/:poolName"
+    key="sv-pool-detail"
+    element={<SvPoolDetailPage />}
+  />,
+  <Route
+    path="/survivor/public-picks/week/:weekNumber"
+    key="sv-public-weekly"
+    element={<SvMostPopularThisWeekPage />}
+  />,
+  <Route
+    path="/survivor/public-picks/season"
+    key="sv-public-season"
+    element={<SvMostPopularThisSeasonPage />}
+  />,
+  <Route
+    path="/survivor/leaderboard"
+    key="sv-leaderboard"
+    element={<SvLeaderboardPage />}
   />,
 ];

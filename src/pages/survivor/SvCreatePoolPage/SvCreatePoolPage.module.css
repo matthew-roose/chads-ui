@@ -1,0 +1,29 @@
+.notSignedIn {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 8rem;
+  text-align: center;
+}
+
+.title {
+  margin-top: 50px;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form {
+  margin: 50px auto;
+  max-width: 80%;
+}
+
+.form > * {
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.createButton {
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+}

@@ -22,8 +22,9 @@ export const SbDepositModal = ({
   onClose,
 }: SbDepositModalProps) => {
   const { googleJwt, username } = useContext(AuthContext);
-  const { mutateAsync: deposit } = useSbDeposit(googleJwt);
   const { refetch: refetchUserBalances } = useSbGetUserPools(username);
+
+  const deposit = useSbDeposit();
 
   return (
     <Modal radius="lg" size={500} opened={opened} onClose={onClose}>
@@ -48,7 +49,7 @@ export const SbDepositModal = ({
           disabled={totalBalance >= 1}
           onClick={() =>
             toast
-              .promise(deposit(), {
+              .promise(deposit.mutateAsync({ googleJwt }), {
                 pending: "Depositing...",
                 success: "Successfully deposited $1000!",
                 error: "Error depositing!",
@@ -59,7 +60,7 @@ export const SbDepositModal = ({
           variant="gradient"
           gradient={{ from: "teal", to: "blue" }}
         >
-          Deposit $1000
+          Deposit $10000
         </Button>
       </div>
 

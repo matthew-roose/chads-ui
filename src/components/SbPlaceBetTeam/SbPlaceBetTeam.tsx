@@ -18,7 +18,7 @@ interface SbPlaceBetTeamProps {
   total: number;
   hasStarted: boolean;
   score: number | null;
-  selected?: SbBetLegType;
+  selected?: SbBetLegType[];
   addBetLeg: ({ gameId, betLegType }: SbBetLegCreate) => void;
 }
 
@@ -37,23 +37,23 @@ export const SbPlaceBetTeam = ({
 }: SbPlaceBetTeamProps) => {
   const teamClasses = `${classes.choice} ${hasStarted ? classes.started : ""}`;
   const spreadClasses = `${classes.betOption} ${
-    isHomeTeam && selected === SbBetLegType.HOME_SPREAD
+    isHomeTeam && selected?.includes(SbBetLegType.HOME_SPREAD)
       ? classes.selected
-      : !isHomeTeam && selected === SbBetLegType.AWAY_SPREAD
+      : !isHomeTeam && selected?.includes(SbBetLegType.AWAY_SPREAD)
       ? classes.selected
       : ""
   } ${hasStarted ? classes.started : classes.notStarted}`;
   const moneylineClasses = `${classes.betOption} ${
-    isHomeTeam && selected === SbBetLegType.HOME_MONEYLINE
+    isHomeTeam && selected?.includes(SbBetLegType.HOME_MONEYLINE)
       ? classes.selected
-      : !isHomeTeam && selected === SbBetLegType.AWAY_MONEYLINE
+      : !isHomeTeam && selected?.includes(SbBetLegType.AWAY_MONEYLINE)
       ? classes.selected
       : ""
   } ${hasStarted ? classes.started : classes.notStarted}`;
   const totalClasses = `${classes.betOption} ${
-    isOver && selected === SbBetLegType.OVER_TOTAL
+    isOver && selected?.includes(SbBetLegType.OVER_TOTAL)
       ? classes.selected
-      : !isOver && selected === SbBetLegType.UNDER_TOTAL
+      : !isOver && selected?.includes(SbBetLegType.UNDER_TOTAL)
       ? classes.selected
       : ""
   } ${hasStarted ? classes.started : classes.notStarted}`;

@@ -23,11 +23,8 @@ export const ScPoolDetailPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: poolDetailData, refetch: refetchPoolDetailData } =
     useScGetPoolDetail(poolName);
-  const { mutateAsync: joinPool } = useScJoinPool(
-    googleJwt,
-    poolName,
-    passwordValue
-  );
+
+  const joinPool = useScJoinPool();
 
   if (!currentWeekNumber || !poolDetailData) {
     return null;
@@ -45,13 +42,14 @@ export const ScPoolDetailPage = () => {
     return null;
   }
 
-  const seasonHasStarted = Date.now() > 1662682800000;
+  const seasonHasStarted = Date.now() > 1707780600000;
   const alreadyInPool = poolDetailData.entries.find(
     (entry) => entry.username === loggedInUsername
   );
 
   const seasonLeaderboardRows = poolDetailData.entries
     .sort((a, b) => a.username.localeCompare(b.username))
+    .sort((a, b) => a.seasonLosses - b.seasonLosses)
     .sort((a, b) => b.seasonScore - a.seasonScore)
     .map((entry) => {
       const { username, seasonScore, seasonWins, seasonLosses, seasonPushes } =
@@ -66,6 +64,12 @@ export const ScPoolDetailPage = () => {
     });
 
   const weeklyLeaderboardRows = poolDetailData.entries
+    .sort((a, b) => a.username.localeCompare(b.username))
+    .sort(
+      (a, b) =>
+        a.supercontestEntryWeeks[+viewingWeek - 1].weekLosses -
+        b.supercontestEntryWeeks[+viewingWeek - 1].weekLosses
+    )
     .sort(
       (a, b) =>
         b.supercontestEntryWeeks[+viewingWeek - 1].weekScore -
@@ -113,11 +117,18 @@ export const ScPoolDetailPage = () => {
           className={classes.joinButton}
           onClick={() =>
             toast
-              .promise(joinPool(), {
-                pending: "Joining this pool...",
-                success: "Successfully joined this pool!",
-                error: "Error joining this pool!",
-              })
+              .promise(
+                joinPool.mutateAsync({
+                  googleJwt,
+                  poolName,
+                  password: passwordValue,
+                }),
+                {
+                  pending: "Joining this pool...",
+                  success: "Successfully joined this pool!",
+                  error: "Error joining this pool!",
+                }
+              )
               .then(() => refetchPoolDetailData())
           }
         >
@@ -141,7 +152,7 @@ export const ScPoolDetailPage = () => {
 
       <Divider className={classes.divider} />
 
-      <div className={classes.leaderboardTitle}>Season Leaders</div>
+      <div className={classes.leaderboardTitle}>Season Leaderboard</div>
       <ScLeaderboard
         rows={seasonLeaderboardRows}
         linkedWeekNumber={currentWeekNumber}
@@ -161,7 +172,9 @@ export const ScPoolDetailPage = () => {
           itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
         })}
       />
-      <div className={classes.leaderboardTitle}>Week {viewingWeek} Leaders</div>
+      <div className={classes.leaderboardTitle}>
+        Week {viewingWeek} Leaderboard
+      </div>
       <ScLeaderboard
         rows={weeklyLeaderboardRows}
         linkedWeekNumber={+viewingWeek}
