@@ -4,8 +4,10 @@ import { AuthContext } from "../../../store/auth-context";
 import {
   Aside,
   Button,
+  NativeSelect,
   NumberInput,
   ScrollArea,
+  SegmentedControl,
   SimpleGrid,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons";
@@ -23,11 +25,16 @@ import {
   formatSpread,
 } from "../../../util/format";
 import classes from "./SbPlaceBetsPage.module.css";
+import { TEASER_LEG_ODDS } from "../../../util/constants";
 
 export const SbPlaceBetsPage = () => {
   const { googleJwt, username } = useContext(AuthContext);
   // only used for screens <993px
   const [showBetSlip, setShowBetSlip] = useState(false);
+  const [parlayOrTeaser, setParlayOrTeaser] = useState<"Parlay" | "Teaser">(
+    "Parlay"
+  );
+  const [teaserPoints, setTeaserPoints] = useState(6);
   const [wager, setWager] = useState(0);
   const [betLegs, setBetLegs] = useState<SbBetLegCreate[]>([]);
 
@@ -72,6 +79,13 @@ export const SbPlaceBetsPage = () => {
   ) => isBetLegOnATotal(oldBetLegType) && isBetLegOnATotal(newBetLegType);
 
   const addBetLeg = ({ gameId, betLegType: newBetLegType }: SbBetLegCreate) => {
+    if (
+      newBetLegType === SbBetLegType.HOME_MONEYLINE ||
+      newBetLegType === SbBetLegType.AWAY_MONEYLINE
+    ) {
+      // can't tease a moneyline
+      setParlayOrTeaser("Parlay");
+    }
     const gameLine = currentWeekGameLines.find(
       (game) => game.gameId === gameId
     );
@@ -129,8 +143,13 @@ export const SbPlaceBetsPage = () => {
       );
     });
 
-  const pickEmOdds = 1.90909;
-  const pickEmOddsString = convertOddsFromDecimal(pickEmOdds);
+  const spreadAndTotalOdds =
+    betLegs.length === 1 || parlayOrTeaser === "Parlay"
+      ? 1.90909
+      : TEASER_LEG_ODDS[
+          teaserPoints as 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10
+        ];
+  const spreadAndTotalOddsString = convertOddsFromDecimal(spreadAndTotalOdds);
   let betOdds = 1;
   const getBetLegTypeSortValue = (betLegType: SbBetLegType) =>
     isBetLegOnATeam(betLegType) ? 1 : 2;
@@ -162,17 +181,17 @@ export const SbPlaceBetsPage = () => {
       let logoToShow;
       let textToShow;
       if (betLegType === SbBetLegType.HOME_SPREAD) {
-        betOdds *= pickEmOdds;
+        betOdds *= spreadAndTotalOdds;
         logoToShow = "home";
         textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
           homeSpread
-        )} ${pickEmOddsString}`;
+        )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.AWAY_SPREAD) {
-        betOdds *= pickEmOdds;
+        betOdds *= spreadAndTotalOdds;
         logoToShow = "away";
         textToShow = `${awayTeam.split("_").pop()} ${formatSpread(
           homeSpread * -1
-        )} ${pickEmOddsString}`;
+        )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.HOME_MONEYLINE) {
         betOdds *= homeMoneyline;
         logoToShow = "home";
@@ -186,13 +205,15 @@ export const SbPlaceBetsPage = () => {
           awayMoneyline
         )}`;
       } else if (betLegType === SbBetLegType.OVER_TOTAL) {
-        betOdds *= pickEmOdds;
+        betOdds *= spreadAndTotalOdds;
         logoToShow = "both";
-        textToShow = `Over ${gameTotal.toFixed(1)} ${pickEmOddsString}`;
+        textToShow = `Over ${gameTotal.toFixed(1)} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.UNDER_TOTAL) {
-        betOdds *= pickEmOdds;
+        betOdds *= spreadAndTotalOdds;
         logoToShow = "both";
-        textToShow = `Under ${gameTotal.toFixed(1)} ${pickEmOddsString}`;
+        textToShow = `Under ${gameTotal.toFixed(
+          1
+        )} ${spreadAndTotalOddsString}`;
       }
 
       return (
@@ -311,6 +332,7 @@ export const SbPlaceBetsPage = () => {
               bet: {
                 wager,
                 betLegs,
+                teaserPoints: parlayOrTeaser === "Teaser" ? teaserPoints : null,
               },
             }),
             {
@@ -350,10 +372,51 @@ export const SbPlaceBetsPage = () => {
         {betLegs.length === 0 && (
           <div className={classes.noBets}>No bets selected.</div>
         )}
+        {betLegs.length > 1 && (
+          <>
+            {!betLegs.find(
+              (betLeg) =>
+                betLeg.betLegType === SbBetLegType.HOME_MONEYLINE ||
+                betLeg.betLegType === SbBetLegType.AWAY_MONEYLINE
+            ) && (
+              <div className={classes.betTypeSelect}>
+                <SegmentedControl
+                  size="lg"
+                  radius="xl"
+                  value={parlayOrTeaser}
+                  onChange={(newValue) =>
+                    setParlayOrTeaser(newValue as "Parlay" | "Teaser")
+                  }
+                  data={[
+                    { label: "Parlay", value: "Parlay" },
+                    { label: "Teaser", value: "Teaser" },
+                  ]}
+                />
+              </div>
+            )}
+
+            {parlayOrTeaser === "Teaser" && (
+              <div className={classes.betTypeSelect}>
+                <NativeSelect
+                  data={["6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10"]}
+                  label="Teaser points"
+                  value={teaserPoints}
+                  onChange={(newValue) =>
+                    setTeaserPoints(parseFloat(newValue.target.value))
+                  }
+                />
+              </div>
+            )}
+          </>
+        )}
         <div className={classes.betSlipOdds}>
           {betOdds > 1 &&
             `${
-              betLegs.length === 1 ? "Straight" : "Parlay"
+              betLegs.length === 1
+                ? "Straight"
+                : parlayOrTeaser === "Parlay"
+                ? "Parlay"
+                : "Teaser"
             } Bet: ${convertOddsFromDecimal(betOdds)}`}
         </div>
         <div>{betSlipItems}</div>

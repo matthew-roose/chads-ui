@@ -13,6 +13,7 @@ import { SbBetLegType } from "../../../types/sportsbook/SbBetLegType";
 import {
   convertOddsFromDecimal,
   formatCurrency,
+  formatEnum,
   formatSpread,
   formatTimestamp,
   formatUsernamePossessiveForm,
@@ -49,6 +50,7 @@ export const SbViewBetsPage = () => {
   const betRows = userBetData.map((bet) => {
     const {
       placedTimestamp,
+      betType,
       odds,
       effectiveOdds,
       wager,
@@ -68,7 +70,10 @@ export const SbViewBetsPage = () => {
     return (
       <tr key={placedTimestamp}>
         <td className={classes.hideFirstForMobile}>
-          {formatTimestamp(placedTimestamp, false)}
+          {formatTimestamp(placedTimestamp, true)}
+        </td>
+        <td className={classes.hideFirstForMobile}>
+          {formatEnum(betType.toString())}
         </td>
         <td>
           {betLegs.map((betLeg) => {
@@ -253,6 +258,7 @@ export const SbViewBetsPage = () => {
           <thead>
             <tr>
               <th className={classes.hideFirstForMobile}>Placed</th>
+              <th className={classes.hideFirstForMobile}>Type</th>
               <th>Bet</th>
               <th>Wager</th>
               <th className={classes.hideSecondForMobile}>Odds</th>

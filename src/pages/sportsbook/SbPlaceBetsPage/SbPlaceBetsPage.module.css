@@ -24,12 +24,19 @@
   margin: 80px 0;
 }
 
+.betTypeSelect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
 .betSlipOdds {
   font-size: 28px;
   font-weight: bold;
   font-style: italic;
   text-align: center;
-  margin: 50px 0 30px;
+  margin: 30px 0;
 }
 
 .betSlipItem {
