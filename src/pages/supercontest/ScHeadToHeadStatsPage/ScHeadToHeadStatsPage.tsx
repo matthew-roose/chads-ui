@@ -307,6 +307,10 @@ export const ScHeadToHeadStatsPage = () => {
             </thead>
             <tbody>{opposingPicksRows}</tbody>
           </Table>
+        </>
+      )}
+      {aligningPicks.length > 0 && (
+        <>
           <div className={`${classes.title} ${classes.secondTitle}`}>
             {formatUsernamePossessiveForm(firstUsername)} Record Picking With{" "}
             {secondUsername}:{" "}

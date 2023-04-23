@@ -180,17 +180,19 @@ export const SbPlaceBetsPage = () => {
       const { betLegType } = betLeg;
       let logoToShow;
       let textToShow;
+      const teaserPointsIfApplicable =
+        parlayOrTeaser === "Teaser" ? teaserPoints : 0;
       if (betLegType === SbBetLegType.HOME_SPREAD) {
         betOdds *= spreadAndTotalOdds;
         logoToShow = "home";
         textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
-          homeSpread
+          homeSpread + teaserPointsIfApplicable
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.AWAY_SPREAD) {
         betOdds *= spreadAndTotalOdds;
         logoToShow = "away";
         textToShow = `${awayTeam.split("_").pop()} ${formatSpread(
-          homeSpread * -1
+          homeSpread * -1 + teaserPointsIfApplicable
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.HOME_MONEYLINE) {
         betOdds *= homeMoneyline;
@@ -207,11 +209,13 @@ export const SbPlaceBetsPage = () => {
       } else if (betLegType === SbBetLegType.OVER_TOTAL) {
         betOdds *= spreadAndTotalOdds;
         logoToShow = "both";
-        textToShow = `Over ${gameTotal.toFixed(1)} ${spreadAndTotalOddsString}`;
+        textToShow = `Over ${(gameTotal - teaserPointsIfApplicable).toFixed(
+          1
+        )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.UNDER_TOTAL) {
         betOdds *= spreadAndTotalOdds;
         logoToShow = "both";
-        textToShow = `Under ${gameTotal.toFixed(
+        textToShow = `Under ${(gameTotal + teaserPointsIfApplicable).toFixed(
           1
         )} ${spreadAndTotalOddsString}`;
       }
