@@ -124,33 +124,38 @@ export const SvMakePickPage = () => {
         : ""
     }`;
     return (
-      <tr className={classes.row} key={gameId}>
-        <td className={classes.hideForMobile}>
+      <tr key={gameId}>
+        <td className={`${classes.timestamp} ${classes.hideForMobile}`}>
           {formatTimestamp(timestamp, true)}
         </td>
-        <td className={classes.teams}>
-          <div
-            className={awayClasses}
-            onClick={() => addPickHandler({ gameId, pickedTeam: awayTeam })}
-          >
-            <img
-              className={classes.logo}
-              src={AllTeamLogos[awayTeam] as unknown as string}
-              alt={awayTeam}
-            />
-            <div className={classes.score}>{awayScore}</div>
+        <td>
+          <div className={classes.mobileOnly}>
+            {formatTimestamp(timestamp, true)}
           </div>
-          <div className={classes.at}>at</div>
-          <div
-            className={homeClasses}
-            onClick={() => addPickHandler({ gameId, pickedTeam: homeTeam })}
-          >
-            <img
-              className={classes.logo}
-              src={AllTeamLogos[homeTeam] as unknown as string}
-              alt={homeTeam}
-            />
-            <div className={classes.score}>{homeScore}</div>
+          <div className={classes.teams}>
+            <div
+              className={awayClasses}
+              onClick={() => addPickHandler({ gameId, pickedTeam: awayTeam })}
+            >
+              <img
+                className={classes.logo}
+                src={AllTeamLogos[awayTeam] as unknown as string}
+                alt={awayTeam}
+              />
+              <div className={classes.score}>{awayScore}</div>
+            </div>
+            <div className={classes.at}>@</div>
+            <div
+              className={homeClasses}
+              onClick={() => addPickHandler({ gameId, pickedTeam: homeTeam })}
+            >
+              <img
+                className={classes.logo}
+                src={AllTeamLogos[homeTeam] as unknown as string}
+                alt={homeTeam}
+              />
+              <div className={classes.score}>{homeScore}</div>
+            </div>
           </div>
         </td>
       </tr>

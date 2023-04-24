@@ -27,10 +27,6 @@
   background-color: gray;
 }
 
-.row {
-  font-weight: bold;
-}
-
 .teams {
   display: flex;
   flex-direction: row;
@@ -53,14 +49,18 @@
   cursor: pointer;
 }
 
+.timestamp {
+  font-weight: bold;
+}
+
 .score {
   font-size: 28px;
+  font-weight: bold;
   text-align: center;
 }
 
 .at {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 40px;
   font-style: italic;
   margin: 0 2rem;
 }
@@ -115,6 +115,12 @@
   cursor: not-allowed;
 }
 
+.mobileOnly {
+  display: none;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
 @media only screen and (min-width: 1300px) {
   .notStarted img {
     transition: transform 0.2s;
@@ -128,5 +134,12 @@
 @media only screen and (max-width: 500px) {
   .hideForMobile {
     display: none;
+  }
+  .mobileOnly {
+    display: block;
+  }
+  .teamDiv {
+    height: 6rem;
+    width: 4rem;
   }
 }

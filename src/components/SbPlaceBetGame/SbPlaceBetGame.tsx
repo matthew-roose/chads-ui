@@ -57,7 +57,7 @@ export const SbPlaceBetGame = ({
           selected={selected}
           addBetLeg={addBetLeg}
         />
-        <p className={classes.at}>at</p>
+        <p className={classes.at}>@</p>
         <SbPlaceBetTeam
           gameId={gameId}
           isHomeTeam={true}

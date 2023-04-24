@@ -51,7 +51,7 @@ export const ScMakePicksGame = ({
           result={result}
           onPickTeam={onPickTeam}
         />
-        <p className={classes.at}>at</p>
+        <p className={classes.at}>@</p>
         <ScMakePicksTeam
           gameId={gameId}
           teamName={homeTeam}

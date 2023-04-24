@@ -33,7 +33,7 @@ export const ScViewPicksGame = ({
       <Paper radius="xl" shadow="xl">
         <div className={classes.game}>
           <ScViewPicksMysteryTeam />
-          <p className={classes.at}>at</p>
+          <p className={classes.at}>@</p>
           <ScViewPicksMysteryTeam />
         </div>
       </Paper>
@@ -51,7 +51,7 @@ export const ScViewPicksGame = ({
           score={awayScore}
           result={result}
         />
-        <p className={classes.at}>at</p>
+        <p className={classes.at}>@</p>
         <ScViewPicksTeam
           teamName={homeTeam}
           spread={homeSpread}

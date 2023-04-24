@@ -55,7 +55,7 @@ export const HomePage = () => {
             src={AllTeamLogos[awayTeam] as unknown as string}
             alt={awayTeam}
           />
-          <div className={classes.xMargin}>at</div>
+          <div className={classes.xMargin}>@</div>
           <img
             className={classes.matchupLogo}
             src={AllTeamLogos[homeTeam] as unknown as string}
