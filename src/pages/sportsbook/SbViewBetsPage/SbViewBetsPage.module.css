@@ -39,6 +39,10 @@
   width: 2rem;
 }
 
+.atSymbol {
+  margin: 0 3px;
+}
+
 .hiddenBet {
   margin: 5px 0;
 }

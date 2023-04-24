@@ -45,7 +45,7 @@
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  max-width: 300px;
+  max-width: 350px;
   margin: 20px auto;
 }
 
@@ -58,6 +58,10 @@
 .betSlipItemLogo {
   height: 3rem;
   width: 3rem;
+}
+
+.atSymbol {
+  margin: 0 3px;
 }
 
 .betSlipItemText {

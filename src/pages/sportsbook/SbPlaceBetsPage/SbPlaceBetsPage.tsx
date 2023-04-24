@@ -27,6 +27,8 @@ import {
 import classes from "./SbPlaceBetsPage.module.css";
 import { TEASER_LEG_ODDS } from "../../../util/constants";
 
+type TeaserPointOption = 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10;
+
 export const SbPlaceBetsPage = () => {
   const { googleJwt, username } = useContext(AuthContext);
   // only used for screens <993px
@@ -34,7 +36,7 @@ export const SbPlaceBetsPage = () => {
   const [parlayOrTeaser, setParlayOrTeaser] = useState<"Parlay" | "Teaser">(
     "Parlay"
   );
-  const [teaserPoints, setTeaserPoints] = useState(6);
+  const [teaserPoints, setTeaserPoints] = useState<TeaserPointOption>(6);
   const [wager, setWager] = useState(0);
   const [betLegs, setBetLegs] = useState<SbBetLegCreate[]>([]);
 
@@ -146,9 +148,7 @@ export const SbPlaceBetsPage = () => {
   const spreadAndTotalOdds =
     betLegs.length === 1 || parlayOrTeaser === "Parlay"
       ? 1.90909
-      : TEASER_LEG_ODDS[
-          teaserPoints as 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10
-        ];
+      : TEASER_LEG_ODDS[teaserPoints as TeaserPointOption];
   const spreadAndTotalOddsString = convertOddsFromDecimal(spreadAndTotalOdds);
   let betOdds = 1;
   const getBetLegTypeSortValue = (betLegType: SbBetLegType) =>
@@ -178,43 +178,36 @@ export const SbPlaceBetsPage = () => {
         gameTotal,
       } = gameLine;
       const { betLegType } = betLeg;
-      let logoToShow;
       let textToShow;
       const teaserPointsIfApplicable =
         parlayOrTeaser === "Teaser" ? teaserPoints : 0;
       if (betLegType === SbBetLegType.HOME_SPREAD) {
         betOdds *= spreadAndTotalOdds;
-        logoToShow = "home";
         textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
           homeSpread + teaserPointsIfApplicable
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.AWAY_SPREAD) {
         betOdds *= spreadAndTotalOdds;
-        logoToShow = "away";
         textToShow = `${awayTeam.split("_").pop()} ${formatSpread(
           homeSpread * -1 + teaserPointsIfApplicable
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.HOME_MONEYLINE) {
         betOdds *= homeMoneyline;
-        logoToShow = "home";
         textToShow = `${homeTeam.split("_").pop()} ML ${convertOddsFromDecimal(
           homeMoneyline
         )}`;
       } else if (betLegType === SbBetLegType.AWAY_MONEYLINE) {
         betOdds *= awayMoneyline;
-        logoToShow = "away";
         textToShow = `${awayTeam.split("_").pop()} ML ${convertOddsFromDecimal(
           awayMoneyline
         )}`;
       } else if (betLegType === SbBetLegType.OVER_TOTAL) {
         betOdds *= spreadAndTotalOdds;
-        logoToShow = "both";
         textToShow = `Over ${(gameTotal - teaserPointsIfApplicable).toFixed(
           1
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.UNDER_TOTAL) {
         betOdds *= spreadAndTotalOdds;
-        logoToShow = "both";
         textToShow = `Under ${(gameTotal + teaserPointsIfApplicable).toFixed(
           1
         )} ${spreadAndTotalOddsString}`;
@@ -223,34 +216,17 @@ export const SbPlaceBetsPage = () => {
       return (
         <div key={`${gameId}${betLegType}`} className={classes.betSlipItem}>
           <div className={classes.betSlipItemLogoAndText}>
-            {logoToShow === "home" && (
-              <img
-                className={classes.betSlipItemLogo}
-                src={AllTeamLogos[homeTeam] as unknown as string}
-                alt={homeTeam}
-              />
-            )}
-            {logoToShow === "away" && (
-              <img
-                className={classes.betSlipItemLogo}
-                src={AllTeamLogos[awayTeam] as unknown as string}
-                alt={awayTeam}
-              />
-            )}
-            {logoToShow === "both" && (
-              <>
-                <img
-                  className={classes.betSlipItemLogo}
-                  src={AllTeamLogos[awayTeam] as unknown as string}
-                  alt={awayTeam}
-                />
-                <img
-                  className={classes.betSlipItemLogo}
-                  src={AllTeamLogos[homeTeam] as unknown as string}
-                  alt={homeTeam}
-                />
-              </>
-            )}
+            <img
+              className={classes.betSlipItemLogo}
+              src={AllTeamLogos[awayTeam] as unknown as string}
+              alt={awayTeam}
+            />
+            <span className={classes.atSymbol}>@</span>
+            <img
+              className={classes.betSlipItemLogo}
+              src={AllTeamLogos[homeTeam] as unknown as string}
+              alt={homeTeam}
+            />
             <div className={classes.betSlipItemText}>{textToShow}</div>
           </div>
 
@@ -261,7 +237,11 @@ export const SbPlaceBetsPage = () => {
             onClick={() =>
               setBetLegs((prevState) =>
                 prevState.filter(
-                  (oldBetLeg) => oldBetLeg.gameId !== betLeg.gameId
+                  (oldBetLeg) =>
+                    !(
+                      oldBetLeg.gameId === betLeg.gameId &&
+                      oldBetLeg.betLegType === betLeg.betLegType
+                    )
                 )
               )
             }
@@ -369,7 +349,7 @@ export const SbPlaceBetsPage = () => {
       : undefined;
 
   const betSlip = (
-    <Aside className={hideBetSlip} p="md" width={{ md: 300 }}>
+    <Aside className={hideBetSlip} p="sm" width={{ md: 360 }}>
       <Aside.Section grow component={ScrollArea} type="never">
         {closeBetSlipButton}
         <div className={classes.betSlip}>BET SLIP</div>
@@ -398,15 +378,40 @@ export const SbPlaceBetsPage = () => {
                 />
               </div>
             )}
-
             {parlayOrTeaser === "Teaser" && (
               <div className={classes.betTypeSelect}>
                 <NativeSelect
-                  data={["6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10"]}
+                  data={[
+                    `6 (${convertOddsFromDecimal(TEASER_LEG_ODDS[6])} per leg)`,
+                    `6.5 (${convertOddsFromDecimal(
+                      TEASER_LEG_ODDS[6.5]
+                    )} per leg)`,
+                    `7 (${convertOddsFromDecimal(TEASER_LEG_ODDS[7])} per leg)`,
+                    `7.5 (${convertOddsFromDecimal(
+                      TEASER_LEG_ODDS[7.5]
+                    )} per leg)`,
+                    `8 (${convertOddsFromDecimal(TEASER_LEG_ODDS[8])} per leg)`,
+                    `8.5 (${convertOddsFromDecimal(
+                      TEASER_LEG_ODDS[8.5]
+                    )} per leg)`,
+                    `9 (${convertOddsFromDecimal(TEASER_LEG_ODDS[9])} per leg)`,
+                    `9.5 (${convertOddsFromDecimal(
+                      TEASER_LEG_ODDS[9.5]
+                    )} per leg)`,
+                    `10 (${convertOddsFromDecimal(
+                      TEASER_LEG_ODDS[10]
+                    )} per leg)`,
+                  ]}
                   label="Teaser points"
-                  value={teaserPoints}
+                  value={`${teaserPoints} (${convertOddsFromDecimal(
+                    TEASER_LEG_ODDS[teaserPoints]
+                  )} per leg)`}
                   onChange={(newValue) =>
-                    setTeaserPoints(parseFloat(newValue.target.value))
+                    setTeaserPoints(
+                      parseFloat(
+                        newValue.target.value.split(" ")[0]
+                      ) as TeaserPointOption
+                    )
                   }
                 />
               </div>
@@ -426,8 +431,7 @@ export const SbPlaceBetsPage = () => {
         <div>{betSlipItems}</div>
         {betLegs.length > 0 && clearBetSlipButton}
         <div className={classes.availableBalance}>
-          Available balance: $
-          {currentAccountBalance.availableBalance.toFixed(2)}
+          Available balance: {formatCurrency(availableBalance, 2)}
         </div>
         <div className={classes.keepHeight}>
           {availableBalance >= 1 && wager !== availableBalance && allInButton}
@@ -446,7 +450,9 @@ export const SbPlaceBetsPage = () => {
           />
         </div>
         {toWinAmount > 0 && (
-          <div className={classes.toWin}>To win: ${toWinAmount.toFixed(2)}</div>
+          <div className={classes.toWin}>
+            To win: {formatCurrency(toWinAmount, 2)}
+          </div>
         )}
         {placeBetButton}
         <div style={{ height: "10rem" }}></div>

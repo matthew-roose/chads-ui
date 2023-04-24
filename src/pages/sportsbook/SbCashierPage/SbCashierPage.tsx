@@ -5,6 +5,7 @@ import { SbCashOutModal } from "../../../components/SbCashOutModal/SbCashOutModa
 import { SbDepositModal } from "../../../components/SbDepositModal/SbDepositModal";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { AuthContext } from "../../../store/auth-context";
+import { formatCurrency } from "../../../util/format";
 import classes from "./SbCashierPage.module.css";
 
 export const SbCashierPage = () => {
@@ -35,13 +36,13 @@ export const SbCashierPage = () => {
       </Helmet>
       <div className={classes.title}>Cashier</div>
       <div className={`${classes.balance} ${classes.totalBalance}`}>
-        Total balance: ${totalBalance.toFixed(2)}
+        Total balance: {formatCurrency(totalBalance, 2)}
       </div>
       <div className={classes.balance}>
-        Available balance: ${availableBalance.toFixed(2)}
+        Available balance: {formatCurrency(availableBalance, 2)}
       </div>
       <div className={classes.balance}>
-        Pending balance: ${pendingBalance.toFixed(2)}
+        Pending balance: {formatCurrency(pendingBalance, 2)}
       </div>
       <div className={classes.buttons}>
         <Button

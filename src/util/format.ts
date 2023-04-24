@@ -37,9 +37,15 @@ export const formatSpread = (spread: number) => {
 
 export const formatCurrency = (amount: number, places: number) => {
   if (amount < 0) {
-    return `-$${(amount * -1).toFixed(places)}`;
+    return `-$${(amount * -1).toLocaleString("en-US", {
+      minimumFractionDigits: places,
+      maximumFractionDigits: places,
+    })}`;
   }
-  return `$${amount.toFixed(places)}`;
+  return `$${amount.toLocaleString("en-US", {
+    minimumFractionDigits: places,
+    maximumFractionDigits: places,
+  })}`;
 };
 
 export const convertOddsFromDecimal = (decimalOdds: number) => {

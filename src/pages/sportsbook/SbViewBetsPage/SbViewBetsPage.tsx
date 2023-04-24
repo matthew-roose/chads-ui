@@ -95,7 +95,6 @@ export const SbViewBetsPage = () => {
                 : result === Result.PUSH
                 ? classes.push
                 : "";
-            let logoToShow;
             let textToShow;
             if (
               betLegType === null ||
@@ -105,35 +104,28 @@ export const SbViewBetsPage = () => {
               gameTotal === null ||
               odds === null
             ) {
-              logoToShow = "mystery";
               textToShow = "Hidden";
             } else if (betLegType === SbBetLegType.HOME_SPREAD) {
-              logoToShow = "home";
               textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
                 homeSpread
               )} ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.AWAY_SPREAD) {
-              logoToShow = "away";
               textToShow = `${awayTeam.split("_").pop()} ${formatSpread(
                 homeSpread * -1
               )} ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.HOME_MONEYLINE) {
-              logoToShow = "home";
               textToShow = `${homeTeam
                 .split("_")
                 .pop()} ML ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.AWAY_MONEYLINE) {
-              logoToShow = "away";
               textToShow = `${awayTeam
                 .split("_")
                 .pop()} ML ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.OVER_TOTAL) {
-              logoToShow = "both";
               textToShow = `Over ${gameTotal.toFixed(
                 1
               )} ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.UNDER_TOTAL) {
-              logoToShow = "both";
               textToShow = `Under ${gameTotal.toFixed(
                 1
               )} ${convertOddsFromDecimal(odds)}`;
@@ -141,42 +133,34 @@ export const SbViewBetsPage = () => {
 
             return (
               <div key={id} className={classes.viewBetLogoAndText}>
-                {logoToShow === "home" && homeTeam !== null && (
-                  <img
-                    className={classes.viewBetLogo}
-                    src={AllTeamLogos[homeTeam] as unknown as string}
-                    alt={homeTeam}
-                  />
-                )}
-                {logoToShow === "away" && awayTeam !== null && (
-                  <img
-                    className={classes.viewBetLogo}
-                    src={AllTeamLogos[awayTeam] as unknown as string}
-                    alt={awayTeam}
-                  />
-                )}
-                {logoToShow === "both" &&
-                  homeTeam !== null &&
-                  awayTeam !== null && (
-                    <>
-                      <img
-                        className={classes.viewBetLogo}
-                        src={AllTeamLogos[awayTeam] as unknown as string}
-                        alt={awayTeam}
-                      />
-                      <img
-                        className={classes.viewBetLogo}
-                        src={AllTeamLogos[homeTeam] as unknown as string}
-                        alt={homeTeam}
-                      />
-                    </>
-                  )}
-                {logoToShow === "mystery" && (
-                  <img
-                    className={`${classes.viewBetLogo} ${classes.hiddenBet}`}
-                    src={require("../../../assets/mystery_team.png")}
-                    alt="Mystery Team"
-                  />
+                {homeTeam !== null && awayTeam !== null ? (
+                  <>
+                    <img
+                      className={classes.viewBetLogo}
+                      src={AllTeamLogos[awayTeam] as unknown as string}
+                      alt={awayTeam}
+                    />
+                    <span className={classes.atSymbol}>@</span>
+                    <img
+                      className={classes.viewBetLogo}
+                      src={AllTeamLogos[homeTeam] as unknown as string}
+                      alt={homeTeam}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <img
+                      className={`${classes.viewBetLogo} ${classes.hiddenBet}`}
+                      src={require("../../../assets/mystery_team.png")}
+                      alt="Mystery Team"
+                    />
+                    <span className={classes.atSymbol}>@</span>
+                    <img
+                      className={`${classes.viewBetLogo} ${classes.hiddenBet}`}
+                      src={require("../../../assets/mystery_team.png")}
+                      alt="Mystery Team"
+                    />
+                  </>
                 )}
                 <div className={classes.viewBetText}>
                   {textToShow}

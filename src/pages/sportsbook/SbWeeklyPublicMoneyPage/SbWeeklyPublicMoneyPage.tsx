@@ -7,12 +7,7 @@ import classes from "./SbWeeklyPublicMoneyPage.module.css";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { Table } from "@mantine/core";
-import {
-  convertOddsFromDecimal,
-  formatCurrency,
-  formatSpread,
-  formatTimestamp,
-} from "../../../util/format";
+import { formatCurrency, formatTimestamp } from "../../../util/format";
 
 export const SbWeeklyPublicMoneyPage = () => {
   const { weekNumber } = useParams();
@@ -68,15 +63,7 @@ export const SbWeeklyPublicMoneyPage = () => {
         return null;
       }
 
-      const {
-        timestamp,
-        homeTeam,
-        awayTeam,
-        homeSpread,
-        homeMoneyline,
-        awayMoneyline,
-        gameTotal,
-      } = gameLine;
+      const { timestamp, homeTeam, awayTeam } = gameLine;
 
       return (
         <tr key={gameId} className={classes.keepHeight}>
@@ -104,15 +91,13 @@ export const SbWeeklyPublicMoneyPage = () => {
             <td>{`${homeSpreadPct.toFixed(0)}% (${formatCurrency(
               homeSpreadMoney,
               0
-            )}) ${homeTeam.split("_").pop()} ${formatSpread(homeSpread)}`}</td>
+            )}) ${homeTeam.split("_").pop()}`}</td>
           )}
           {homeSpreadMoney < awaySpreadMoney && (
             <td>{`${awaySpreadPct.toFixed(0)}% (${formatCurrency(
               awaySpreadMoney,
               0
-            )}) ${awayTeam.split("_").pop()} ${formatSpread(
-              homeSpread * -1
-            )}`}</td>
+            )}) ${awayTeam.split("_").pop()}`}</td>
           )}
           {/* Moneylines */}
           {homeMoneylineMoney === 0 && awayMoneylineMoney === 0 && <td>N/A</td>}
@@ -121,17 +106,13 @@ export const SbWeeklyPublicMoneyPage = () => {
               <td>{`${homeMoneylinePct.toFixed(0)}% (${formatCurrency(
                 homeMoneylineMoney,
                 0
-              )}) ${homeTeam.split("_").pop()} ${convertOddsFromDecimal(
-                homeMoneyline
-              )}`}</td>
+              )}) ${homeTeam.split("_").pop()}`}</td>
             )}
           {homeMoneylineMoney < awayMoneylineMoney && (
             <td>{`${awayMoneylinePct.toFixed(0)}% (${formatCurrency(
               awayMoneylineMoney,
               0
-            )}) ${awayTeam.split("_").pop()} ${convertOddsFromDecimal(
-              awayMoneyline
-            )}`}</td>
+            )}) ${awayTeam.split("_").pop()}`}</td>
           )}
           {/* Totals */}
           {overMoney === 0 && underMoney === 0 && <td>N/A</td>}
@@ -139,13 +120,13 @@ export const SbWeeklyPublicMoneyPage = () => {
             <td>{`${overMoneyPct.toFixed(0)}% (${formatCurrency(
               overMoney,
               0
-            )}) Over ${gameTotal.toFixed(1)}`}</td>
+            )}) Over`}</td>
           )}
           {overMoney < underMoney && (
             <td>{`${underMoneyPct.toFixed(0)}% (${formatCurrency(
               underMoney,
               0
-            )}) Under ${gameTotal.toFixed(1)}`}</td>
+            )}) Under`}</td>
           )}
         </tr>
       );

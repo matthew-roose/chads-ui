@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSbDeposit } from "../../hooks/sportsbook/useSbDeposit";
 import { useSbGetUserPools } from "../../hooks/sportsbook/useSbGetUserPools";
 import { AuthContext } from "../../store/auth-context";
+import { formatCurrency } from "../../util/format";
 import classes from "./SbDepositModal.module.css";
 
 interface SbDepositModalProps {
@@ -30,13 +31,13 @@ export const SbDepositModal = ({
     <Modal radius="lg" size={500} opened={opened} onClose={onClose}>
       <div className={classes.title}>Deposit</div>
       <div className={`${classes.balance} ${classes.totalBalance}`}>
-        Total balance: ${totalBalance.toFixed(2)}
+        Total balance: {formatCurrency(totalBalance, 2)}
       </div>
       <div className={classes.balance}>
-        Available: ${availableBalance.toFixed(2)}
+        Available: {formatCurrency(availableBalance, 2)}
       </div>
       <div className={classes.balance}>
-        Pending: ${pendingBalance.toFixed(2)}
+        Pending: {formatCurrency(pendingBalance, 2)}
       </div>
       <div className={classes.warningAndDepositButton}>
         {totalBalance >= 1 && (
