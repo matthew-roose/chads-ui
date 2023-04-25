@@ -31,7 +31,8 @@
   width: 2rem;
 }
 
-.xMargin {
+.at {
+  font-style: italic;
   margin: 0 5px;
 }
 
