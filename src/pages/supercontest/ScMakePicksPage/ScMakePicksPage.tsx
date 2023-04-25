@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Helmet } from "react-helmet-async";
 
-import { Button, Group, SimpleGrid } from "@mantine/core";
+import { Button, Group, Table } from "@mantine/core";
 import { toast } from "react-toastify";
 
 import { ScMakePicksGame } from "../../../components/ScMakePicksGame/ScMakePicksGame";
@@ -143,7 +143,10 @@ export const ScMakePicksPage = () => {
 
   const submitButton = (
     <Button
-      disabled={JSON.stringify(existingPicks) === JSON.stringify(currentPicks)}
+      disabled={
+        JSON.stringify(existingPicks.map((pick) => pick.pickedTeam)) ===
+        JSON.stringify(currentPicks.map((pick) => pick.pickedTeam))
+      }
       variant="gradient"
       gradient={{ from: "teal", to: "lime" }}
       className={classes.submitButton}
@@ -173,14 +176,15 @@ export const ScMakePicksPage = () => {
         {currentPicksLogos}
       </Group>
       {submitButton}
-      <SimpleGrid
-        p="xl"
-        cols={2}
-        spacing={20}
-        breakpoints={[{ maxWidth: 1000, cols: 1 }]}
-      >
-        {gameLines}
-      </SimpleGrid>
+      <Table className={classes.table}>
+        <thead>
+          <tr>
+            <th></th>
+            <th className={classes.hideForMobile}></th>
+          </tr>
+        </thead>
+        <tbody>{gameLines}</tbody>
+      </Table>
       <Group className={classes.currentPickLogoGroup} position="center">
         {currentPicksLogos}
       </Group>

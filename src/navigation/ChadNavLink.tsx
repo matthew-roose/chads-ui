@@ -34,15 +34,13 @@ export const ChadNavLink = ({
   return (
     <NavLink label={label} icon={icon}>
       {childLinks.map((link) => (
-        <NavLink
+        <ChadNavLink
           label={link.label}
           key={link.label}
           icon={link.icon}
-          component={Link}
           to={link.to}
-          onClick={closeNavbar}
-          color="blue"
-          active={location.pathname === link.to}
+          childLinks={link.childLinks}
+          closeNavbar={closeNavbar}
         />
       ))}
     </NavLink>

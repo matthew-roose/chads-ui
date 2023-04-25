@@ -113,6 +113,11 @@
   justify-content: flex-end;
 }
 
+.table {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 @media only screen and (max-width: 992px) {
   .hideBetSlip {
     display: none;
@@ -121,6 +126,12 @@
 
 @media only screen and (min-width: 993px) {
   .hideBetSlipButton {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
     display: none;
   }
 }

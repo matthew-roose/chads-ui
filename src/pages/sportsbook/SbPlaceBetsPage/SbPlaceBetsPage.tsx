@@ -8,7 +8,7 @@ import {
   NumberInput,
   ScrollArea,
   SegmentedControl,
-  SimpleGrid,
+  Table,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons";
 import { toast } from "react-toastify";
@@ -139,7 +139,7 @@ export const SbPlaceBetsPage = () => {
         <SbPlaceBetGame
           key={line.gameId}
           {...line}
-          selected={selectedBets}
+          selectedBets={selectedBets}
           addBetLeg={addBetLeg}
         />
       );
@@ -466,14 +466,18 @@ export const SbPlaceBetsPage = () => {
         <title>Chad's | Place Bets</title>
       </Helmet>
       {showBetSlipButton}
-      <SimpleGrid
-        p="xl"
-        cols={2}
-        spacing={20}
-        breakpoints={[{ maxWidth: 1300, cols: 1 }]}
-      >
-        {gameElements}
-      </SimpleGrid>
+      <Table className={classes.table}>
+        <thead>
+          <tr>
+            <th className={classes.hideForMobile}>Time</th>
+            <th>Game</th>
+            <th>Spread</th>
+            <th>ML</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>{gameElements}</tbody>
+      </Table>
       {showBetSlipButton}
       {betSlip}
     </div>

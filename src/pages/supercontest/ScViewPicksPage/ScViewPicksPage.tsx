@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Group, SimpleGrid } from "@mantine/core";
+import { Group, Table } from "@mantine/core";
 import { ScViewPicksGame } from "../../../components/ScViewPicksGame/ScViewPicksGame";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
@@ -111,14 +111,15 @@ export const ScViewPicksPage = () => {
       {entryWeekData.picks.length === 0 && (
         <div className={classes.noPicks}>No picks.</div>
       )}
-      <SimpleGrid
-        p="xl"
-        cols={2}
-        spacing={20}
-        breakpoints={[{ maxWidth: 1000, cols: 1 }]}
-      >
-        {picks}
-      </SimpleGrid>
+      <Table className={classes.table}>
+        <thead>
+          <tr>
+            <th></th>
+            <th className={classes.hideForMobile}></th>
+          </tr>
+        </thead>
+        <tbody>{picks}</tbody>
+      </Table>
     </div>
   );
 };

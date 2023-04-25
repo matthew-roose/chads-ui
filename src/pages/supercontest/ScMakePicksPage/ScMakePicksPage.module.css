@@ -39,3 +39,14 @@
   font-size: large;
   font-weight: bold;
 }
+
+.table {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+}

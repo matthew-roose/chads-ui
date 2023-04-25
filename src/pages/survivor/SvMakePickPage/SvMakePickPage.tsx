@@ -209,7 +209,7 @@ export const SvMakePickPage = () => {
         <thead>
           <tr>
             <th></th>
-            <th></th>
+            <th className={classes.hideForMobile}></th>
           </tr>
         </thead>
         <tbody>{gameRows}</tbody>

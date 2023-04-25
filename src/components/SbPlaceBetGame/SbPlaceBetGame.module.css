@@ -1,26 +1,59 @@
-.gameTime {
-  font-size: 24px;
-  margin: 20px 0 0 20px;
+.row {
+  font-weight: bold;
 }
 
-.game {
+.logo {
+  padding: 2px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-radius: 20px;
-  padding: 10px;
+  height: 3rem;
+  width: 3rem;
 }
 
-.at {
-  font-size: 48px;
-  font-style: italic;
-  margin: 10px;
+.line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
 }
 
-.started {
-  opacity: 0.4;
+.line:hover {
+  cursor: pointer;
 }
 
-.started:hover {
-  cursor: not-allowed;
+.selected {
+  border-radius: 8px;
+  background-color: lightgray;
+}
+
+.mobileOnly {
+  display: none;
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 1300px) {
+  .line {
+    transition: transform 0.2s;
+  }
+
+  .line:hover {
+    transform: scale(1.1);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hideForMobile {
+    display: none;
+  }
+  .mobileOnly {
+    display: flex;
+    align-items: center;
+    width: 4rem;
+    font-size: 12px;
+  }
+  .logo {
+    margin: 0.5rem auto;
+    height: 2rem;
+    width: 2rem;
+  }
 }
