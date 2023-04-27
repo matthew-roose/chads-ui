@@ -14,6 +14,7 @@ import {
   formatUsernamePossessiveForm,
 } from "../../../util/format";
 import { useSearchParams } from "react-router-dom";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScHeadToHeadStatsPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);
@@ -38,7 +39,11 @@ export const ScHeadToHeadStatsPage = () => {
   );
 
   if (!allUsernames) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!headToHeadData) {

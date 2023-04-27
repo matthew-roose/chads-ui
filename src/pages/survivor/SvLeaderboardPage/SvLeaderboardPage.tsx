@@ -5,6 +5,7 @@ import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber"
 import classes from "./SvLeaderboardPage.module.css";
 import { useContext } from "react";
 import { AuthContext } from "../../../store/auth-context";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvLeaderboardPage = () => {
   const { googleJwt } = useContext(AuthContext);
@@ -12,7 +13,11 @@ export const SvLeaderboardPage = () => {
   const { data: leaderboardData } = useSvGetLeaderboard(googleJwt);
 
   if (!currentWeekNumber || !leaderboardData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const leaderboardRows = leaderboardData

@@ -12,6 +12,7 @@ import { formatEnum, formatCurrency } from "../../../util/format";
 import classes from "./SbPoolDetailPage.module.css";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
 import { SbSeasonLeaderboard } from "../../../components/SbSeasonLeaderboard/SbSeasonLeaderboard";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbPoolDetailPage = () => {
   const {
@@ -37,7 +38,11 @@ export const SbPoolDetailPage = () => {
     !poolDetailData ||
     !weeklyLeaderboardData
   ) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!viewingWeek) {
@@ -47,10 +52,6 @@ export const SbPoolDetailPage = () => {
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
     (i + 1).toString()
   );
-
-  if (!viewingWeek) {
-    return null;
-  }
 
   const {
     creatorUsername,

@@ -4,11 +4,16 @@ import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { useSvGetSeasonMostPopular } from "../../../hooks/survivor/useSvGetSeasonMostPopular";
 import { Result } from "../../../types/Result";
 import classes from "./SvMostPopularThisSeasonPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useSvGetSeasonMostPopular();
   if (!seasonMostPopularData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const mostPopularPickRows = seasonMostPopularData.map((pick) => {

@@ -5,11 +5,16 @@ import { useScGetSeasonMostPopular } from "../../../hooks/supercontest/useScGetS
 import { formatSpread } from "../../../util/format";
 import classes from "./ScMostPopularThisSeasonPage.module.css";
 import { Result } from "../../../types/Result";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useScGetSeasonMostPopular();
   if (!seasonMostPopularData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
   const mostPopularPickRows = seasonMostPopularData.map((pick) => {
     const {

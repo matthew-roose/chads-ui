@@ -8,6 +8,7 @@ import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { Table } from "@mantine/core";
 import { formatCurrency, formatTimestamp } from "../../../util/format";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbWeeklyPublicMoneyPage = () => {
   const { weekNumber } = useParams();
@@ -20,7 +21,11 @@ export const SbWeeklyPublicMoneyPage = () => {
   );
 
   if (!currentWeekNumber || !publicMoneyData || !gameLinesData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

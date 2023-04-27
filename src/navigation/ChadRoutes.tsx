@@ -203,8 +203,8 @@ export const supercontestRoutes = [
 
 export const survivorRoutes = [
   <Route
-    path="/survivor/make-pick"
-    key="sv-make-pick"
+    path="/survivor/make-picks"
+    key="sv-make-picks"
     element={<SvMakePickPage />}
   />,
   <Route

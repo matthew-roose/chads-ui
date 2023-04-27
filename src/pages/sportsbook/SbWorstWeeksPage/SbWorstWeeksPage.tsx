@@ -2,12 +2,17 @@ import { Helmet } from "react-helmet-async";
 import { useSbGetWorstWeeks } from "../../../hooks/sportsbook/useSbGetWorstWeeks";
 import classes from "./SbWorstWeeksPage.module.css";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbWorstWeeksPage = () => {
   const { data: worstWeeksData } = useSbGetWorstWeeks();
 
   if (!worstWeeksData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const leaderboardRows = worstWeeksData.filter((week) => week.profit < 0);

@@ -61,7 +61,7 @@ export const SbDepositModal = ({
           variant="gradient"
           gradient={{ from: "teal", to: "blue" }}
         >
-          Deposit $10000
+          Deposit $10,000
         </Button>
       </div>
 

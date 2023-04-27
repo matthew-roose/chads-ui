@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { Navbar, Text } from "@mantine/core";
+import { Navbar } from "@mantine/core";
 
 import { ChadNavLink } from "./ChadNavLink";
 import { AuthContext } from "../store/auth-context";
@@ -18,14 +18,9 @@ export interface LinkData {
 interface LinksProps {
   closeNavbar: () => void;
   getLinkData: (username: string, currentWeekNumber: number) => LinkData[];
-  displayText: string;
 }
 
-export const ChadNavLinks = ({
-  closeNavbar,
-  getLinkData,
-  displayText,
-}: LinksProps) => {
+export const ChadNavLinks = ({ closeNavbar, getLinkData }: LinksProps) => {
   const { username } = useContext(AuthContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   let links;
@@ -53,14 +48,5 @@ export const ChadNavLinks = ({
       <ChadNavLink {...link} key={link.label} closeNavbar={closeNavbar} />
     ));
   }
-  return (
-    <>
-      <Text
-        style={{ marginTop: "1rem", fontWeight: "bold", fontStyle: "italic" }}
-      >
-        {displayText}
-      </Text>
-      <Navbar.Section>{chadLinks}</Navbar.Section>
-    </>
-  );
+  return <Navbar.Section>{chadLinks}</Navbar.Section>;
 };

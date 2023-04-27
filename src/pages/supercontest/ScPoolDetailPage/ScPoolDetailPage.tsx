@@ -10,6 +10,7 @@ import { formatEnum } from "../../../util/format";
 import classes from "./ScPoolDetailPage.module.css";
 import { toast } from "react-toastify";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScPoolDetailPage = () => {
   const {
@@ -27,7 +28,11 @@ export const ScPoolDetailPage = () => {
   const joinPool = useScJoinPool();
 
   if (!currentWeekNumber || !poolDetailData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!viewingWeek) {
@@ -37,10 +42,6 @@ export const ScPoolDetailPage = () => {
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
     (i + 1).toString()
   );
-
-  if (!viewingWeek) {
-    return null;
-  }
 
   const seasonHasStarted = Date.now() > 1707780600000;
   const alreadyInPool = poolDetailData.entries.find(

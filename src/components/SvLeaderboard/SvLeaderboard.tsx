@@ -108,10 +108,10 @@ export const SvLeaderboard = ({
               <th>Streak</th>
               {viewAllPicks ? (
                 allWeekNumbers.map((weekNumber) => (
-                  <th key={weekNumber}>Week {weekNumber}</th>
+                  <th key={weekNumber}>W{weekNumber}</th>
                 ))
               ) : (
-                <th>Week {currentWeekNumber}</th>
+                <th>W{currentWeekNumber}</th>
               )}
             </tr>
           </thead>

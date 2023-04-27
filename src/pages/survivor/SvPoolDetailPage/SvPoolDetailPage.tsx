@@ -10,6 +10,7 @@ import { Button, PasswordInput, Divider } from "@mantine/core";
 import { toast } from "react-toastify";
 import { SvLeaderboard } from "../../../components/SvLeaderboard/SvLeaderboard";
 import { formatEnum } from "../../../util/format";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvPoolDetailPage = () => {
   const {
@@ -26,7 +27,11 @@ export const SvPoolDetailPage = () => {
   const joinPool = useSvJoinPool();
 
   if (!currentWeekNumber || !poolDetailData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const seasonHasStarted = Date.now() > 1707780600000;

@@ -8,6 +8,7 @@ import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import classes from "./SbUserSeasonBreakdownPage.module.css";
 import { SbSeasonBreakdownTable } from "../../../components/SbSeasonBreakdownTable/SbSeasonBreakdownTable";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbUserSeasonBreakdownPage = () => {
   const { username } = useParams();
@@ -15,7 +16,11 @@ export const SbUserSeasonBreakdownPage = () => {
   const { data: seasonBreakdownData } = useSbGetUserSeasonBreakdown(username);
 
   if (!allUsernames || !seasonBreakdownData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

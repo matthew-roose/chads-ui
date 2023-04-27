@@ -12,6 +12,7 @@ import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber"
 import { formatTimestamp } from "../../../util/format";
 import { useSvSubmitPick } from "../../../hooks/survivor/useSvSubmitPick";
 import { toast } from "react-toastify";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvMakePickPage = () => {
   const { googleJwt, username } = useContext(AuthContext);
@@ -43,7 +44,11 @@ export const SvMakePickPage = () => {
   }
 
   if (!gameLinesData || !entryData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const teamsUsed = entryData.picks
@@ -196,14 +201,10 @@ export const SvMakePickPage = () => {
       <SimpleGrid
         cols={8}
         className={classes.prevPickedGrid}
-        breakpoints={[
-          { maxWidth: 1000, cols: 6 },
-          { maxWidth: 600, cols: 4 },
-        ]}
+        breakpoints={[{ maxWidth: 1000, cols: 6 }]}
       >
         {prevPickedTeamLogos}
       </SimpleGrid>
-      <div className={classes.title}>Make Survivor Pick</div>
       {submitButton}
       <Table className={classes.table}>
         <thead>

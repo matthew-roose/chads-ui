@@ -7,6 +7,7 @@ import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { AuthContext } from "../../../store/auth-context";
 import { formatCurrency } from "../../../util/format";
 import classes from "./SbCashierPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbCashierPage = () => {
   const { username } = useContext(AuthContext);
@@ -24,7 +25,11 @@ export const SbCashierPage = () => {
   }
 
   if (!sbAccountData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const { availableBalance, pendingBalance } = sbAccountData;

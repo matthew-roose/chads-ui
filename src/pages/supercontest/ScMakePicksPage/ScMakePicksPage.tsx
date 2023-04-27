@@ -14,6 +14,7 @@ import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { ScPickCreate } from "../../../types/supercontest/ScPickCreate";
 import { Result } from "../../../types/Result";
 import classes from "./ScMakePicksPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScMakePicksPage = () => {
   const { googleJwt, username } = useContext(AuthContext);
@@ -49,7 +50,11 @@ export const ScMakePicksPage = () => {
   }
 
   if (!gameLinesData || !existingEntryWeekData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const addPickHandler = (newPick: ScPickCreate) => {

@@ -6,6 +6,7 @@ import { formatUsernamePossessiveForm } from "../../../util/format";
 import classes from "./ScMostPickedTeamsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { ScPickedAndFadedTable } from "../../../components/ScPickedAndFadedTable/ScPickedAndFadedTable";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScMostPickedTeamsPage = () => {
   const { username } = useParams();
@@ -13,7 +14,11 @@ export const ScMostPickedTeamsPage = () => {
   const { data: mostPickedTeamsData } = useScGetUserPickStats(username);
 
   if (!allUsernames) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -21,7 +26,11 @@ export const ScMostPickedTeamsPage = () => {
   }
 
   if (!mostPickedTeamsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const teamRows = mostPickedTeamsData.map((team) => {

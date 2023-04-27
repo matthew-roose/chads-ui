@@ -17,6 +17,7 @@ import { useScGetPrevWeekBestPicks } from "../../hooks/supercontest/useScGetPrev
 import { Result } from "../../types/Result";
 import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
 import { useSvGetPrevWeekLosses } from "../../hooks/survivor/useSvGetPrevWeekLosses";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
 export const HomePage = () => {
   const { data: gameLinesData } = useGetCurrentGameLines();
@@ -29,7 +30,11 @@ export const HomePage = () => {
     useSvGetPrevWeekLosses(currentWeekNumber);
 
   if (!currentWeekNumber || !gameLinesData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const gameRows = gameLinesData.map((gameLine) => {
@@ -55,7 +60,7 @@ export const HomePage = () => {
             src={AllTeamLogos[awayTeam] as unknown as string}
             alt={awayTeam}
           />
-          <div className={classes.at}>@</div>
+          <div className={classes.atSymbol}>@</div>
           <img
             className={classes.matchupLogo}
             src={AllTeamLogos[homeTeam] as unknown as string}
@@ -63,7 +68,9 @@ export const HomePage = () => {
           />
         </td>
         <td>
-          {homeTeam.split("_").pop()} {formatSpread(homeSpread)}
+          <div className={classes.text}>
+            {homeTeam.split("_").pop()} {formatSpread(homeSpread)}
+          </div>
         </td>
         <td>{displayScore}</td>
       </tr>
@@ -93,70 +100,46 @@ export const HomePage = () => {
             } = betLeg;
             const betLegResultClass =
               result === Result.WIN ? classes.win : classes.push;
-            let logoToShow;
             let textToShow;
             if (betLegType === SbBetLegType.HOME_SPREAD) {
-              logoToShow = "home";
               textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
                 homeSpread
               )} ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.AWAY_SPREAD) {
-              logoToShow = "away";
               textToShow = `${awayTeam.split("_").pop()} ${formatSpread(
                 homeSpread * -1
               )} ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.HOME_MONEYLINE) {
-              logoToShow = "home";
               textToShow = `${homeTeam
                 .split("_")
                 .pop()} ML ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.AWAY_MONEYLINE) {
-              logoToShow = "away";
               textToShow = `${awayTeam
                 .split("_")
                 .pop()} ML ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.OVER_TOTAL) {
-              logoToShow = "both";
               textToShow = `Over ${gameTotal.toFixed(
                 1
               )} ${convertOddsFromDecimal(odds)}`;
             } else if (betLegType === SbBetLegType.UNDER_TOTAL) {
-              logoToShow = "both";
               textToShow = `Under ${gameTotal.toFixed(
                 1
               )} ${convertOddsFromDecimal(odds)}`;
             }
             return (
               <div key={id} className={classes.matchup}>
-                {logoToShow === "home" && (
-                  <img
-                    className={classes.matchupLogo}
-                    src={AllTeamLogos[homeTeam] as unknown as string}
-                    alt={homeTeam}
-                  />
-                )}
-                {logoToShow === "away" && (
-                  <img
-                    className={classes.matchupLogo}
-                    src={AllTeamLogos[awayTeam] as unknown as string}
-                    alt={awayTeam}
-                  />
-                )}
-                {logoToShow === "both" && (
-                  <>
-                    <img
-                      className={classes.matchupLogo}
-                      src={AllTeamLogos[awayTeam] as unknown as string}
-                      alt={awayTeam}
-                    />
-                    <img
-                      className={classes.matchupLogo}
-                      src={AllTeamLogos[homeTeam] as unknown as string}
-                      alt={homeTeam}
-                    />
-                  </>
-                )}
-                <div className={classes.viewBetText}>
+                <img
+                  className={classes.matchupLogo}
+                  src={AllTeamLogos[awayTeam] as unknown as string}
+                  alt={awayTeam}
+                />
+                <span className={classes.atSymbol}>@</span>
+                <img
+                  className={classes.matchupLogo}
+                  src={AllTeamLogos[homeTeam] as unknown as string}
+                  alt={homeTeam}
+                />
+                <div className={`${classes.viewBetText} ${classes.text}`}>
                   {textToShow}
                   <span>{result ? `: ` : ""}</span>
                   <span className={betLegResultClass}>
@@ -185,7 +168,7 @@ export const HomePage = () => {
         <td>{username}</td>
         <td>
           {picks.map((pick) => {
-            const { pickedTeam, homeTeam, homeSpread, result } = pick;
+            const { pickedTeam, homeTeam, awayTeam, homeSpread, result } = pick;
             const pickResultClass =
               result === Result.WIN
                 ? classes.win
@@ -201,10 +184,16 @@ export const HomePage = () => {
               <div key={pickedTeam} className={classes.matchup}>
                 <img
                   className={classes.matchupLogo}
-                  src={AllTeamLogos[pickedTeam] as unknown as string}
-                  alt={pickedTeam}
+                  src={AllTeamLogos[awayTeam] as unknown as string}
+                  alt={awayTeam}
                 />
-                <div className={classes.viewPickText}>
+                <span className={classes.atSymbol}>@</span>
+                <img
+                  className={classes.matchupLogo}
+                  src={AllTeamLogos[homeTeam] as unknown as string}
+                  alt={homeTeam}
+                />
+                <div className={`${classes.viewPickText} ${classes.text}`}>
                   {pickText}
                   <span>{result ? `: ` : ""}</span>
                   <span className={pickResultClass}>
@@ -234,29 +223,37 @@ export const HomePage = () => {
       awayScore,
       result,
     } = loser;
-    const opposingTeam = pickedTeam === homeTeam ? awayTeam : homeTeam;
-    const score =
-      pickedTeam === homeTeam
-        ? `${homeScore}-${awayScore}`
-        : `${awayScore}-${homeScore}`;
+    let displayScore;
+    if (homeScore !== null && awayScore !== null) {
+      displayScore =
+        homeScore > awayScore
+          ? `${homeScore}-${awayScore} ${formatTeamMascot(homeTeam)}`
+          : homeScore < awayScore
+          ? `${awayScore}-${homeScore} ${formatTeamMascot(awayTeam)}`
+          : `${homeScore}-${awayScore} Tie`;
+    }
     return (
       <tr className={classes.row} key={username}>
         <td>{username}</td>
-        <td>
+        <td className={classes.matchup}>
           <img
             className={classes.matchupLogo}
-            src={AllTeamLogos[pickedTeam] as unknown as string}
-            alt={pickedTeam}
+            src={AllTeamLogos[awayTeam] as unknown as string}
+            alt={awayTeam}
           />
-        </td>
-        <td>
+          <div className={classes.atSymbol}>@</div>
           <img
             className={classes.matchupLogo}
-            src={AllTeamLogos[opposingTeam] as unknown as string}
-            alt={opposingTeam}
+            src={AllTeamLogos[homeTeam] as unknown as string}
+            alt={homeTeam}
           />
+          <div className={`${classes.viewPickText} ${classes.text}`}>
+            {formatTeamMascot(pickedTeam)}
+          </div>
         </td>
-        <td>{score}</td>
+        <td className={classes.hideForMobile}>
+          <div className={classes.text}>{displayScore}</div>
+        </td>
         <td className={classes.loss}>{result}</td>
       </tr>
     );
@@ -338,7 +335,6 @@ export const HomePage = () => {
             <tr>
               <th>Username</th>
               <th>Pick</th>
-              <th>Opponent</th>
               <th className={classes.hideForMobile}>Score</th>
               <th>Result</th>
             </tr>

@@ -15,6 +15,7 @@ import classes from "./ScViewPicksPage.module.css";
 import { UserAndWeekSelects } from "../../../components/UserAndWeekSelects/UserAndWeekSelects";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScViewPicksPage = () => {
   const { googleJwt } = useContext(AuthContext);
@@ -30,7 +31,11 @@ export const ScViewPicksPage = () => {
   );
 
   if (!allUsernames || !currentWeekNumber || !entryWeekData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -111,15 +116,17 @@ export const ScViewPicksPage = () => {
       {entryWeekData.picks.length === 0 && (
         <div className={classes.noPicks}>No picks.</div>
       )}
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th></th>
-            <th className={classes.hideForMobile}></th>
-          </tr>
-        </thead>
-        <tbody>{picks}</tbody>
-      </Table>
+      {entryWeekData.picks.length > 0 && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th></th>
+              <th className={classes.hideForMobile}></th>
+            </tr>
+          </thead>
+          <tbody>{picks}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

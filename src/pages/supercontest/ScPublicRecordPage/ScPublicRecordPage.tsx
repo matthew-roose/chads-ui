@@ -4,13 +4,18 @@ import { calculateWinPct, formatRecord } from "../../../util/format";
 import classes from "./ScPublicRecordPage.module.css";
 import { Table } from "@mantine/core";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScPublicRecordPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: publicEntryWeeksData } = useScGetPublicEntryWeeks();
 
   if (!publicEntryWeeksData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   let seasonWins = 0;

@@ -6,6 +6,7 @@ import { useSvGetUserPools } from "../../../hooks/survivor/useSvGetUserPools";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import classes from "./SvViewUserPoolsPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvViewUserPoolsPage = () => {
   const { username } = useParams();
@@ -13,7 +14,11 @@ export const SvViewUserPoolsPage = () => {
   const { data: userPoolsData } = useSvGetUserPools(username);
 
   if (!allUsernames || !userPoolsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

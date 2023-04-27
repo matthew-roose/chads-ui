@@ -19,6 +19,7 @@ import {
   formatUsernamePossessiveForm,
 } from "../../../util/format";
 import classes from "./SbViewBetsPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbViewBetsPage = () => {
   const { googleJwt } = useContext(AuthContext);
@@ -32,7 +33,11 @@ export const SbViewBetsPage = () => {
   );
 
   if (!allUsernames || !currentWeekNumber || !userBetData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -134,7 +139,7 @@ export const SbViewBetsPage = () => {
             return (
               <div key={id} className={classes.viewBetLogoAndText}>
                 {homeTeam !== null && awayTeam !== null ? (
-                  <>
+                  <div className={classes.logos}>
                     <img
                       className={classes.viewBetLogo}
                       src={AllTeamLogos[awayTeam] as unknown as string}
@@ -146,9 +151,9 @@ export const SbViewBetsPage = () => {
                       src={AllTeamLogos[homeTeam] as unknown as string}
                       alt={homeTeam}
                     />
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div className={classes.logos}>
                     <img
                       className={`${classes.viewBetLogo} ${classes.hiddenBet}`}
                       src={require("../../../assets/mystery_team.png")}
@@ -160,7 +165,7 @@ export const SbViewBetsPage = () => {
                       src={require("../../../assets/mystery_team.png")}
                       alt="Mystery Team"
                     />
-                  </>
+                  </div>
                 )}
                 <div className={classes.viewBetText}>
                   {textToShow}
@@ -173,13 +178,13 @@ export const SbViewBetsPage = () => {
             );
           })}
         </td>
-        <td>{formatCurrency(wager, 2)}</td>
+        <td>{formatCurrency(wager, 0)}</td>
         <td className={classes.hideSecondForMobile}>
           {odds === effectiveOdds || result === Result.PUSH ? (
             convertOddsFromDecimal(odds)
           ) : (
             <>
-              <span style={{ textDecoration: "line-through" }}>
+              <span className={classes.lineThrough}>
                 {convertOddsFromDecimal(odds)}
               </span>{" "}
               <span>{convertOddsFromDecimal(effectiveOdds)}</span>
@@ -188,16 +193,15 @@ export const SbViewBetsPage = () => {
         </td>
         <td>
           {toWinAmount === effectiveToWinAmount || result === Result.PUSH ? (
-            formatCurrency(toWinAmount, 2)
+            formatCurrency(toWinAmount, 0)
           ) : (
             <>
               <span
-                className={classes.hideThirdForMobile}
-                style={{ textDecoration: "line-through" }}
+                className={`${classes.lineThrough} ${classes.hideThirdForMobile}`}
               >
-                {formatCurrency(toWinAmount, 2)}
+                {formatCurrency(toWinAmount, 0)}
               </span>{" "}
-              <span>{formatCurrency(effectiveToWinAmount, 2)}</span>
+              <span>{formatCurrency(effectiveToWinAmount, 0)}</span>
             </>
           )}
         </td>

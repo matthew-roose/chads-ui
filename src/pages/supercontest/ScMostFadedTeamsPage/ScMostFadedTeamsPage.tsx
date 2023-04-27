@@ -3,9 +3,10 @@ import { Helmet } from "react-helmet-async";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useScGetUserFadeStats } from "../../../hooks/supercontest/useScGetUserFadeStats";
 import { formatUsernamePossessiveForm } from "../../../util/format";
-import classes from "./ScMostFadedTeamsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { ScPickedAndFadedTable } from "../../../components/ScPickedAndFadedTable/ScPickedAndFadedTable";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScMostFadedTeamsPage.module.css";
 
 export const ScMostFadedTeamsPage = () => {
   const { username } = useParams();
@@ -13,7 +14,11 @@ export const ScMostFadedTeamsPage = () => {
   const { data: mostFadedTeamsData } = useScGetUserFadeStats(username);
 
   if (!allUsernames) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -21,7 +26,11 @@ export const ScMostFadedTeamsPage = () => {
   }
 
   if (!mostFadedTeamsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const teamRows = mostFadedTeamsData.map((team) => {

@@ -153,23 +153,20 @@ const App = () => {
             <ChadNavLink
               to="/"
               label="Home"
-              icon={<IconHome size={24} color="green" />}
+              icon={<IconHome size={24} color="red" />}
               closeNavbar={closeNavbarHandler}
             />
             <ChadNavLinks
               closeNavbar={closeNavbarHandler}
               getLinkData={getSportsbookLinkData}
-              displayText="Sportsbook"
             />
             <ChadNavLinks
               closeNavbar={closeNavbarHandler}
               getLinkData={getSupercontestLinkData}
-              displayText="Supercontest"
             />
             <ChadNavLinks
               closeNavbar={closeNavbarHandler}
               getLinkData={getSurvivorLinkData}
-              displayText="Survivor"
             />
             <div style={{ height: "10rem" }}></div>
           </Navbar.Section>
@@ -178,7 +175,7 @@ const App = () => {
     >
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={2000}
         newestOnTop
         closeOnClick
         pauseOnHover={false}

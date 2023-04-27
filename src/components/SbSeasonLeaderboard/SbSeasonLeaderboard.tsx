@@ -6,6 +6,7 @@ import { AuthContext } from "../../store/auth-context";
 import { SbAccount } from "../../types/sportsbook/SbAccount";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
 import classes from "./SbSeasonLeaderboard.module.css";
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
 interface SbSeasonLeaderboardProps {
   rows: SbAccount[];
@@ -15,7 +16,11 @@ export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
 
   if (!currentWeekNumber) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const leaderboardRows = rows.map((account) => {

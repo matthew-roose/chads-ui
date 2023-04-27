@@ -31,6 +31,11 @@
   font-weight: bold;
 }
 
+.timeAndTeams {
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (min-width: 1300px) {
   .line {
     transition: transform 0.2s;
@@ -55,5 +60,8 @@
     margin: 0.5rem auto;
     height: 2rem;
     width: 2rem;
+  }
+  .line {
+    font-size: 12px;
   }
 }

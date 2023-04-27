@@ -38,7 +38,7 @@ export const SbPlaceBetGame = ({
       <td className={`${classes.timestamp} ${classes.hideForMobile}`}>
         {formatTimestamp(timestamp, true)}
       </td>
-      <td style={{ display: "flex" }}>
+      <td className={classes.timeAndTeams}>
         <div className={classes.mobileOnly}>
           {formatTimestamp(timestamp, true)}
         </div>

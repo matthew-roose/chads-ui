@@ -3,13 +3,18 @@ import { useScGetSeasonLeaderboard } from "../../../hooks/supercontest/useScGetS
 import classes from "./ScSeasonLeaderboardPage.module.css";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScSeasonLeaderboardPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: seasonLeaderboardData } = useScGetSeasonLeaderboard();
 
   if (!currentWeekNumber || !seasonLeaderboardData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const seasonLeaderboardRows = seasonLeaderboardData

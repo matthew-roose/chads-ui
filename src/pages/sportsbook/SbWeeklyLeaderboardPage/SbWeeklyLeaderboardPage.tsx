@@ -5,6 +5,7 @@ import { useSbGetWeeklyLeaderboard } from "../../../hooks/sportsbook/useSbGetWee
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import classes from "./SbWeeklyLeaderboardPage.module.css";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbWeeklyLeaderboardPage = () => {
   const { weekNumber } = useParams();
@@ -14,7 +15,11 @@ export const SbWeeklyLeaderboardPage = () => {
   );
 
   if (!currentWeekNumber || !weeklyLeaderboardData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

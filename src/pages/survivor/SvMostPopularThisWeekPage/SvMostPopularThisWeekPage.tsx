@@ -7,6 +7,7 @@ import { useSvGetWeekMostPopular } from "../../../hooks/survivor/useSvGetWeekMos
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { Result } from "../../../types/Result";
 import classes from "./SvMostPopularThisWeekPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvMostPopularThisWeekPage = () => {
   const { weekNumber } = useParams();
@@ -16,7 +17,11 @@ export const SvMostPopularThisWeekPage = () => {
   );
 
   if (!currentWeekNumber || !weekMostPopularData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

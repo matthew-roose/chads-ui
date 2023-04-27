@@ -6,6 +6,7 @@ import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import classes from "./SbViewUserPoolsPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbViewUserPoolsPage = () => {
   const { username } = useParams();
@@ -13,7 +14,11 @@ export const SbViewUserPoolsPage = () => {
   const { data: userPoolsData } = useSbGetUserPools(username);
 
   if (!allUsernames || !userPoolsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

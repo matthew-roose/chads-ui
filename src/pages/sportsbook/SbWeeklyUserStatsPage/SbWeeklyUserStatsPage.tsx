@@ -6,6 +6,7 @@ import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import classes from "./SbWeeklyUserStatsPage.module.css";
 import { SbWeeklyStatsTable } from "../../../components/SbWeeklyStatsTable/SbWeeklyStatsTable";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbWeeklyUserStatsPage = () => {
   const { username } = useParams();
@@ -13,7 +14,11 @@ export const SbWeeklyUserStatsPage = () => {
   const { data: weeklyUserStatsData } = useSbGetAllWeeklyUserStats(username);
 
   if (!allUsernames || !weeklyUserStatsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

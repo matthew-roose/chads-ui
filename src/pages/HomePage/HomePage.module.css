@@ -31,9 +31,9 @@
   width: 2rem;
 }
 
-.at {
+.atSymbol {
   font-style: italic;
-  margin: 0 5px;
+  margin: 0 2px;
 }
 
 .viewBetText {
@@ -73,5 +73,9 @@
 @media only screen and (max-width: 500px) {
   .hideForMobile {
     display: none;
+  }
+
+  .text {
+    font-size: 12px;
   }
 }

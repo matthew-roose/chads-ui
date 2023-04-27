@@ -17,6 +17,10 @@
   margin-top: 20px;
 }
 
+.betSlipBottom {
+  height: 10rem;
+}
+
 .noBets {
   font-size: 28px;
   font-weight: bold;
@@ -115,12 +119,15 @@
 
 .table {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 5rem auto;
 }
 
 @media only screen and (max-width: 992px) {
   .hideBetSlip {
     display: none;
+  }
+  .table {
+    margin: 0 auto;
   }
 }
 

@@ -11,6 +11,7 @@ import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { Table } from "@mantine/core";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SvViewPicksPage = () => {
   const { googleJwt } = useContext(AuthContext);
@@ -25,7 +26,11 @@ export const SvViewPicksPage = () => {
   );
 
   if (!allUsernames || !currentWeekNumber || !entryData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

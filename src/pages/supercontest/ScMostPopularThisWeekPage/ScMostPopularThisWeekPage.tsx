@@ -8,6 +8,7 @@ import { formatSpread } from "../../../util/format";
 import classes from "./ScMostPopularThisWeekPage.module.css";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { Result } from "../../../types/Result";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScMostPopularThisWeekPage = () => {
   const { weekNumber } = useParams();
@@ -17,7 +18,11 @@ export const ScMostPopularThisWeekPage = () => {
   );
 
   if (!currentWeekNumber || !weekMostPopularData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

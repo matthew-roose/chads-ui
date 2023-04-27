@@ -6,6 +6,7 @@ import { useScGetUserPools } from "../../../hooks/supercontest/useScGetUserPools
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import classes from "./ScViewUserPoolsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScViewUserPoolsPage = () => {
   const { username } = useParams();
@@ -13,7 +14,11 @@ export const ScViewUserPoolsPage = () => {
   const { data: userPoolsData } = useScGetUserPools(username);
 
   if (!allUsernames || !userPoolsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

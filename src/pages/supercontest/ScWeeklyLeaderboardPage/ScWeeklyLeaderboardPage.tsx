@@ -5,6 +5,7 @@ import { useScGetWeeklyLeaderboard } from "../../../hooks/supercontest/useScGetW
 import classes from "./ScWeeklyLeaderboardPage.module.css";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScWeeklyLeaderboardPage = () => {
   const { weekNumber } = useParams();
@@ -14,7 +15,11 @@ export const ScWeeklyLeaderboardPage = () => {
   );
 
   if (!currentWeekNumber || !weeklyLeaderboardData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

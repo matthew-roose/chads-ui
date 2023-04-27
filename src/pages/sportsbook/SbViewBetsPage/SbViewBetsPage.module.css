@@ -28,6 +28,13 @@
   max-width: 1000px;
 }
 
+.logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: max-content;
+}
+
 .viewBetLogoAndText {
   display: flex;
   flex-direction: row;
@@ -49,6 +56,10 @@
 
 .viewBetText {
   margin-left: 10px;
+}
+
+.lineThrough {
+  text-decoration: line-through;
 }
 
 .win {
@@ -81,5 +92,13 @@
 @media only screen and (max-width: 600px) {
   .hideThirdForMobile {
     display: none;
+  }
+  .viewBetText {
+    margin-left: 0px;
+  }
+  .viewBetLogoAndText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

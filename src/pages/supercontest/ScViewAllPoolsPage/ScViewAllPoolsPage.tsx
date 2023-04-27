@@ -5,6 +5,7 @@ import { useScGetAllPools } from "../../../hooks/supercontest/useScGetAllPools";
 import { useScGetUserPools } from "../../../hooks/supercontest/useScGetUserPools";
 import { AuthContext } from "../../../store/auth-context";
 import classes from "./ScViewAllPoolsPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScViewAllPoolsPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);
@@ -12,7 +13,11 @@ export const ScViewAllPoolsPage = () => {
   const { data: allJoinedPoolsData } = useScGetUserPools(loggedInUsername);
 
   if (!allPoolsData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const pools = allPoolsData.map((pool) => {

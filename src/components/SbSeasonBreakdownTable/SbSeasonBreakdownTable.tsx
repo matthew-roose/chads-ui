@@ -63,7 +63,7 @@ export const SbSeasonBreakdownTable = ({
             {formatCurrency(amountWon, 0)}
           </td>
           <td className={classes.hideForMobile}>
-            {formatCurrency(amountLost * -1, 0)}
+            {amountLost > 0 ? formatCurrency(amountLost * -1, 0) : "$0"}
           </td>
           <td className={amountProfitedClass}>
             {formatCurrency(amountProfited, 0)}

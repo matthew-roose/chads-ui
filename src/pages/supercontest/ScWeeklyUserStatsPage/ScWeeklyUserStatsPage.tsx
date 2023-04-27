@@ -11,6 +11,7 @@ import {
 } from "../../../util/format";
 import classes from "./ScWeeklyUserStatsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const ScWeeklyUserStatsPage = () => {
   const { username } = useParams();
@@ -19,7 +20,11 @@ export const ScWeeklyUserStatsPage = () => {
   const { data: entryAndEntryWeeksData } = useScGetAllUserEntryWeeks(username);
 
   if (!currentWeekNumber || !allUsernames || !entryAndEntryWeeksData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!username || !allUsernames.includes(username)) {

@@ -26,6 +26,7 @@ import {
 } from "../../../util/format";
 import classes from "./SbPlaceBetsPage.module.css";
 import { TEASER_LEG_ODDS } from "../../../util/constants";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 type TeaserPointOption = 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10;
 
@@ -53,7 +54,11 @@ export const SbPlaceBetsPage = () => {
   }
 
   if (!currentWeekGameLines || !currentAccountBalance) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const { availableBalance } = currentAccountBalance;
@@ -455,7 +460,7 @@ export const SbPlaceBetsPage = () => {
           </div>
         )}
         {placeBetButton}
-        <div style={{ height: "10rem" }}></div>
+        <div className={classes.betSlipBottom}></div>
       </Aside.Section>
     </Aside>
   );
@@ -470,10 +475,10 @@ export const SbPlaceBetsPage = () => {
         <thead>
           <tr>
             <th className={classes.hideForMobile}>Time</th>
-            <th>Game</th>
-            <th>Spread</th>
-            <th>ML</th>
-            <th>Total</th>
+            <th style={{ textAlign: "center" }}>Game</th>
+            <th style={{ textAlign: "center" }}>Spread</th>
+            <th style={{ textAlign: "center" }}>ML</th>
+            <th style={{ textAlign: "center" }}>Total</th>
           </tr>
         </thead>
         <tbody>{gameElements}</tbody>

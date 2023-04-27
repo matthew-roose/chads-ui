@@ -6,13 +6,18 @@ import { useSbGetBestParlays } from "../../../hooks/sportsbook/useSbGetBestParla
 import { AuthContext } from "../../../store/auth-context";
 import { convertOddsFromDecimal, formatCurrency } from "../../../util/format";
 import classes from "./SbBestParlaysPage.module.css";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbBestParlaysPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);
   const { data: bestParlaysData } = useSbGetBestParlays();
 
   if (!bestParlaysData) {
-    return null;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const leaderboardRows = bestParlaysData.map((week) => {
