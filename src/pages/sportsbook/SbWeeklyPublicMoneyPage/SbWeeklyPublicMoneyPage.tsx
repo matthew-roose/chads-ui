@@ -20,12 +20,8 @@ export const SbWeeklyPublicMoneyPage = () => {
     weekNumber ? +weekNumber : undefined
   );
 
-  if (!currentWeekNumber || !publicMoneyData || !gameLinesData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -37,7 +33,7 @@ export const SbWeeklyPublicMoneyPage = () => {
   }
 
   const publicMoneyRows = publicMoneyData
-    .sort((a, b) => a.gameId - b.gameId)
+    ?.sort((a, b) => a.gameId - b.gameId)
     .map((game) => {
       const {
         gameId,
@@ -60,7 +56,7 @@ export const SbWeeklyPublicMoneyPage = () => {
       const overMoneyPct = (overMoney / totalSum) * 100;
       const underMoneyPct = (underMoney / totalSum) * 100;
 
-      const gameLine = gameLinesData.find(
+      const gameLine = gameLinesData?.find(
         (gameLine) => gameLine.gameId === gameId
       );
 
@@ -155,18 +151,23 @@ export const SbWeeklyPublicMoneyPage = () => {
         getNavigateUrl={getNavigateUrl}
       />
       <div className={classes.title}>Week {weekNumber} Public Money</div>
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.hideForMobile}>Date</th>
-            <th>Game</th>
-            <th>Spread</th>
-            <th>Moneyline</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>{publicMoneyRows}</tbody>
-      </Table>
+      {(!publicMoneyData || !gameLinesData) && (
+        <LoadingSpinner type="secondary" />
+      )}
+      {publicMoneyData && gameLinesData && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th className={classes.hideForMobile}>Date</th>
+              <th>Game</th>
+              <th>Spread</th>
+              <th>Moneyline</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>{publicMoneyRows}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

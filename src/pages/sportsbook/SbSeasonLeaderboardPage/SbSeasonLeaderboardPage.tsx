@@ -8,11 +8,7 @@ export const SbSeasonLeaderboardPage = () => {
   const { data: seasonLeaderboardData } = useSbGetSeasonLeaderboard();
 
   if (!seasonLeaderboardData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const seasonLeaderboardRows = seasonLeaderboardData.sort(

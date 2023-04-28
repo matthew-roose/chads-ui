@@ -17,12 +17,8 @@ export const ScMostPopularThisWeekPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!currentWeekNumber || !weekMostPopularData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -33,7 +29,7 @@ export const ScMostPopularThisWeekPage = () => {
     return <div>Invalid week number in URL.</div>;
   }
 
-  const mostPopularPickRows = weekMostPopularData.map((pick) => {
+  const mostPopularPickRows = weekMostPopularData?.map((pick) => {
     const {
       pickedTeam,
       opposingTeam,
@@ -109,19 +105,22 @@ export const ScMostPopularThisWeekPage = () => {
       <div className={classes.title}>
         Most Popular Picks of Week {weekNumber}
       </div>
-      <Table striped highlightOnHover className={classes.table}>
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th className={classes.hideForMobile}>Opponent</th>
-            <th>Count</th>
-            <th>Spread</th>
-            <th>Score</th>
-            <th>Result</th>
-          </tr>
-        </thead>
-        <tbody>{mostPopularPickRows}</tbody>
-      </Table>
+      {!weekMostPopularData && <LoadingSpinner type="secondary" />}
+      {weekMostPopularData && (
+        <Table striped highlightOnHover className={classes.table}>
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th className={classes.hideForMobile}>Opponent</th>
+              <th>Count</th>
+              <th>Spread</th>
+              <th>Score</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>{mostPopularPickRows}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

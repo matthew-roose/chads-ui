@@ -28,11 +28,7 @@ export const ScPoolDetailPage = () => {
   const joinPool = useScJoinPool();
 
   if (!currentWeekNumber || !poolDetailData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!viewingWeek) {

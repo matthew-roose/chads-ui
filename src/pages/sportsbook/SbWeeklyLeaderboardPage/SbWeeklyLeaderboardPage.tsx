@@ -14,12 +14,8 @@ export const SbWeeklyLeaderboardPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!currentWeekNumber || !weeklyLeaderboardData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -48,11 +44,14 @@ export const SbWeeklyLeaderboardPage = () => {
         getNavigateUrl={getNavigateUrl}
       />
       <div className={classes.title}>Week {weekNumber} Leaderboard</div>
-      <SbWeeklyLeaderboard
-        rows={weeklyLeaderboardData}
-        showWeekColumn={false}
-        showParlayColumn={true}
-      />
+      {!weeklyLeaderboardData && <LoadingSpinner type="secondary" />}
+      {weeklyLeaderboardData !== undefined && (
+        <SbWeeklyLeaderboard
+          rows={weeklyLeaderboardData}
+          showWeekColumn={false}
+          showParlayColumn={true}
+        />
+      )}
     </div>
   );
 };

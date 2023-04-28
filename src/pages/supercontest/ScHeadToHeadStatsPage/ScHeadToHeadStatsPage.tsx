@@ -33,17 +33,11 @@ export const ScHeadToHeadStatsPage = () => {
   }, [searchParams, setSearchParams, loggedInUsername]);
 
   const { data: allUsernames } = useGetAllUsernames();
-  let { data: headToHeadData } = useScGetHeadToHeadStats(
-    firstUsername,
-    secondUsername
-  );
+  let { data: headToHeadData, isLoading: isHeadToHeadDataLoading } =
+    useScGetHeadToHeadStats(firstUsername, secondUsername);
 
   if (!allUsernames) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!headToHeadData) {
@@ -293,7 +287,10 @@ export const ScHeadToHeadStatsPage = () => {
           Please choose two different users.
         </div>
       )}
-      {opposingPicks.length > 0 && (
+      {!invalidSelections && isHeadToHeadDataLoading && (
+        <LoadingSpinner type="secondary" />
+      )}
+      {!isHeadToHeadDataLoading && opposingPicks.length > 0 && (
         <>
           <div className={classes.title}>
             {formatUsernamePossessiveForm(firstUsername)} Record vs.{" "}
@@ -314,7 +311,7 @@ export const ScHeadToHeadStatsPage = () => {
           </Table>
         </>
       )}
-      {aligningPicks.length > 0 && (
+      {!isHeadToHeadDataLoading && aligningPicks.length > 0 && (
         <>
           <div className={`${classes.title} ${classes.secondTitle}`}>
             {formatUsernamePossessiveForm(firstUsername)} Record Picking With{" "}

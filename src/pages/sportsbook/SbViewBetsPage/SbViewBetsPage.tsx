@@ -32,12 +32,8 @@ export const SbViewBetsPage = () => {
     weekNumber ? +weekNumber : undefined
   );
 
-  if (!allUsernames || !currentWeekNumber || !userBetData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!allUsernames || !currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -52,7 +48,7 @@ export const SbViewBetsPage = () => {
     return <div>Invalid week number in URL.</div>;
   }
 
-  const betRows = userBetData.map((bet) => {
+  const betRows = userBetData?.map((bet) => {
     const {
       placedTimestamp,
       betType,
@@ -238,10 +234,11 @@ export const SbViewBetsPage = () => {
         getNavigateUrl={getNavigateUrl}
       />
       <div className={classes.title}>{pageTitle}</div>
-      {userBetData.length === 0 && (
+      {!userBetData && <LoadingSpinner type="secondary" />}
+      {userBetData !== undefined && userBetData.length === 0 && (
         <div className={classes.noBets}>No bets.</div>
       )}
-      {userBetData.length > 0 && (
+      {userBetData !== undefined && userBetData.length > 0 && (
         <Table className={classes.table}>
           <thead>
             <tr>

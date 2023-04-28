@@ -54,11 +54,7 @@ export const SbPlaceBetsPage = () => {
   }
 
   if (!currentWeekGameLines || !currentAccountBalance) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const { availableBalance } = currentAccountBalance;

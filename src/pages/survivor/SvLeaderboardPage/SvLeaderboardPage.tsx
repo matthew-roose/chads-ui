@@ -13,11 +13,7 @@ export const SvLeaderboardPage = () => {
   const { data: leaderboardData } = useSvGetLeaderboard(googleJwt);
 
   if (!currentWeekNumber || !leaderboardData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const leaderboardRows = leaderboardData

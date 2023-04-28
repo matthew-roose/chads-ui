@@ -14,26 +14,14 @@ export const ScMostFadedTeamsPage = () => {
   const { data: mostFadedTeamsData } = useScGetUserFadeStats(username);
 
   if (!allUsernames) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
     return <div>Invalid username in URL.</div>;
   }
 
-  if (!mostFadedTeamsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  const teamRows = mostFadedTeamsData.map((team) => {
+  const teamRows = mostFadedTeamsData?.map((team) => {
     const { fadedTeam, total, wins, losses, pushes } = team;
     return { team: fadedTeam, total, wins, losses, pushes };
   });
@@ -60,7 +48,8 @@ export const ScMostFadedTeamsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Most Faded Teams
       </div>
-      <ScPickedAndFadedTable rows={teamRows} />
+      {!mostFadedTeamsData && <LoadingSpinner type="secondary" />}
+      {teamRows && <ScPickedAndFadedTable rows={teamRows} />}
     </div>
   );
 };

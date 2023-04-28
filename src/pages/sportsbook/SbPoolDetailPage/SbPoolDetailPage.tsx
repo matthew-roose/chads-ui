@@ -32,17 +32,8 @@ export const SbPoolDetailPage = () => {
 
   const joinPool = useSbJoinPool();
 
-  if (
-    !poolName ||
-    !currentWeekNumber ||
-    !poolDetailData ||
-    !weeklyLeaderboardData
-  ) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!poolName || !currentWeekNumber || !poolDetailData) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!viewingWeek) {
@@ -73,7 +64,7 @@ export const SbPoolDetailPage = () => {
     (a, b) => b.winLossTotal - a.winLossTotal
   );
   const allMembers = accounts.map((account) => account.username);
-  const weeklyLeaderboardRows = weeklyLeaderboardData.filter((userWeek) =>
+  const weeklyLeaderboardRows = weeklyLeaderboardData?.filter((userWeek) =>
     allMembers.includes(userWeek.username)
   );
 
@@ -168,11 +159,14 @@ export const SbPoolDetailPage = () => {
       <div className={classes.leaderboardTitle}>
         Week {viewingWeek} Leaderboard
       </div>
-      <SbWeeklyLeaderboard
-        rows={weeklyLeaderboardRows}
-        showWeekColumn={false}
-        showParlayColumn
-      />
+      {!weeklyLeaderboardData && <LoadingSpinner type="secondary" />}
+      {weeklyLeaderboardRows && (
+        <SbWeeklyLeaderboard
+          rows={weeklyLeaderboardRows}
+          showWeekColumn={false}
+          showParlayColumn
+        />
+      )}
     </div>
   );
 };

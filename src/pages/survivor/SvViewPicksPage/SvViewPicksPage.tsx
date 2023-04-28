@@ -25,19 +25,15 @@ export const SvViewPicksPage = () => {
     username
   );
 
-  if (!allUsernames || !currentWeekNumber || !entryData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!allUsernames || !currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
     return <div>Invalid username in URL.</div>;
   }
 
-  const rows = entryData.picks.map((pick) => {
+  const rows = entryData?.picks.map((pick) => {
     const {
       weekNumber,
       pickedTeam,
@@ -123,7 +119,7 @@ export const SvViewPicksPage = () => {
     return `/survivor/pick-history/${username}`;
   };
 
-  const pageTitle = `${formatUsernamePossessiveForm(username)} SV Picks`;
+  const pageTitle = `${formatUsernamePossessiveForm(username)} Survivor Picks`;
 
   return (
     <div className={classes.page}>
@@ -137,18 +133,21 @@ export const SvViewPicksPage = () => {
       />
       <div className={classes.title}>{pageTitle}</div>
 
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th>Week</th>
-            <th>Pick</th>
-            <th>Opponent</th>
-            <th className={classes.hideForMobile}>Score</th>
-            <th>Result</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+      {!entryData && <LoadingSpinner type="secondary" />}
+      {rows !== undefined && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Pick</th>
+              <th>Opponent</th>
+              <th className={classes.hideForMobile}>Score</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

@@ -13,19 +13,15 @@ export const SvViewUserPoolsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: userPoolsData } = useSvGetUserPools(username);
 
-  if (!allUsernames || !userPoolsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!allUsernames) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
     return <div className={classes.message}>Invalid username in URL.</div>;
   }
 
-  const pools = userPoolsData.pools
+  const pools = userPoolsData?.pools
     .sort((a, b) => a.poolName.localeCompare(b.poolName))
     .map((pool) => (
       <PoolCard
@@ -60,8 +56,9 @@ export const SvViewUserPoolsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Survivor Pools
       </div>
-      {pools}
-      {pools.length === 0 && (
+      {!userPoolsData && <LoadingSpinner type="secondary" />}
+      {pools !== undefined && pools}
+      {pools?.length === 0 && (
         <div className={classes.message}>
           {username} hasn't joined any pools yet.
         </div>

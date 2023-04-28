@@ -15,48 +15,51 @@ export const SbUserSeasonBreakdownPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: seasonBreakdownData } = useSbGetUserSeasonBreakdown(username);
 
-  if (!allUsernames || !seasonBreakdownData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!allUsernames) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
     return <div>Invalid username in URL.</div>;
   }
 
-  // turn maps into arrays
-  const pickedTeamData = seasonBreakdownData.winsAndLossesByPickedTeam;
-  const pickedTeams = Object.keys(pickedTeamData);
-  const pickedTeamDataArray = pickedTeams.map((team) => {
-    return {
-      team,
-      ...pickedTeamData[team as keyof typeof AllTeamLogos],
-    };
-  });
-  const fadedTeamData = seasonBreakdownData.winsAndLossesByFadedTeam;
-  const fadedTeams = Object.keys(fadedTeamData);
-  const fadedTeamDataArray = fadedTeams.map((team) => {
-    return {
-      team,
-      ...fadedTeamData[team as keyof typeof AllTeamLogos],
-    };
-  });
-  const totalData = seasonBreakdownData.winsAndLossesByTotal;
-  const totals = Object.keys(totalData);
-  const totalDataArray = totals.map((total) => {
-    return {
-      total,
-      ...totalData[total],
-    };
-  });
-  const betTypeData = seasonBreakdownData.winsAndLossesByBetType;
-  const betTypes = Object.keys(betTypeData);
-  const betTypeDataArray = betTypes.map((betType) => {
-    return { betType, ...betTypeData[betType] };
-  });
+  let pickedTeamDataArray;
+  let fadedTeamDataArray;
+  let totalDataArray;
+  let betTypeDataArray;
+
+  if (seasonBreakdownData) {
+    // turn maps into arrays
+    const pickedTeamData = seasonBreakdownData.winsAndLossesByPickedTeam;
+    const pickedTeams = Object.keys(pickedTeamData);
+    pickedTeamDataArray = pickedTeams.map((team) => {
+      return {
+        team,
+        ...pickedTeamData[team as keyof typeof AllTeamLogos],
+      };
+    });
+    const fadedTeamData = seasonBreakdownData.winsAndLossesByFadedTeam;
+    const fadedTeams = Object.keys(fadedTeamData);
+    fadedTeamDataArray = fadedTeams.map((team) => {
+      return {
+        team,
+        ...fadedTeamData[team as keyof typeof AllTeamLogos],
+      };
+    });
+    const totalData = seasonBreakdownData.winsAndLossesByTotal;
+    const totals = Object.keys(totalData);
+    totalDataArray = totals.map((total) => {
+      return {
+        total,
+        ...totalData[total],
+      };
+    });
+    const betTypeData = seasonBreakdownData.winsAndLossesByBetType;
+    const betTypes = Object.keys(betTypeData);
+    betTypeDataArray = betTypes.map((betType) => {
+      return { betType, ...betTypeData[betType] };
+    });
+  }
 
   const getNavigateUrl = (username: string | null) => {
     if (!username) {
@@ -80,33 +83,51 @@ export const SbUserSeasonBreakdownPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Season Breakdown
       </div>
-      <div className={classes.parlayMessage}>
-        *For parlay legs, the amount won is calculated as the wager multipled by
-        the leg's individual odds.
-      </div>
-      <SbSeasonBreakdownTable
-        caption="Favorite Teams to Bet"
-        firstColumnName="Team"
-        rows={pickedTeamDataArray}
-      />
-      <Divider className={classes.divider} />
-      <SbSeasonBreakdownTable
-        caption="Favorite Teams to Fade"
-        firstColumnName="Team"
-        rows={fadedTeamDataArray}
-      />
-      <Divider className={classes.divider} />
-      <SbSeasonBreakdownTable
-        caption="Breakdown by Total"
-        firstColumnName="Total"
-        rows={totalDataArray}
-      />
-      <Divider className={classes.divider} />
-      <SbSeasonBreakdownTable
-        caption="Breakdown by Bet Type"
-        firstColumnName="Bet Type"
-        rows={betTypeDataArray}
-      />
+      {!seasonBreakdownData && <LoadingSpinner type="secondary" />}
+      {seasonBreakdownData && (
+        <div className={classes.parlayMessage}>
+          *For parlay legs, the amount won is calculated as the wager multipled
+          by the leg's individual odds.
+        </div>
+      )}
+
+      {pickedTeamDataArray !== undefined && (
+        <>
+          <SbSeasonBreakdownTable
+            caption="Favorite Teams to Bet"
+            firstColumnName="Team"
+            rows={pickedTeamDataArray}
+          />
+          <Divider className={classes.divider} />
+        </>
+      )}
+      {fadedTeamDataArray !== undefined && (
+        <>
+          <SbSeasonBreakdownTable
+            caption="Favorite Teams to Fade"
+            firstColumnName="Team"
+            rows={fadedTeamDataArray}
+          />
+          <Divider className={classes.divider} />
+        </>
+      )}
+      {totalDataArray !== undefined && (
+        <>
+          <SbSeasonBreakdownTable
+            caption="Breakdown by Total"
+            firstColumnName="Total"
+            rows={totalDataArray}
+          />
+          <Divider className={classes.divider} />
+        </>
+      )}
+      {betTypeDataArray !== undefined && (
+        <SbSeasonBreakdownTable
+          caption="Breakdown by Bet Type"
+          firstColumnName="Bet Type"
+          rows={betTypeDataArray}
+        />
+      )}
     </div>
   );
 };

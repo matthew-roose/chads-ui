@@ -14,26 +14,14 @@ export const ScMostPickedTeamsPage = () => {
   const { data: mostPickedTeamsData } = useScGetUserPickStats(username);
 
   if (!allUsernames) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
     return <div>Invalid username in URL.</div>;
   }
 
-  if (!mostPickedTeamsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  const teamRows = mostPickedTeamsData.map((team) => {
+  const teamRows = mostPickedTeamsData?.map((team) => {
     const { pickedTeam, total, wins, losses, pushes } = team;
     return { team: pickedTeam, total, wins, losses, pushes };
   });
@@ -60,7 +48,8 @@ export const ScMostPickedTeamsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Most Picked Teams
       </div>
-      <ScPickedAndFadedTable rows={teamRows} />
+      {!mostPickedTeamsData && <LoadingSpinner type="secondary" />}
+      {teamRows && <ScPickedAndFadedTable rows={teamRows} />}
     </div>
   );
 };

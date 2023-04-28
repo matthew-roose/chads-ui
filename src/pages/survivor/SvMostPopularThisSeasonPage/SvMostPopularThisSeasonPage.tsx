@@ -9,11 +9,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 export const SvMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useSvGetSeasonMostPopular();
   if (!seasonMostPopularData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const mostPopularPickRows = seasonMostPopularData.map((pick) => {

@@ -30,11 +30,7 @@ export const HomePage = () => {
     useSvGetPrevWeekLosses(currentWeekNumber);
 
   if (!currentWeekNumber || !gameLinesData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const gameRows = gameLinesData.map((gameLine) => {
@@ -77,10 +73,10 @@ export const HomePage = () => {
     );
   });
 
-  const prevWeekBestParlay = prevWeekBestParlayData
+  const prevWeekBestParlays = prevWeekBestParlayData
     ? prevWeekBestParlayData
     : [];
-  const bestParlayRows = prevWeekBestParlay.map((parlay) => {
+  const bestParlayRows = prevWeekBestParlays.map((parlay) => {
     const { username, effectiveOdds, wager, effectiveToWinAmount, betLegs } =
       parlay;
     return (

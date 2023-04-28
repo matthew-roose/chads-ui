@@ -16,11 +16,7 @@ export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
 
   if (!currentWeekNumber) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const leaderboardRows = rows.map((account) => {

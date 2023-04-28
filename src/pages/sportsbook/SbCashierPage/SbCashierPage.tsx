@@ -25,11 +25,7 @@ export const SbCashierPage = () => {
   }
 
   if (!sbAccountData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const { availableBalance, pendingBalance } = sbAccountData;

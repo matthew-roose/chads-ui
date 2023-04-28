@@ -14,12 +14,8 @@ export const ScWeeklyLeaderboardPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!currentWeekNumber || !weeklyLeaderboardData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -31,7 +27,7 @@ export const ScWeeklyLeaderboardPage = () => {
   }
 
   const weeklyLeaderboardRows = weeklyLeaderboardData
-    .sort((a, b) => a.username.localeCompare(b.username))
+    ?.sort((a, b) => a.username.localeCompare(b.username))
     .sort((a, b) => a.weekLosses - b.weekLosses)
     .sort((a, b) => b.weekScore - a.weekScore)
     .map((entryWeek) => {
@@ -64,10 +60,13 @@ export const ScWeeklyLeaderboardPage = () => {
         getNavigateUrl={getNavigateUrl}
       />
       <div className={classes.title}>Week {weekNumber} Leaderboard</div>
-      <ScLeaderboard
-        rows={weeklyLeaderboardRows}
-        linkedWeekNumber={+weekNumber}
-      />
+      {!weeklyLeaderboardData && <LoadingSpinner type="secondary" />}
+      {weeklyLeaderboardRows !== undefined && (
+        <ScLeaderboard
+          rows={weeklyLeaderboardRows}
+          linkedWeekNumber={+weekNumber}
+        />
+      )}
     </div>
   );
 };

@@ -8,11 +8,7 @@ export const SbBestWeeksPage = () => {
   const { data: bestWeeksData } = useSbGetBestWeeks();
 
   if (!bestWeeksData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const leaderboardRows = bestWeeksData.filter((week) => week.profit > 0);

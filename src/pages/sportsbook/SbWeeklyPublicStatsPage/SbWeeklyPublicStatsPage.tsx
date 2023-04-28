@@ -8,11 +8,7 @@ export const SbWeeklyPublicStatsPage = () => {
   const { data: weeklyPublicStatsData } = useSbGetPublicWeeklyStats();
 
   if (!weeklyPublicStatsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   return (

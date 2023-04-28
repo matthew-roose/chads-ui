@@ -30,12 +30,8 @@ export const ScViewPicksPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!allUsernames || !currentWeekNumber || !entryWeekData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!allUsernames || !currentWeekNumber) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -50,7 +46,7 @@ export const ScViewPicksPage = () => {
     return <div>Invalid week number in URL.</div>;
   }
 
-  const picksLogos = entryWeekData.picks
+  const picksLogos = entryWeekData?.picks
     .filter((pick) => pick.pickedTeam)
     .map((pick) => {
       const picksLogoClasses = `${classes.pickLogo} ${
@@ -77,10 +73,10 @@ export const ScViewPicksPage = () => {
       );
     });
 
-  const picks = entryWeekData.picks.map((pick) => (
+  const picks = entryWeekData?.picks.map((pick) => (
     <ScViewPicksGame key={pick.gameId || Math.random()} {...pick} />
   ));
-  const { weekWins, weekLosses, weekPushes } = entryWeekData;
+
   const getNavigateUrl = (
     username: string | null,
     weekNumber: string | null
@@ -90,6 +86,7 @@ export const ScViewPicksPage = () => {
     }
     return `/supercontest/pick-history/${username}/week/${weekNumber}`;
   };
+
   return (
     <div className={classes.page}>
       <Helmet>
@@ -105,27 +102,37 @@ export const ScViewPicksPage = () => {
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <Group className={classes.pickLogoGroup} position="center">
-        {picksLogos}
-      </Group>
-      {entryWeekData.picks.length > 0 && (
-        <div className={classes.title}>
-          Week {weekNumber}: {formatRecord(weekWins, weekLosses, weekPushes)}
-        </div>
-      )}
-      {entryWeekData.picks.length === 0 && (
-        <div className={classes.noPicks}>No picks.</div>
-      )}
-      {entryWeekData.picks.length > 0 && (
-        <Table className={classes.table}>
-          <thead>
-            <tr>
-              <th></th>
-              <th className={classes.hideForMobile}></th>
-            </tr>
-          </thead>
-          <tbody>{picks}</tbody>
-        </Table>
+      {!entryWeekData && <LoadingSpinner type="secondary" />}
+      {entryWeekData && (
+        <>
+          <Group className={classes.pickLogoGroup} position="center">
+            {picksLogos}
+          </Group>
+          {entryWeekData.picks.length > 0 && (
+            <div className={classes.title}>
+              Week {weekNumber}:{" "}
+              {formatRecord(
+                entryWeekData.weekWins,
+                entryWeekData.weekLosses,
+                entryWeekData.weekPushes
+              )}
+            </div>
+          )}
+          {entryWeekData.picks.length === 0 && (
+            <div className={classes.noPicks}>No picks.</div>
+          )}
+          {entryWeekData.picks.length > 0 && (
+            <Table className={classes.table}>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th className={classes.hideForMobile}></th>
+                </tr>
+              </thead>
+              <tbody>{picks}</tbody>
+            </Table>
+          )}
+        </>
       )}
     </div>
   );

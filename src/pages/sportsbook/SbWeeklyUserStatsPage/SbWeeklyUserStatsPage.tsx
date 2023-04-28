@@ -13,12 +13,8 @@ export const SbWeeklyUserStatsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: weeklyUserStatsData } = useSbGetAllWeeklyUserStats(username);
 
-  if (!allUsernames || !weeklyUserStatsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!allUsernames) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -47,7 +43,8 @@ export const SbWeeklyUserStatsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Weekly Stats
       </div>
-      <SbWeeklyStatsTable rows={weeklyUserStatsData} />
+      {!weeklyUserStatsData && <LoadingSpinner type="secondary" />}
+      {weeklyUserStatsData && <SbWeeklyStatsTable rows={weeklyUserStatsData} />}
     </div>
   );
 };

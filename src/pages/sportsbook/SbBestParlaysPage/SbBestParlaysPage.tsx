@@ -13,11 +13,7 @@ export const SbBestParlaysPage = () => {
   const { data: bestParlaysData } = useSbGetBestParlays();
 
   if (!bestParlaysData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const leaderboardRows = bestParlaysData.map((week) => {

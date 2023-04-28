@@ -50,11 +50,7 @@ export const ScMakePicksPage = () => {
   }
 
   if (!gameLinesData || !existingEntryWeekData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const addPickHandler = (newPick: ScPickCreate) => {

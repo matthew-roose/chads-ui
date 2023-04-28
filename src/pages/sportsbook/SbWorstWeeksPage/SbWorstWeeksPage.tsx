@@ -8,11 +8,7 @@ export const SbWorstWeeksPage = () => {
   const { data: worstWeeksData } = useSbGetWorstWeeks();
 
   if (!worstWeeksData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const leaderboardRows = worstWeeksData.filter((week) => week.profit < 0);

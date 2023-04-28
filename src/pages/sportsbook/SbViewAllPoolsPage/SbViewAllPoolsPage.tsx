@@ -13,11 +13,7 @@ export const SbViewAllPoolsPage = () => {
   const { data: allJoinedPoolsData } = useSbGetUserPools(loggedInUsername);
 
   if (!allPoolsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const pools = allPoolsData.map((pool) => {

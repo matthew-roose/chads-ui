@@ -19,23 +19,19 @@ export const ScWeeklyUserStatsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: entryAndEntryWeeksData } = useScGetAllUserEntryWeeks(username);
 
-  if (!currentWeekNumber || !allUsernames || !entryAndEntryWeeksData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+  if (!currentWeekNumber || !allUsernames) {
+    return <LoadingSpinner type="primary" />;
   }
 
   if (!username || !allUsernames.includes(username)) {
     return <div>Invalid username in URL.</div>;
   }
 
-  const entryWeeksSoFar = entryAndEntryWeeksData.supercontestEntryWeeks.slice(
+  const entryWeeksSoFar = entryAndEntryWeeksData?.supercontestEntryWeeks.slice(
     0,
     currentWeekNumber
   );
-  const weeklyDataRows = entryWeeksSoFar.map((entryWeek) => {
+  const weeklyDataRows = entryWeeksSoFar?.map((entryWeek) => {
     const { weekNumber, weekScore, weekWins, weekLosses, weekPushes } =
       entryWeek;
     const winPct = calculateWinPct(weekWins, weekLosses, weekPushes);
@@ -62,9 +58,20 @@ export const ScWeeklyUserStatsPage = () => {
       </tr>
     );
   });
-  const { seasonWins, seasonLosses, seasonPushes } = entryAndEntryWeeksData;
-  const seasonRecord = formatRecord(seasonWins, seasonLosses, seasonPushes);
-  const winPct = calculateWinPct(seasonWins, seasonLosses, seasonPushes);
+  let seasonRecord;
+  let winPct;
+  let recordClass;
+  if (entryAndEntryWeeksData) {
+    const { seasonWins, seasonLosses, seasonPushes } = entryAndEntryWeeksData;
+    seasonRecord = formatRecord(seasonWins, seasonLosses, seasonPushes);
+    winPct = calculateWinPct(seasonWins, seasonLosses, seasonPushes);
+    recordClass =
+      seasonWins - seasonLosses > 0
+        ? classes.positive
+        : seasonWins - seasonLosses < 0
+        ? classes.negative
+        : "";
+  }
 
   const getNavigateUrl = (username: string | null) => {
     if (!username) {
@@ -72,13 +79,6 @@ export const ScWeeklyUserStatsPage = () => {
     }
     return `/supercontest/${username}/stats/weekly`;
   };
-
-  const recordClass =
-    seasonWins - seasonLosses > 0
-      ? classes.positive
-      : seasonWins - seasonLosses < 0
-      ? classes.negative
-      : "";
 
   return (
     <div className={classes.page}>
@@ -95,20 +95,25 @@ export const ScWeeklyUserStatsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Weekly Stats
       </div>
-      <div className={`${classes.seasonRecord} ${recordClass}`}>
-        Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}
-      </div>
-      <Table striped highlightOnHover className={classes.table}>
-        <thead>
-          <tr>
-            <th>Week number</th>
-            <th>Record</th>
-            <th>Points</th>
-            <th>Win pct.</th>
-          </tr>
-        </thead>
-        <tbody>{weeklyDataRows}</tbody>
-      </Table>
+      {!entryAndEntryWeeksData && <LoadingSpinner type="secondary" />}
+      {entryAndEntryWeeksData !== undefined && (
+        <>
+          <div className={`${classes.seasonRecord} ${recordClass}`}>
+            Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}
+          </div>
+          <Table striped highlightOnHover className={classes.table}>
+            <thead>
+              <tr>
+                <th>Week number</th>
+                <th>Record</th>
+                <th>Points</th>
+                <th>Win pct.</th>
+              </tr>
+            </thead>
+            <tbody>{weeklyDataRows}</tbody>
+          </Table>
+        </>
+      )}
     </div>
   );
 };

@@ -13,11 +13,7 @@ export const SvViewAllPoolsPage = () => {
   const { data: allJoinedPoolsData } = useSvGetUserPools(loggedInUsername);
 
   if (!allPoolsData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const pools = allPoolsData.map((pool) => {
@@ -43,7 +39,7 @@ export const SvViewAllPoolsPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | All SV Pools</title>
+        <title>Chad's | All Survivor Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Survivor Pools</div>
       {pools}

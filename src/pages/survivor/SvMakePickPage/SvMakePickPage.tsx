@@ -44,11 +44,7 @@ export const SvMakePickPage = () => {
   }
 
   if (!gameLinesData || !entryData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const teamsUsed = entryData.picks

@@ -1,8 +1,15 @@
-.positionLoader {
+.loaderDiv {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.primaryLoaderDiv {
   margin-top: 15rem;
+}
+
+.secondaryLoaderDiv {
+  margin-top: 5rem;
 }
 
 .loader {

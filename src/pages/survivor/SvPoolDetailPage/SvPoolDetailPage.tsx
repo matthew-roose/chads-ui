@@ -27,11 +27,7 @@ export const SvPoolDetailPage = () => {
   const joinPool = useSvJoinPool();
 
   if (!currentWeekNumber || !poolDetailData) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner type="primary" />;
   }
 
   const seasonHasStarted = Date.now() > 1707780600000;
