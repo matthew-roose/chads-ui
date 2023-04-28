@@ -5,8 +5,8 @@ import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { useSvGetUserPools } from "../../../hooks/survivor/useSvGetUserPools";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
-import classes from "./SvViewUserPoolsPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvViewUserPoolsPage.module.css";
 
 export const SvViewUserPoolsPage = () => {
   const { username } = useParams();

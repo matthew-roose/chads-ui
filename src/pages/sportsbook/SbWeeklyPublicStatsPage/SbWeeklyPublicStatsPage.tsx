@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { useSbGetPublicWeeklyStats } from "../../../hooks/sportsbook/useSbGetPublicWeeklyStats";
-import classes from "./SbWeeklyPublicStatsPage.module.css";
 import { SbWeeklyStatsTable } from "../../../components/SbWeeklyStatsTable/SbWeeklyStatsTable";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbWeeklyPublicStatsPage.module.css";
 
 export const SbWeeklyPublicStatsPage = () => {
   const { data: weeklyPublicStatsData } = useSbGetPublicWeeklyStats();

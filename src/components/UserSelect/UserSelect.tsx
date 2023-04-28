@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 import { Select } from "@mantine/core";
 import classes from "./UserSelect.module.css";
 

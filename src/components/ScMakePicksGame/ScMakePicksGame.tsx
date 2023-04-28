@@ -1,8 +1,8 @@
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
-import classes from "./ScMakePicksGame.module.css";
 import { formatSpread, formatTimestamp } from "../../util/format";
 import { ScPickCreate } from "../../types/supercontest/ScPickCreate";
 import { Result } from "../../types/Result";
+import classes from "./ScMakePicksGame.module.css";
 
 interface ScMakePicksGameProps {
   gameId: number;

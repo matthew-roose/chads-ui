@@ -4,9 +4,9 @@ import { PoolCard } from "../../../components/PoolCard/PoolCard";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useScGetUserPools } from "../../../hooks/supercontest/useScGetUserPools";
 import { formatUsernamePossessiveForm } from "../../../util/format";
-import classes from "./ScViewUserPoolsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScViewUserPoolsPage.module.css";
 
 export const ScViewUserPoolsPage = () => {
   const { username } = useParams();

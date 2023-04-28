@@ -2,11 +2,11 @@ import { Table } from "@mantine/core";
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useSbGetBestParlays } from "../../../hooks/sportsbook/useSbGetBestParlays";
 import { AuthContext } from "../../../store/auth-context";
 import { convertOddsFromDecimal, formatCurrency } from "../../../util/format";
 import classes from "./SbBestParlaysPage.module.css";
-import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbBestParlaysPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);

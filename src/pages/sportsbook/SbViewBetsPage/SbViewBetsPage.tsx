@@ -18,8 +18,8 @@ import {
   formatTimestamp,
   formatUsernamePossessiveForm,
 } from "../../../util/format";
-import classes from "./SbViewBetsPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbViewBetsPage.module.css";
 
 export const SbViewBetsPage = () => {
   const { googleJwt } = useContext(AuthContext);

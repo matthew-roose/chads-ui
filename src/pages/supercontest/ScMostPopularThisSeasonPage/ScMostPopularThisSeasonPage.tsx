@@ -3,9 +3,9 @@ import { Table } from "@mantine/core";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { useScGetSeasonMostPopular } from "../../../hooks/supercontest/useScGetSeasonMostPopular";
 import { formatSpread } from "../../../util/format";
-import classes from "./ScMostPopularThisSeasonPage.module.css";
 import { Result } from "../../../types/Result";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScMostPopularThisSeasonPage.module.css";
 
 export const ScMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useScGetSeasonMostPopular();

@@ -3,12 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { useSbGetPublicMoneyStats } from "../../../hooks/sportsbook/useSbGetPublicMoneyStats";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { useGetGameLinesForWeek } from "../../../hooks/useGetGameLinesForWeek";
-import classes from "./SbWeeklyPublicMoneyPage.module.css";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { Table } from "@mantine/core";
 import { formatCurrency, formatTimestamp } from "../../../util/format";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbWeeklyPublicMoneyPage.module.css";
 
 export const SbWeeklyPublicMoneyPage = () => {
   const { weekNumber } = useParams();

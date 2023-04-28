@@ -6,8 +6,8 @@ import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { useSvGetWeekMostPopular } from "../../../hooks/survivor/useSvGetWeekMostPopular";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { Result } from "../../../types/Result";
-import classes from "./SvMostPopularThisWeekPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvMostPopularThisWeekPage.module.css";
 
 export const SvMostPopularThisWeekPage = () => {
   const { weekNumber } = useParams();

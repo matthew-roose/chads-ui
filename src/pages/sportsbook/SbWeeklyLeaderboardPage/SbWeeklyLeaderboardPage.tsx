@@ -3,9 +3,9 @@ import { Helmet } from "react-helmet-async";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { useSbGetWeeklyLeaderboard } from "../../../hooks/sportsbook/useSbGetWeeklyLeaderboard";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
-import classes from "./SbWeeklyLeaderboardPage.module.css";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbWeeklyLeaderboardPage.module.css";
 
 export const SbWeeklyLeaderboardPage = () => {
   const { weekNumber } = useParams();

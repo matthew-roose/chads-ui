@@ -6,9 +6,9 @@ import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { useSbGetUserSeasonBreakdown } from "../../../hooks/sportsbook/useSbGetUserSeasonBreakdown";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
-import classes from "./SbUserSeasonBreakdownPage.module.css";
 import { SbSeasonBreakdownTable } from "../../../components/SbSeasonBreakdownTable/SbSeasonBreakdownTable";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbUserSeasonBreakdownPage.module.css";
 
 export const SbUserSeasonBreakdownPage = () => {
   const { username } = useParams();

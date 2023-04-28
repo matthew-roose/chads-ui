@@ -11,11 +11,11 @@ import {
   formatRecord,
   formatUsernamePossessiveForm,
 } from "../../../util/format";
-import classes from "./ScViewPicksPage.module.css";
 import { UserAndWeekSelects } from "../../../components/UserAndWeekSelects/UserAndWeekSelects";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScViewPicksPage.module.css";
 
 export const ScViewPicksPage = () => {
   const { googleJwt } = useContext(AuthContext);

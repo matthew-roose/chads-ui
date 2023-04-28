@@ -5,10 +5,10 @@ import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { useScGetWeekMostPopular } from "../../../hooks/supercontest/useScGetWeekMostPopular";
 import { formatSpread } from "../../../util/format";
-import classes from "./ScMostPopularThisWeekPage.module.css";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { Result } from "../../../types/Result";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScMostPopularThisWeekPage.module.css";
 
 export const ScMostPopularThisWeekPage = () => {
   const { weekNumber } = useParams();

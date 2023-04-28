@@ -1,5 +1,5 @@
-import { Select } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { Select } from "@mantine/core";
 import classes from "./WeekSelect.module.css";
 
 interface WeekSelectProps {

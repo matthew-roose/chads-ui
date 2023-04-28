@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { useSbGetSeasonLeaderboard } from "../../../hooks/sportsbook/useSbGetSeasonLeaderboard";
-import classes from "./SbSeasonLeaderboardPage.module.css";
 import { SbSeasonLeaderboard } from "../../../components/SbSeasonLeaderboard/SbSeasonLeaderboard";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbSeasonLeaderboardPage.module.css";
 
 export const SbSeasonLeaderboardPage = () => {
   const { data: seasonLeaderboardData } = useSbGetSeasonLeaderboard();

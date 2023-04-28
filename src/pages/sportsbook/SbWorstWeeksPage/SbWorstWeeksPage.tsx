@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { useSbGetWorstWeeks } from "../../../hooks/sportsbook/useSbGetWorstWeeks";
-import classes from "./SbWorstWeeksPage.module.css";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbWorstWeeksPage.module.css";
 
 export const SbWorstWeeksPage = () => {
   const { data: worstWeeksData } = useSbGetWorstWeeks();

@@ -13,8 +13,8 @@ import { AuthContext } from "../../../store/auth-context";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { ScPickCreate } from "../../../types/supercontest/ScPickCreate";
 import { Result } from "../../../types/Result";
-import classes from "./ScMakePicksPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScMakePicksPage.module.css";
 
 export const ScMakePicksPage = () => {
   const { googleJwt, username } = useContext(AuthContext);

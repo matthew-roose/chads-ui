@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button, Image } from "@mantine/core";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { SbCashOutModal } from "../../../components/SbCashOutModal/SbCashOutModal";
 import { SbDepositModal } from "../../../components/SbDepositModal/SbDepositModal";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { AuthContext } from "../../../store/auth-context";
 import { formatCurrency } from "../../../util/format";
 import classes from "./SbCashierPage.module.css";
-import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export const SbCashierPage = () => {
   const { username } = useContext(AuthContext);

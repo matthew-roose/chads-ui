@@ -4,8 +4,8 @@ import { PoolCard } from "../../../components/PoolCard/PoolCard";
 import { useSvGetAllPools } from "../../../hooks/survivor/useSvGetAllPools";
 import { useSvGetUserPools } from "../../../hooks/survivor/useSvGetUserPools";
 import { AuthContext } from "../../../store/auth-context";
-import classes from "./SvViewAllPoolsPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvViewAllPoolsPage.module.css";
 
 export const SvViewAllPoolsPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);

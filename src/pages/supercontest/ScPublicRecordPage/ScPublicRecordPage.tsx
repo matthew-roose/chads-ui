@@ -1,10 +1,10 @@
 import { Helmet } from "react-helmet-async";
 import { useScGetPublicEntryWeeks } from "../../../hooks/supercontest/useScGetPublicEntryWeeks";
 import { calculateWinPct, formatRecord } from "../../../util/format";
-import classes from "./ScPublicRecordPage.module.css";
 import { Table } from "@mantine/core";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScPublicRecordPage.module.css";
 
 export const ScPublicRecordPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();

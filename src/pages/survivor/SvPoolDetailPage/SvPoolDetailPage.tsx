@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../../store/auth-context";
-import classes from "./SvPoolDetailPage.module.css";
 import { useParams } from "react-router-dom";
 import { useSvGetPoolDetail } from "../../../hooks/survivor/useSvGetPoolDetail";
 import { useSvJoinPool } from "../../../hooks/survivor/useSvJoinPool";
@@ -11,6 +10,7 @@ import { toast } from "react-toastify";
 import { SvLeaderboard } from "../../../components/SvLeaderboard/SvLeaderboard";
 import { formatEnum } from "../../../util/format";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvPoolDetailPage.module.css";
 
 export const SvPoolDetailPage = () => {
   const {

@@ -1,9 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useScGetSeasonLeaderboard } from "../../../hooks/supercontest/useScGetSeasonLeaderboard";
-import classes from "./ScSeasonLeaderboardPage.module.css";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScSeasonLeaderboardPage.module.css";
 
 export const ScSeasonLeaderboardPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();

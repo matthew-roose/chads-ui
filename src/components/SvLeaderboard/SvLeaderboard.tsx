@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
 import { SvEntryAndNullablePicks } from "../../types/survivor/SvEntryAndNullablePicks";
-import classes from "./SvLeaderboard.module.css";
-import { Link } from "react-router-dom";
 import { formatRecord } from "../../util/format";
 import { Button, ScrollArea, Table } from "@mantine/core";
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
 import { Result } from "../../types/Result";
+import classes from "./SvLeaderboard.module.css";
 
 interface SvLeaderboardProps {
   rows: SvEntryAndNullablePicks[];

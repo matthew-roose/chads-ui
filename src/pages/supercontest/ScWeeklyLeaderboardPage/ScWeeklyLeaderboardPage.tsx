@@ -2,10 +2,10 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { useScGetWeeklyLeaderboard } from "../../../hooks/supercontest/useScGetWeeklyLeaderboard";
-import classes from "./ScWeeklyLeaderboardPage.module.css";
 import { WeekSelect } from "../../../components/WeekSelect/WeekSelect";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScWeeklyLeaderboardPage.module.css";
 
 export const ScWeeklyLeaderboardPage = () => {
   const { weekNumber } = useParams();

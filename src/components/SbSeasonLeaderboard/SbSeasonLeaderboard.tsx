@@ -1,12 +1,12 @@
 import { Table } from "@mantine/core";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { useGetCurrentWeekNumber } from "../../hooks/useGetCurrentWeekNumber";
 import { AuthContext } from "../../store/auth-context";
 import { SbAccount } from "../../types/sportsbook/SbAccount";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
 import classes from "./SbSeasonLeaderboard.module.css";
-import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
 interface SbSeasonLeaderboardProps {
   rows: SbAccount[];

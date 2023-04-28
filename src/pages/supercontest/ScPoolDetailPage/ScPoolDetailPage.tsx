@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Button, Divider, PasswordInput, Select } from "@mantine/core";
@@ -7,10 +7,10 @@ import { useScGetPoolDetail } from "../../../hooks/supercontest/useScGetPoolDeta
 import { useScJoinPool } from "../../../hooks/supercontest/useScJoinPool";
 import { AuthContext } from "../../../store/auth-context";
 import { formatEnum } from "../../../util/format";
-import classes from "./ScPoolDetailPage.module.css";
 import { toast } from "react-toastify";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScPoolDetailPage.module.css";
 
 export const ScPoolDetailPage = () => {
   const {
@@ -27,12 +27,12 @@ export const ScPoolDetailPage = () => {
 
   const joinPool = useScJoinPool();
 
-  if (!currentWeekNumber || !poolDetailData) {
-    return <LoadingSpinner type="primary" />;
-  }
+  useEffect(() => {
+    setViewingWeek(currentWeekNumber?.toString() || "");
+  }, [currentWeekNumber]);
 
-  if (!viewingWeek) {
-    setViewingWeek(currentWeekNumber.toString());
+  if (!currentWeekNumber || !poolDetailData || !viewingWeek) {
+    return <LoadingSpinner type="primary" />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

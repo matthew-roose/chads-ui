@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons";
 import { toast } from "react-toastify";
+import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useGetCurrentGameLines } from "../../../hooks/useGetCurrentGameLines";
 import { SbPlaceBetGame } from "../../../components/SbPlaceBetGame/SbPlaceBetGame";
 import { useSbPlaceBet } from "../../../hooks/sportsbook/useSbPlaceBet";
@@ -24,9 +25,8 @@ import {
   formatCurrency,
   formatSpread,
 } from "../../../util/format";
-import classes from "./SbPlaceBetsPage.module.css";
 import { TEASER_LEG_ODDS } from "../../../util/constants";
-import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbPlaceBetsPage.module.css";
 
 type TeaserPointOption = 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10;
 

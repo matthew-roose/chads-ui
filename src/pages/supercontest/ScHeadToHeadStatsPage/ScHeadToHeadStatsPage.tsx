@@ -4,7 +4,6 @@ import { AuthContext } from "../../../store/auth-context";
 import { useScGetHeadToHeadStats } from "../../../hooks/supercontest/useScGetHeadToHeadStats";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { ScHeadToHeadStats } from "../../../types/supercontest/ScHeadToHeadStats";
-import classes from "./ScHeadToHeadStatsPage.module.css";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
 import {
@@ -15,6 +14,7 @@ import {
 } from "../../../util/format";
 import { useSearchParams } from "react-router-dom";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScHeadToHeadStatsPage.module.css";
 
 export const ScHeadToHeadStatsPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);
@@ -293,7 +293,7 @@ export const ScHeadToHeadStatsPage = () => {
       {!isHeadToHeadDataLoading && opposingPicks.length > 0 && (
         <>
           <div className={classes.title}>
-            {formatUsernamePossessiveForm(firstUsername)} Record vs.{" "}
+            {formatUsernamePossessiveForm(firstUsername)} Record Against{" "}
             {secondUsername}:{" "}
             {formatRecord(firstUserWins, firstUserLosses, firstUserPushes)}
           </div>

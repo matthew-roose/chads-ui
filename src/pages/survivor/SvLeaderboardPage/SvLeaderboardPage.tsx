@@ -2,10 +2,10 @@ import { Helmet } from "react-helmet-async";
 import { SvLeaderboard } from "../../../components/SvLeaderboard/SvLeaderboard";
 import { useSvGetLeaderboard } from "../../../hooks/survivor/useSvGetLeaderboard";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
-import classes from "./SvLeaderboardPage.module.css";
 import { useContext } from "react";
 import { AuthContext } from "../../../store/auth-context";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvLeaderboardPage.module.css";
 
 export const SvLeaderboardPage = () => {
   const { googleJwt } = useContext(AuthContext);

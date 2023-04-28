@@ -4,8 +4,8 @@ import { PoolCard } from "../../../components/PoolCard/PoolCard";
 import { useSbGetAllPools } from "../../../hooks/sportsbook/useSbGetAllPools";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { AuthContext } from "../../../store/auth-context";
-import classes from "./SbViewAllPoolsPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbViewAllPoolsPage.module.css";
 
 export const SbViewAllPoolsPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);

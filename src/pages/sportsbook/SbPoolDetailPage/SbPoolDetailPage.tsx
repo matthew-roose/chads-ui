@@ -9,10 +9,10 @@ import { useSbJoinPool } from "../../../hooks/sportsbook/useSbJoinPool";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { AuthContext } from "../../../store/auth-context";
 import { formatEnum, formatCurrency } from "../../../util/format";
-import classes from "./SbPoolDetailPage.module.css";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
 import { SbSeasonLeaderboard } from "../../../components/SbSeasonLeaderboard/SbSeasonLeaderboard";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbPoolDetailPage.module.css";
 
 export const SbPoolDetailPage = () => {
   const {

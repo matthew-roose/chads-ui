@@ -1,9 +1,9 @@
 import { Divider, Table } from "@mantine/core";
 import { Helmet } from "react-helmet-async";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { useGetCurrentGameLines } from "../../hooks/useGetCurrentGameLines";
 import { useGetCurrentWeekNumber } from "../../hooks/useGetCurrentWeekNumber";
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
-import classes from "./HomePage.module.css";
 import {
   convertOddsFromDecimal,
   formatCurrency,
@@ -17,7 +17,7 @@ import { useScGetPrevWeekBestPicks } from "../../hooks/supercontest/useScGetPrev
 import { Result } from "../../types/Result";
 import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
 import { useSvGetPrevWeekLosses } from "../../hooks/survivor/useSvGetPrevWeekLosses";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./HomePage.module.css";
 
 export const HomePage = () => {
   const { data: gameLinesData } = useGetCurrentGameLines();

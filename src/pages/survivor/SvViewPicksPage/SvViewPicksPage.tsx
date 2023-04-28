@@ -4,7 +4,6 @@ import { useSvGetUserEntryAndNullablePicks } from "../../../hooks/survivor/useSv
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { AuthContext } from "../../../store/auth-context";
-import classes from "./SvViewPicksPage.module.css";
 import { Helmet } from "react-helmet-async";
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
@@ -12,6 +11,7 @@ import { Table } from "@mantine/core";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvViewPicksPage.module.css";
 
 export const SvViewPicksPage = () => {
   const { googleJwt } = useContext(AuthContext);

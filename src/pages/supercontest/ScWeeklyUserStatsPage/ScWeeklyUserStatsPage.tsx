@@ -9,9 +9,9 @@ import {
   formatRecord,
   formatUsernamePossessiveForm,
 } from "../../../util/format";
-import classes from "./ScWeeklyUserStatsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScWeeklyUserStatsPage.module.css";
 
 export const ScWeeklyUserStatsPage = () => {
   const { username } = useParams();

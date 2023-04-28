@@ -5,7 +5,6 @@ import { useSvGetUserEntryAndPicks } from "../../../hooks/survivor/useSvGetUserE
 import { useGetCurrentGameLines } from "../../../hooks/useGetCurrentGameLines";
 import { AuthContext } from "../../../store/auth-context";
 import { SvPickCreate } from "../../../types/survivor/SvPickCreate";
-import classes from "./SvMakePickPage.module.css";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
@@ -13,6 +12,7 @@ import { formatTimestamp } from "../../../util/format";
 import { useSvSubmitPick } from "../../../hooks/survivor/useSvSubmitPick";
 import { toast } from "react-toastify";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvMakePickPage.module.css";
 
 export const SvMakePickPage = () => {
   const { googleJwt, username } = useContext(AuthContext);

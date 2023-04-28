@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { useSvGetSeasonMostPopular } from "../../../hooks/survivor/useSvGetSeasonMostPopular";
 import { Result } from "../../../types/Result";
-import classes from "./SvMostPopularThisSeasonPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SvMostPopularThisSeasonPage.module.css";
 
 export const SvMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useSvGetSeasonMostPopular();

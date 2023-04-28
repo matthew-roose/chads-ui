@@ -5,8 +5,8 @@ import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { formatUsernamePossessiveForm } from "../../../util/format";
-import classes from "./SbViewUserPoolsPage.module.css";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./SbViewUserPoolsPage.module.css";
 
 export const SbViewUserPoolsPage = () => {
   const { username } = useParams();

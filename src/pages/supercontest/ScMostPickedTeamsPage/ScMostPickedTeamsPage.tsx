@@ -3,10 +3,10 @@ import { Helmet } from "react-helmet-async";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useScGetUserPickStats } from "../../../hooks/supercontest/useScGetUserPickStats";
 import { formatUsernamePossessiveForm } from "../../../util/format";
-import classes from "./ScMostPickedTeamsPage.module.css";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { ScPickedAndFadedTable } from "../../../components/ScPickedAndFadedTable/ScPickedAndFadedTable";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
+import classes from "./ScMostPickedTeamsPage.module.css";
 
 export const ScMostPickedTeamsPage = () => {
   const { username } = useParams();
