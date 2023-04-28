@@ -79,7 +79,11 @@ export const SvMakePickPage = () => {
     ) {
       return;
     }
-    setCurrentPick(newPick);
+    if (currentPick?.pickedTeam === newPick.pickedTeam) {
+      setCurrentPick(undefined);
+    } else {
+      setCurrentPick(newPick);
+    }
   };
 
   const gameRows = gameLinesData.map((gameLine) => {
