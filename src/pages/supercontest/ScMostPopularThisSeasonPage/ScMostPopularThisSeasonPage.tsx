@@ -47,15 +47,20 @@ export const ScMostPopularThisSeasonPage = () => {
       : "";
     return (
       <tr className={classes.row} key={weekNumber + pickedTeam}>
-        <td>{weekNumber}</td>
+        <td className={classes.hideForMobile}>{weekNumber}</td>
         <td>
-          <img
-            className={classes.logo}
-            src={AllTeamLogos[pickedTeam] as unknown as string}
-            alt={pickedTeam}
-          />
+          <div className={classes.flexRow}>
+            <img
+              className={classes.logo}
+              src={AllTeamLogos[pickedTeam] as unknown as string}
+              alt={pickedTeam}
+            />
+            <span className={classes.spread}>
+              {formatSpread(+pickedSpread)}
+            </span>
+          </div>
         </td>
-        <td className={classes.hideForMobile}>
+        <td>
           <img
             className={classes.logo}
             src={AllTeamLogos[opposingTeam] as unknown as string}
@@ -63,7 +68,6 @@ export const ScMostPopularThisSeasonPage = () => {
           />
         </td>
         <td>{timesPicked}</td>
-        <td>{formatSpread(+pickedSpread)}</td>
         <td className={classes.hideForMobile}>{gameScore}</td>
         <td className={resultClassName}>{result}</td>
       </tr>
@@ -73,17 +77,16 @@ export const ScMostPopularThisSeasonPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SC Season Most Popular</title>
+        <title>Chad's | Supercontest | Season's Most Popular</title>
       </Helmet>
       <div className={classes.title}>Most Popular Picks of the Season</div>
       <Table striped highlightOnHover className={classes.table}>
         <thead>
           <tr>
-            <th>Week</th>
-            <th>Team</th>
-            <th className={classes.hideForMobile}>Opponent</th>
+            <th className={classes.hideForMobile}>Week</th>
+            <th>Pick</th>
+            <th>Opponent</th>
             <th>Count</th>
-            <th>Spread</th>
             <th className={classes.hideForMobile}>Score</th>
             <th>Result</th>
           </tr>

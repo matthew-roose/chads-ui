@@ -44,9 +44,9 @@ export const SvPoolDetailPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SV Pool | {poolName}</title>
+        <title>Chad's | Survivor | Pool | {poolName}</title>
       </Helmet>
-      <div className={classes.poolName}>SV Pool: {poolName}</div>
+      <div className={classes.poolName}>Survivor Pool: {poolName}</div>
       <div className={classes.creator}>
         Created by {poolDetailData.creatorUsername}
       </div>

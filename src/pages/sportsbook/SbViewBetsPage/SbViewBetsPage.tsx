@@ -216,15 +216,13 @@ export const SbViewBetsPage = () => {
     return `/sportsbook/bet-history/${username}/week/${weekNumber}`;
   };
 
-  const pageTitle = `${formatUsernamePossessiveForm(
-    username
-  )} Week ${weekNumber}
-  Bets`;
-
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | {pageTitle}</title>
+        <title>
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Week{" "}
+          {weekNumber} Bets
+        </title>
       </Helmet>
       <UserAndWeekSelects
         username={username}
@@ -233,7 +231,9 @@ export const SbViewBetsPage = () => {
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>{pageTitle}</div>
+      <div className={classes.title}>
+        {formatUsernamePossessiveForm(username)} Week {weekNumber} Bets
+      </div>
       {!userBetData && <LoadingSpinner type="secondary" />}
       {userBetData !== undefined && userBetData.length === 0 && (
         <div className={classes.noBets}>No bets.</div>

@@ -84,7 +84,8 @@ export const ScWeeklyUserStatsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} Weekly Stats
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username)}{" "}
+          Weekly Stats
         </title>
       </Helmet>
       <UserSelect

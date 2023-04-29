@@ -72,7 +72,8 @@ export const SbUserSeasonBreakdownPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} SB Season Breakdown
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Season
+          Breakdown
         </title>
       </Helmet>
       <UserSelect

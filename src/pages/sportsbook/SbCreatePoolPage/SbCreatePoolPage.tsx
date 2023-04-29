@@ -44,7 +44,7 @@ export const SbCreatePoolPage = () => {
   return (
     <>
       <Helmet>
-        <title>Chad's | Create SB Pool</title>
+        <title>Chad's | Sportsbook | Create Pool</title>
       </Helmet>
       <div className={classes.title}>Create a Sportsbook Pool</div>
       <div className={classes.form}>

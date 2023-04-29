@@ -11,6 +11,15 @@
   text-align: center;
 }
 
+.teamsUsed {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 .win {
   background-color: lightgreen;
 }
@@ -54,7 +63,7 @@
 }
 
 .score {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
   text-align: center;
 }

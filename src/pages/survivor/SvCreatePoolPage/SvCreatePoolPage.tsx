@@ -42,7 +42,7 @@ export const SvCreatePoolPage = () => {
   return (
     <>
       <Helmet>
-        <title>Chad's | Create SV Pool</title>
+        <title>Chad's | Survivor | Create Pool</title>
       </Helmet>
       <div className={classes.title}>Create a Survivor Pool</div>
       <div className={classes.form}>

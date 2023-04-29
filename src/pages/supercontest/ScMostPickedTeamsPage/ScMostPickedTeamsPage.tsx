@@ -37,7 +37,8 @@ export const ScMostPickedTeamsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} Most Picked Teams
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Most
+          Picked Teams
         </title>
       </Helmet>
       <UserSelect

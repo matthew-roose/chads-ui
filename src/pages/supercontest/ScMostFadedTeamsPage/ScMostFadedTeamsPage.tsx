@@ -37,7 +37,8 @@ export const ScMostFadedTeamsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} Most Faded Teams
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Most
+          Faded Teams
         </title>
       </Helmet>
       <UserSelect

@@ -2,10 +2,19 @@
   margin-bottom: 150px;
 }
 
-.notSignedIn {
+.title {
   font-size: 36px;
   font-weight: bold;
-  margin: 8rem;
+  font-style: italic;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.message {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 8rem auto;
   text-align: center;
 }
 
@@ -119,7 +128,7 @@
 
 .table {
   max-width: 800px;
-  margin: 5rem auto;
+  margin: 0 auto;
 }
 
 @media only screen and (max-width: 992px) {

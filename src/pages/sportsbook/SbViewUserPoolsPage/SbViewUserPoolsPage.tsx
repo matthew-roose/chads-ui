@@ -47,7 +47,7 @@ export const SbViewUserPoolsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} SB Pools
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Pools
         </title>
       </Helmet>
       <UserSelect

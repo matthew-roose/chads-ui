@@ -68,7 +68,7 @@ export const SvMostPopularThisSeasonPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SV Season Most Popular</title>
+        <title>Chad's | Survivor | Season's Most Popular</title>
       </Helmet>
       <div className={classes.title}>Most Popular Picks of the Season</div>
       <Table striped highlightOnHover className={classes.table}>

@@ -32,7 +32,7 @@ export const ScSeasonLeaderboardPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SC Season Leaderboard</title>
+        <title>Chad's | Supercontest | Season Leaderboard</title>
       </Helmet>
       <div className={classes.title}>Season Leaderboard</div>
       <ScLeaderboard

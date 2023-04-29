@@ -56,7 +56,7 @@ export const ScPublicRecordPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Public Record</title>
+        <title>Chad's | Supercontest | Public Record</title>
       </Helmet>
       <div className={classes.title}>Public Record</div>
       <div className={`${classes.seasonRecord} ${recordClass}`}>

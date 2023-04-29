@@ -33,7 +33,7 @@ export const SbCashierPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Cashier</title>
+        <title>Chad's | Sportsbook | Cashier</title>
       </Helmet>
       <div className={classes.title}>Cashier</div>
       <div className={`${classes.balance} ${classes.totalBalance}`}>

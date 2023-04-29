@@ -39,7 +39,7 @@ export const ScViewAllPoolsPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | All SC Pools</title>
+        <title>Chad's | Supercontest | All Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Supercontest Pools</div>
       {pools}

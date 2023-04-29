@@ -32,7 +32,8 @@ export const SbWeeklyUserStatsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} SB Weekly Stats
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Weekly
+          Stats
         </title>
       </Helmet>
       <UserSelect

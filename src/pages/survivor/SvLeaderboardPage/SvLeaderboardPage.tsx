@@ -25,9 +25,9 @@ export const SvLeaderboardPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SV Leaderboard</title>
+        <title>Chad's | Survivor | Leaderboard</title>
       </Helmet>
-      <div className={classes.title}>Leaderboard</div>
+      <div className={classes.title}>Survivor Leaderboard</div>
       <SvLeaderboard
         rows={leaderboardRows}
         currentWeekNumber={currentWeekNumber}

@@ -16,7 +16,7 @@ export const SbBestWeeksPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Best SB Weeks</title>
+        <title>Chad's | Sportsbook | Best Weeks</title>
       </Helmet>
       <div className={classes.title}>Biggest Winning Weeks</div>
       <SbWeeklyLeaderboard

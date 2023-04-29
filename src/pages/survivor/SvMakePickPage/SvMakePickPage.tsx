@@ -128,6 +128,13 @@ export const SvMakePickPage = () => {
           : classes.pending
         : ""
     }`;
+    const atClasses = `${classes.at} ${
+      hasStarted ||
+      isPickLocked ||
+      (teamsUsed.includes(homeTeam) && teamsUsed.includes(awayTeam))
+        ? classes.started
+        : classes.notStarted
+    }`;
     return (
       <tr key={gameId}>
         <td className={`${classes.timestamp} ${classes.hideForMobile}`}>
@@ -149,7 +156,7 @@ export const SvMakePickPage = () => {
               />
               <div className={classes.score}>{awayScore}</div>
             </div>
-            <div className={classes.at}>@</div>
+            <div className={atClasses}>@</div>
             <div
               className={homeClasses}
               onClick={() => addPickHandler({ gameId, pickedTeam: homeTeam })}
@@ -195,9 +202,12 @@ export const SvMakePickPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Make SV Pick</title>
+        <title>Chad's | Survivor | Make Picks</title>
       </Helmet>
-      <div className={classes.title}>Teams Used</div>
+      <div className={classes.title}>Make a Pick</div>
+      <div className={classes.teamsUsed}>
+        Teams Used: {prevPickedTeamLogos.length === 0 && "None"}
+      </div>
       <SimpleGrid
         cols={8}
         className={classes.prevPickedGrid}

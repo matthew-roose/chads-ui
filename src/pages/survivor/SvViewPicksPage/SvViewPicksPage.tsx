@@ -119,20 +119,21 @@ export const SvViewPicksPage = () => {
     return `/survivor/pick-history/${username}`;
   };
 
-  const pageTitle = `${formatUsernamePossessiveForm(username)} Survivor Picks`;
-
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | {pageTitle}</title>
+        <title>
+          Chad's | Survivor | {formatUsernamePossessiveForm(username)} Picks
+        </title>
       </Helmet>
       <UserSelect
         username={username}
         allUsernames={allUsernames}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>{pageTitle}</div>
-
+      <div className={classes.title}>
+        {formatUsernamePossessiveForm(username)} Picks
+      </div>
       {!entryData && <LoadingSpinner type="secondary" />}
       {rows !== undefined && (
         <Table className={classes.table}>

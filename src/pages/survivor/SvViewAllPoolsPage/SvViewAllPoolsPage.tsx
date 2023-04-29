@@ -39,7 +39,7 @@ export const SvViewAllPoolsPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | All Survivor Pools</title>
+        <title>Chad's | Survivor | All Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Survivor Pools</div>
       {pools}

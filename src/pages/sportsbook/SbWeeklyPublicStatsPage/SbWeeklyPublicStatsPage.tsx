@@ -14,7 +14,7 @@ export const SbWeeklyPublicStatsPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SB Public Weekly Stats</title>
+        <title>Chad's | Sportsbook | Public Weekly Stats</title>
       </Helmet>
       <div className={classes.title}>Public Weekly Stats</div>
       <SbWeeklyStatsTable rows={weeklyPublicStatsData} />

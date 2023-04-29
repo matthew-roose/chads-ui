@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Select, Table } from "@mantine/core";
 import { AuthContext } from "../../../store/auth-context";
 import { useScGetHeadToHeadStats } from "../../../hooks/supercontest/useScGetHeadToHeadStats";
@@ -281,6 +282,9 @@ export const ScHeadToHeadStatsPage = () => {
 
   return (
     <div className={classes.page}>
+      <Helmet>
+        <title>Chad's | Supercontest | H2H Stats</title>
+      </Helmet>
       {userSelects}
       {invalidSelections && (
         <div className={classes.invalidSelections}>

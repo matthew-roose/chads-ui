@@ -48,9 +48,7 @@ export const SbPlaceBetsPage = () => {
   const placeBet = useSbPlaceBet();
 
   if (!googleJwt || !username) {
-    return (
-      <div className={classes.notSignedIn}>Please sign in to place bets.</div>
-    );
+    return <div className={classes.message}>Please sign in to place bets.</div>;
   }
 
   if (!currentWeekGameLines || !currentAccountBalance) {
@@ -464,21 +462,28 @@ export const SbPlaceBetsPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Place Bets</title>
+        <title>Chad's | Sportsbook | Place Bets</title>
       </Helmet>
+      <div className={classes.title}>Place Bets</div>
       {showBetSlipButton}
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.hideForMobile}>Time</th>
-            <th style={{ textAlign: "center" }}>Game</th>
-            <th style={{ textAlign: "center" }}>Spread</th>
-            <th style={{ textAlign: "center" }}>ML</th>
-            <th style={{ textAlign: "center" }}>Total</th>
-          </tr>
-        </thead>
-        <tbody>{gameElements}</tbody>
-      </Table>
+      {gameElements.length === 0 && (
+        <div className={classes.message}>No games available to bet.</div>
+      )}
+      {gameElements.length > 0 && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th className={classes.hideForMobile}>Time</th>
+              <th style={{ textAlign: "center" }}>Game</th>
+              <th style={{ textAlign: "center" }}>Spread</th>
+              <th style={{ textAlign: "center" }}>ML</th>
+              <th style={{ textAlign: "center" }}>Total</th>
+            </tr>
+          </thead>
+          <tbody>{gameElements}</tbody>
+        </Table>
+      )}
+
       {showBetSlipButton}
       {betSlip}
     </div>

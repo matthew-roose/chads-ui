@@ -36,7 +36,7 @@ export const SbWeeklyLeaderboardPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SB Week {weekNumber} Leaderboard</title>
+        <title>Chad's | Sportsbook | Week {weekNumber} Leaderboard</title>
       </Helmet>
       <WeekSelect
         weekNumber={weekNumber}

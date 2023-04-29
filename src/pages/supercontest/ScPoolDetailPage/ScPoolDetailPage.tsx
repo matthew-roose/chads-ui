@@ -88,9 +88,9 @@ export const ScPoolDetailPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SC Pool | {poolName}</title>
+        <title>Chad's | Supercontest | Pool | {poolName}</title>
       </Helmet>
-      <div className={classes.poolName}>SC Pool: {poolName}</div>
+      <div className={classes.poolName}>Supercontest Pool: {poolName}</div>
       <div className={classes.creator}>
         Created by {poolDetailData.creatorUsername}
       </div>

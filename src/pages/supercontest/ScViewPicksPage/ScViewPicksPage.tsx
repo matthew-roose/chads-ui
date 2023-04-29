@@ -91,8 +91,8 @@ export const ScViewPicksPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} Week {weekNumber} SC
-          Picks
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Week{" "}
+          {weekNumber} Picks
         </title>
       </Helmet>
       <UserAndWeekSelects
@@ -105,19 +105,18 @@ export const ScViewPicksPage = () => {
       {!entryWeekData && <LoadingSpinner type="secondary" />}
       {entryWeekData && (
         <>
-          <Group className={classes.pickLogoGroup} position="center">
-            {picksLogos}
-          </Group>
-          {entryWeekData.picks.length > 0 && (
-            <div className={classes.title}>
-              Week {weekNumber}:{" "}
-              {formatRecord(
+          <div className={classes.title}>
+            {formatUsernamePossessiveForm(username)} Week {weekNumber} Picks
+            {entryWeekData.picks.length > 0 &&
+              `: ${formatRecord(
                 entryWeekData.weekWins,
                 entryWeekData.weekLosses,
                 entryWeekData.weekPushes
-              )}
-            </div>
-          )}
+              )}`}
+          </div>
+          <Group className={classes.pickLogoGroup} position="center">
+            {picksLogos}
+          </Group>
           {entryWeekData.picks.length === 0 && (
             <div className={classes.noPicks}>No picks.</div>
           )}

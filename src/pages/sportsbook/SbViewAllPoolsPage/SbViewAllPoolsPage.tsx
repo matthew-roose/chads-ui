@@ -41,7 +41,7 @@ export const SbViewAllPoolsPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | All SB Pools</title>
+        <title>Chad's | Sportsbook | All Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Sportsbook Pools</div>
       {pools}

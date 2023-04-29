@@ -18,7 +18,7 @@ export const SbSeasonLeaderboardPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SB Season Leaderboard</title>
+        <title>Chad's | Sportsbook | Season Leaderboard</title>
       </Helmet>
       <div className={classes.title}>Season Leaderboard</div>
       <SbSeasonLeaderboard rows={seasonLeaderboardRows} />

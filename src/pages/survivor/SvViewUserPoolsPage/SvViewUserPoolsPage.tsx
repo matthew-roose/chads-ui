@@ -45,7 +45,7 @@ export const SvViewUserPoolsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} SV Pools
+          Chad's | Survivor | {formatUsernamePossessiveForm(username)} Pools
         </title>
       </Helmet>
       <UserSelect
@@ -54,7 +54,7 @@ export const SvViewUserPoolsPage = () => {
         getNavigateUrl={getNavigateUrl}
       />
       <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Survivor Pools
+        {formatUsernamePossessiveForm(username)} Pools
       </div>
       {!userPoolsData && <LoadingSpinner type="secondary" />}
       {pools !== undefined && pools}

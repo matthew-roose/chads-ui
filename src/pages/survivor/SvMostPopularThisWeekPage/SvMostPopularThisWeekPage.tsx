@@ -89,7 +89,7 @@ export const SvMostPopularThisWeekPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SV Week {weekNumber} Most Popular</title>
+        <title>Chad's | Survivor | Week {weekNumber}'s Most Popular</title>
       </Helmet>
       <WeekSelect
         weekNumber={weekNumber}

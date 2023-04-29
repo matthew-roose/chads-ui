@@ -52,7 +52,7 @@ export const ScWeeklyLeaderboardPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SC Week {weekNumber} Leaderboard</title>
+        <title>Chad's | Supercontest | Week {weekNumber} Leaderboard</title>
       </Helmet>
       <WeekSelect
         weekNumber={weekNumber}

@@ -16,7 +16,7 @@ export const SbWorstWeeksPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Worst SB Weeks</title>
+        <title>Chad's | Sportsbook | Worst Weeks</title>
       </Helmet>
       <div className={classes.title}>Biggest Losing Weeks</div>
       <SbWeeklyLeaderboard

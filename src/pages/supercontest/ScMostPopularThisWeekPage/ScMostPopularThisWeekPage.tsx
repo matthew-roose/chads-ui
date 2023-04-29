@@ -64,13 +64,18 @@ export const ScMostPopularThisWeekPage = () => {
     return (
       <tr className={classes.row} key={pickedTeam}>
         <td>
-          <img
-            className={classes.logo}
-            src={AllTeamLogos[pickedTeam] as unknown as string}
-            alt={pickedTeam}
-          />
+          <div className={classes.flexRow}>
+            <img
+              className={classes.logo}
+              src={AllTeamLogos[pickedTeam] as unknown as string}
+              alt={pickedTeam}
+            />
+            <span className={classes.spread}>
+              {formatSpread(+pickedSpread)}
+            </span>
+          </div>
         </td>
-        <td className={classes.hideForMobile}>
+        <td>
           <img
             className={classes.logo}
             src={AllTeamLogos[opposingTeam] as unknown as string}
@@ -78,8 +83,7 @@ export const ScMostPopularThisWeekPage = () => {
           />
         </td>
         <td>{timesPicked}</td>
-        <td>{formatSpread(+pickedSpread)}</td>
-        <td>{gameScore}</td>
+        <td className={classes.hideForMobile}>{gameScore}</td>
         <td className={resultClassName}>{result}</td>
       </tr>
     );
@@ -95,7 +99,7 @@ export const ScMostPopularThisWeekPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SC Week {weekNumber} Most Popular</title>
+        <title>Chad's | Supercontest | Week {weekNumber}'s Most Popular</title>
       </Helmet>
       <WeekSelect
         weekNumber={weekNumber}
@@ -110,11 +114,10 @@ export const ScMostPopularThisWeekPage = () => {
         <Table striped highlightOnHover className={classes.table}>
           <thead>
             <tr>
-              <th>Team</th>
-              <th className={classes.hideForMobile}>Opponent</th>
+              <th>Pick</th>
+              <th>Opponent</th>
               <th>Count</th>
-              <th>Spread</th>
-              <th>Score</th>
+              <th className={classes.hideForMobile}>Score</th>
               <th>Result</th>
             </tr>
           </thead>

@@ -171,8 +171,9 @@ export const ScMakePicksPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Make SC Picks</title>
+        <title>Chad's | Supercontest | Make Picks</title>
       </Helmet>
+      <div className={classes.title}>Make Picks</div>
       <Group className={classes.currentPickLogoGroup} position="center">
         {currentPicksLogos}
       </Group>

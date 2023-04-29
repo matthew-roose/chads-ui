@@ -71,9 +71,9 @@ export const SbPoolDetailPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SB Pool | {poolName}</title>
+        <title>Chad's | Sportsbook | Pool | {poolName}</title>
       </Helmet>
-      <div className={classes.poolName}>SB Pool: {poolName}</div>
+      <div className={classes.poolName}>Sportsbook Pool: {poolName}</div>
       <div className={classes.creator}>Created by {creatorUsername}</div>
       <div className={classes.joinType}>{formatEnum(joinType)}</div>
       <div className={classes.buyInAndPurse}>

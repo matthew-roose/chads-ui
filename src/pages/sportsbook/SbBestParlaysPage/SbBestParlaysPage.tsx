@@ -49,7 +49,7 @@ export const SbBestParlaysPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Best Parlays</title>
+        <title>Chad's | Sportsbook | Best Parlays</title>
       </Helmet>
       <div className={classes.title}>Best Parlays</div>
       <Table className={classes.table}>

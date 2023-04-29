@@ -45,7 +45,7 @@ export const ScViewUserPoolsPage = () => {
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | {formatUsernamePossessiveForm(username)} SC Pools
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Pools
         </title>
       </Helmet>
       <UserSelect

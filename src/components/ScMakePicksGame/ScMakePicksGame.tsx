@@ -57,6 +57,9 @@ export const ScMakePicksGame = ({
         : classes.pending
       : ""
   }`;
+  const atClasses = `${classes.at} ${
+    hasStarted ? classes.started : classes.notStarted
+  }`;
 
   return (
     <tr>
@@ -84,7 +87,7 @@ export const ScMakePicksGame = ({
             </div>
             <div className={classes.score}>{awayScore}</div>
           </div>
-          <div className={classes.at}>@</div>
+          <div className={atClasses}>@</div>
           <div
             className={homeClasses}
             onClick={() => onPickTeam({ gameId, pickedTeam: homeTeam })}

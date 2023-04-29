@@ -143,7 +143,7 @@ export const SbWeeklyPublicMoneyPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | SB Week {weekNumber} Public Money</title>
+        <title>Chad's | Sportsbook | Week {weekNumber} Public Money</title>
       </Helmet>
       <WeekSelect
         weekNumber={weekNumber}

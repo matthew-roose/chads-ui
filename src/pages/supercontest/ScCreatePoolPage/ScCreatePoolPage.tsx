@@ -42,7 +42,7 @@ export const ScCreatePoolPage = () => {
   return (
     <>
       <Helmet>
-        <title>Chad's | Create SC Pool</title>
+        <title>Chad's | Supercontest | Create Pool</title>
       </Helmet>
       <div className={classes.title}>Create a Supercontest Pool</div>
       <div className={classes.form}>
