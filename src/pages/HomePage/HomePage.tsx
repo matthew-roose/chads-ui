@@ -29,11 +29,7 @@ export const HomePage = () => {
   const { data: prevWeekSurvivorLosersData } =
     useSvGetPrevWeekLosses(currentWeekNumber);
 
-  if (!currentWeekNumber || !gameLinesData) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const gameRows = gameLinesData.map((gameLine) => {
+  const gameRows = gameLinesData?.map((gameLine) => {
     const { timestamp, homeTeam, awayTeam, homeSpread, homeScore, awayScore } =
       gameLine;
     let displayScore;
@@ -261,22 +257,39 @@ export const HomePage = () => {
         <title>Chad's | Home</title>
       </Helmet>
       <div className={classes.title}>This Week's Games</div>
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.hideForMobile}>Date</th>
-            <th>Matchup</th>
-            <th>Spread</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>{gameRows}</tbody>
-      </Table>
+      {!gameRows && (
+        <div className={classes.gameLineSpinner}>
+          <LoadingSpinner />
+        </div>
+      )}
+      {gameRows && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th className={classes.hideForMobile}>Date</th>
+              <th>Matchup</th>
+              <th>Spread</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>{gameRows}</tbody>
+        </Table>
+      )}
       <Divider className={classes.divider} />
       <div className={classes.title}>Last Week's Best Parlay</div>
       {currentWeekNumber === 1 && (
         <div className={classes.week1Message}>
           Come back next week to see Week 1's best parlay!
+        </div>
+      )}
+      {!prevWeekBestParlayData && currentWeekNumber !== 1 && (
+        <div className={classes.prevWeekSpinner}>
+          <LoadingSpinner />
+        </div>
+      )}
+      {prevWeekBestParlayData?.length === 0 && currentWeekNumber !== 1 && (
+        <div className={classes.week1Message}>
+          No one hit a parlay last week!
         </div>
       )}
       {bestParlayRows.length > 0 && (
@@ -293,11 +306,7 @@ export const HomePage = () => {
           <tbody>{bestParlayRows}</tbody>
         </Table>
       )}
-      {bestParlayRows.length === 0 && currentWeekNumber !== 1 && (
-        <div className={classes.week1Message}>
-          No one hit a parlay last week!
-        </div>
-      )}
+
       <Divider className={classes.divider} />
       <div className={classes.title}>Last Week's Best Picks</div>
       {currentWeekNumber === 1 && (
@@ -305,7 +314,12 @@ export const HomePage = () => {
           Come back next week to see Week 1's best picks!
         </div>
       )}
-      {currentWeekNumber !== 1 && (
+      {!prevWeekBestPicksData && currentWeekNumber !== 1 && (
+        <div className={classes.prevWeekSpinner}>
+          <LoadingSpinner />
+        </div>
+      )}
+      {prevWeekBestPicksData && (
         <Table className={classes.table}>
           <thead>
             <tr>
@@ -325,6 +339,14 @@ export const HomePage = () => {
           Come back next week to see Week 1's losers!
         </div>
       )}
+      {!prevWeekSurvivorLosersData && currentWeekNumber !== 1 && (
+        <div className={classes.prevWeekSpinner}>
+          <LoadingSpinner />
+        </div>
+      )}
+      {prevWeekSurvivorLosersData?.length === 0 && currentWeekNumber !== 1 && (
+        <div className={classes.week1Message}>No one lost last week!</div>
+      )}
       {losersRows.length > 0 && (
         <Table className={classes.table}>
           <thead>
@@ -337,9 +359,6 @@ export const HomePage = () => {
           </thead>
           <tbody>{losersRows}</tbody>
         </Table>
-      )}
-      {losersRows.length === 0 && currentWeekNumber !== 1 && (
-        <div className={classes.week1Message}>No one lost last week!</div>
       )}
     </div>
   );

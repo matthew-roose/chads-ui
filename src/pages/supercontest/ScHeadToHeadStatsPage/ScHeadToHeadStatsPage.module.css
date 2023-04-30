@@ -11,6 +11,13 @@
   text-align: center;
 }
 
+.noStats {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 5rem;
+  text-align: center;
+}
+
 .secondTitle {
   margin-top: 100px;
 }
@@ -25,7 +32,7 @@
 }
 
 .invalidSelections {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
   margin: 4rem;
   text-align: center;

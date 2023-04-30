@@ -31,7 +31,7 @@ export const ScViewPicksPage = () => {
   );
 
   if (!allUsernames || !currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -102,7 +102,7 @@ export const ScViewPicksPage = () => {
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      {!entryWeekData && <LoadingSpinner type="secondary" />}
+      {!entryWeekData && <LoadingSpinner />}
       {entryWeekData && (
         <>
           <div className={classes.title}>

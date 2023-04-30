@@ -11,7 +11,7 @@ export const ScPublicRecordPage = () => {
   const { data: publicEntryWeeksData } = useScGetPublicEntryWeeks();
 
   if (!publicEntryWeeksData) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   let seasonWins = 0;

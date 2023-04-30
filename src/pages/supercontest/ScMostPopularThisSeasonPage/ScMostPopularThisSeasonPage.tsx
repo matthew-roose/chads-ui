@@ -10,7 +10,7 @@ import classes from "./ScMostPopularThisSeasonPage.module.css";
 export const ScMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useScGetSeasonMostPopular();
   if (!seasonMostPopularData) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
   const mostPopularPickRows = seasonMostPopularData.map((pick) => {
     const {
@@ -80,19 +80,24 @@ export const ScMostPopularThisSeasonPage = () => {
         <title>Chad's | Supercontest | Season's Most Popular</title>
       </Helmet>
       <div className={classes.title}>Most Popular Picks of the Season</div>
-      <Table striped highlightOnHover className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.hideForMobile}>Week</th>
-            <th>Pick</th>
-            <th>Opponent</th>
-            <th>Count</th>
-            <th className={classes.hideForMobile}>Score</th>
-            <th>Result</th>
-          </tr>
-        </thead>
-        <tbody>{mostPopularPickRows}</tbody>
-      </Table>
+      {mostPopularPickRows?.length === 0 && (
+        <div className={classes.noPicks}>No picks yet.</div>
+      )}
+      {mostPopularPickRows && mostPopularPickRows.length > 0 && (
+        <Table striped highlightOnHover className={classes.table}>
+          <thead>
+            <tr>
+              <th className={classes.hideForMobile}>Week</th>
+              <th>Pick</th>
+              <th>Opponent</th>
+              <th>Count</th>
+              <th className={classes.hideForMobile}>Score</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>{mostPopularPickRows}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

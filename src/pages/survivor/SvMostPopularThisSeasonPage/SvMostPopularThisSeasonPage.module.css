@@ -11,6 +11,13 @@
   text-align: center;
 }
 
+.noPicks {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 5rem;
+  text-align: center;
+}
+
 .dropdown {
   width: 200px;
   margin: 30px auto;

@@ -51,13 +51,28 @@ export const SbPlaceBetsPage = () => {
     return <div className={classes.message}>Please sign in to place bets.</div>;
   }
 
-  if (!currentWeekGameLines || !currentAccountBalance) {
-    return <LoadingSpinner type="primary" />;
+  const hideBetSlip = showBetSlip ? "" : classes.hideBetSlip;
+
+  if (!currentWeekGameLines) {
+    return (
+      <div className={classes.page}>
+        <Helmet>
+          <title>Chad's | Sportsbook | Place Bets</title>
+        </Helmet>
+        <div className={classes.title}>Place Bets</div>
+        <LoadingSpinner />
+        <Aside className={hideBetSlip} p="sm" width={{ md: 360 }}>
+          <Aside.Section grow component={ScrollArea} type="never">
+            <div className={classes.betSlip}>BET SLIP</div>
+            <LoadingSpinner />
+          </Aside.Section>
+        </Aside>
+      </div>
+    );
   }
 
-  const { availableBalance } = currentAccountBalance;
-
-  const hideBetSlip = showBetSlip ? "" : classes.hideBetSlip;
+  // temporarily define as 0 so loading spinner can be shown in bet slip
+  const { availableBalance } = currentAccountBalance || { availableBalance: 0 };
 
   const isBetLegOnATeam = (betLegType: SbBetLegType) =>
     betLegType === SbBetLegType.HOME_SPREAD ||
@@ -252,6 +267,7 @@ export const SbPlaceBetsPage = () => {
   const toWinAmount = (betOdds - 1) * wager;
 
   const disableBetButton =
+    placeBet.isLoading ||
     wager > availableBalance ||
     wager === 0 ||
     betLegs.length === 0 ||
@@ -352,108 +368,123 @@ export const SbPlaceBetsPage = () => {
       <Aside.Section grow component={ScrollArea} type="never">
         {closeBetSlipButton}
         <div className={classes.betSlip}>BET SLIP</div>
-        {betLegs.length === 0 && (
-          <div className={classes.noBets}>No bets selected.</div>
-        )}
-        {betLegs.length > 1 && (
+        {currentAccountBalance === undefined && <LoadingSpinner />}
+        {currentAccountBalance !== undefined && (
           <>
-            {!betLegs.find(
-              (betLeg) =>
-                betLeg.betLegType === SbBetLegType.HOME_MONEYLINE ||
-                betLeg.betLegType === SbBetLegType.AWAY_MONEYLINE
-            ) && (
-              <div className={classes.betTypeSelect}>
-                <SegmentedControl
-                  size="lg"
-                  radius="xl"
-                  value={parlayOrTeaser}
-                  onChange={(newValue) =>
-                    setParlayOrTeaser(newValue as "Parlay" | "Teaser")
-                  }
-                  data={[
-                    { label: "Parlay", value: "Parlay" },
-                    { label: "Teaser", value: "Teaser" },
-                  ]}
-                />
+            {betLegs.length === 0 && (
+              <div className={classes.noBets}>No bets selected.</div>
+            )}
+            {betLegs.length > 1 && (
+              <>
+                {!betLegs.find(
+                  (betLeg) =>
+                    betLeg.betLegType === SbBetLegType.HOME_MONEYLINE ||
+                    betLeg.betLegType === SbBetLegType.AWAY_MONEYLINE
+                ) && (
+                  <div className={classes.betTypeSelect}>
+                    <SegmentedControl
+                      size="lg"
+                      radius="xl"
+                      value={parlayOrTeaser}
+                      onChange={(newValue) =>
+                        setParlayOrTeaser(newValue as "Parlay" | "Teaser")
+                      }
+                      data={[
+                        { label: "Parlay", value: "Parlay" },
+                        { label: "Teaser", value: "Teaser" },
+                      ]}
+                    />
+                  </div>
+                )}
+                {parlayOrTeaser === "Teaser" && (
+                  <div className={classes.betTypeSelect}>
+                    <NativeSelect
+                      data={[
+                        `6 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[6]
+                        )} per leg)`,
+                        `6.5 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[6.5]
+                        )} per leg)`,
+                        `7 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[7]
+                        )} per leg)`,
+                        `7.5 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[7.5]
+                        )} per leg)`,
+                        `8 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[8]
+                        )} per leg)`,
+                        `8.5 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[8.5]
+                        )} per leg)`,
+                        `9 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[9]
+                        )} per leg)`,
+                        `9.5 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[9.5]
+                        )} per leg)`,
+                        `10 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[10]
+                        )} per leg)`,
+                      ]}
+                      label="Teaser points"
+                      value={`${teaserPoints} (${convertOddsFromDecimal(
+                        TEASER_LEG_ODDS[teaserPoints]
+                      )} per leg)`}
+                      onChange={(newValue) =>
+                        setTeaserPoints(
+                          parseFloat(
+                            newValue.target.value.split(" ")[0]
+                          ) as TeaserPointOption
+                        )
+                      }
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            <div className={classes.betSlipOdds}>
+              {betOdds > 1 &&
+                `${
+                  betLegs.length === 1
+                    ? "Straight"
+                    : parlayOrTeaser === "Parlay"
+                    ? "Parlay"
+                    : "Teaser"
+                } Bet: ${convertOddsFromDecimal(betOdds)}`}
+            </div>
+            <div>{betSlipItems}</div>
+            {betLegs.length > 0 && clearBetSlipButton}
+            <div className={classes.availableBalance}>
+              Available balance: {formatCurrency(availableBalance, 2)}
+            </div>
+            <div className={classes.keepHeight}>
+              {availableBalance >= 1 &&
+                wager !== availableBalance &&
+                allInButton}
+              <NumberInput
+                className={classes.wager}
+                value={wagerDisplayValue}
+                label="Wager"
+                precision={2}
+                error={wagerErrorMessage}
+                min={0}
+                onChange={(newValue) => setWager(newValue || 0)}
+                styles={() => ({
+                  label: { fontSize: "16px" },
+                  input: { fontSize: "16px" },
+                })}
+              />
+            </div>
+            {toWinAmount > 0 && (
+              <div className={classes.toWin}>
+                To win: {formatCurrency(toWinAmount, 2)}
               </div>
             )}
-            {parlayOrTeaser === "Teaser" && (
-              <div className={classes.betTypeSelect}>
-                <NativeSelect
-                  data={[
-                    `6 (${convertOddsFromDecimal(TEASER_LEG_ODDS[6])} per leg)`,
-                    `6.5 (${convertOddsFromDecimal(
-                      TEASER_LEG_ODDS[6.5]
-                    )} per leg)`,
-                    `7 (${convertOddsFromDecimal(TEASER_LEG_ODDS[7])} per leg)`,
-                    `7.5 (${convertOddsFromDecimal(
-                      TEASER_LEG_ODDS[7.5]
-                    )} per leg)`,
-                    `8 (${convertOddsFromDecimal(TEASER_LEG_ODDS[8])} per leg)`,
-                    `8.5 (${convertOddsFromDecimal(
-                      TEASER_LEG_ODDS[8.5]
-                    )} per leg)`,
-                    `9 (${convertOddsFromDecimal(TEASER_LEG_ODDS[9])} per leg)`,
-                    `9.5 (${convertOddsFromDecimal(
-                      TEASER_LEG_ODDS[9.5]
-                    )} per leg)`,
-                    `10 (${convertOddsFromDecimal(
-                      TEASER_LEG_ODDS[10]
-                    )} per leg)`,
-                  ]}
-                  label="Teaser points"
-                  value={`${teaserPoints} (${convertOddsFromDecimal(
-                    TEASER_LEG_ODDS[teaserPoints]
-                  )} per leg)`}
-                  onChange={(newValue) =>
-                    setTeaserPoints(
-                      parseFloat(
-                        newValue.target.value.split(" ")[0]
-                      ) as TeaserPointOption
-                    )
-                  }
-                />
-              </div>
-            )}
+            {placeBetButton}
           </>
         )}
-        <div className={classes.betSlipOdds}>
-          {betOdds > 1 &&
-            `${
-              betLegs.length === 1
-                ? "Straight"
-                : parlayOrTeaser === "Parlay"
-                ? "Parlay"
-                : "Teaser"
-            } Bet: ${convertOddsFromDecimal(betOdds)}`}
-        </div>
-        <div>{betSlipItems}</div>
-        {betLegs.length > 0 && clearBetSlipButton}
-        <div className={classes.availableBalance}>
-          Available balance: {formatCurrency(availableBalance, 2)}
-        </div>
-        <div className={classes.keepHeight}>
-          {availableBalance >= 1 && wager !== availableBalance && allInButton}
-          <NumberInput
-            className={classes.wager}
-            value={wagerDisplayValue}
-            label="Wager"
-            precision={2}
-            error={wagerErrorMessage}
-            min={0}
-            onChange={(newValue) => setWager(newValue || 0)}
-            styles={() => ({
-              label: { fontSize: "16px" },
-              input: { fontSize: "16px" },
-            })}
-          />
-        </div>
-        {toWinAmount > 0 && (
-          <div className={classes.toWin}>
-            To win: {formatCurrency(toWinAmount, 2)}
-          </div>
-        )}
-        {placeBetButton}
         <div className={classes.betSlipBottom}></div>
       </Aside.Section>
     </Aside>

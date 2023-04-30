@@ -20,7 +20,7 @@ export const ScWeeklyUserStatsPage = () => {
   const { data: entryAndEntryWeeksData } = useScGetAllUserEntryWeeks(username);
 
   if (!currentWeekNumber || !allUsernames) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -96,7 +96,7 @@ export const ScWeeklyUserStatsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Weekly Stats
       </div>
-      {!entryAndEntryWeeksData && <LoadingSpinner type="secondary" />}
+      {!entryAndEntryWeeksData && <LoadingSpinner />}
       {entryAndEntryWeeksData !== undefined && (
         <>
           <div className={`${classes.seasonRecord} ${recordClass}`}>

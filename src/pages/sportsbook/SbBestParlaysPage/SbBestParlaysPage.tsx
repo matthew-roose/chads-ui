@@ -12,11 +12,7 @@ export const SbBestParlaysPage = () => {
   const { username: loggedInUsername } = useContext(AuthContext);
   const { data: bestParlaysData } = useSbGetBestParlays();
 
-  if (!bestParlaysData) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const leaderboardRows = bestParlaysData.map((week) => {
+  const leaderboardRows = bestParlaysData?.map((week) => {
     const {
       id,
       username,
@@ -52,18 +48,24 @@ export const SbBestParlaysPage = () => {
         <title>Chad's | Sportsbook | Best Parlays</title>
       </Helmet>
       <div className={classes.title}>Best Parlays</div>
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Week</th>
-            <th>Odds</th>
-            <th className={classes.hideForMobile}>Wager</th>
-            <th className={classes.hideForMobile}>Win</th>
-          </tr>
-        </thead>
-        <tbody>{leaderboardRows}</tbody>
-      </Table>
+      {!leaderboardRows && <LoadingSpinner />}
+      {leaderboardRows?.length === 0 && (
+        <div className={classes.noStats}>No stats yet.</div>
+      )}
+      {leaderboardRows && leaderboardRows.length > 0 && (
+        <Table className={classes.table}>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Week</th>
+              <th>Odds</th>
+              <th className={classes.hideForMobile}>Wager</th>
+              <th className={classes.hideForMobile}>Win</th>
+            </tr>
+          </thead>
+          <tbody>{leaderboardRows}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

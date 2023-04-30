@@ -11,6 +11,14 @@
   text-align: center;
 }
 
+.gameLineSpinner {
+  margin: 10rem auto 15rem;
+}
+
+.prevWeekSpinner {
+  margin: 5rem auto 10rem;
+}
+
 .row {
   font-weight: bold;
 }

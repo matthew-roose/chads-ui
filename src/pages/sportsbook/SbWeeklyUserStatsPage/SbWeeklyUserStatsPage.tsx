@@ -13,13 +13,13 @@ export const SbWeeklyUserStatsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: weeklyUserStatsData } = useSbGetAllWeeklyUserStats(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
-  }
+  // if (!allUsernames) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
+  // if (!username || !allUsernames.includes(username)) {
+  //   return <div>Invalid username in URL.</div>;
+  // }
 
   const getNavigateUrl = (username: string | null) => {
     if (!username) {
@@ -28,24 +28,37 @@ export const SbWeeklyUserStatsPage = () => {
     return `/sportsbook/${username}/stats/weekly`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Weekly
-          Stats
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username || "")}{" "}
+          Weekly Stats
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Weekly Stats
-      </div>
-      {!weeklyUserStatsData && <LoadingSpinner type="secondary" />}
-      {weeklyUserStatsData && <SbWeeklyStatsTable rows={weeklyUserStatsData} />}
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Weekly Stats
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
+      {!weeklyUserStatsData && <LoadingSpinner />}
+      {!isInvalidUsername && weeklyUserStatsData?.length === 0 && (
+        <div className={classes.message}>No stats yet.</div>
+      )}
+      {weeklyUserStatsData && weeklyUserStatsData.length > 0 && (
+        <SbWeeklyStatsTable rows={weeklyUserStatsData} />
+      )}
     </div>
   );
 };

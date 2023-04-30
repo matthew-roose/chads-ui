@@ -7,17 +7,20 @@ import classes from "./SbWeeklyPublicStatsPage.module.css";
 export const SbWeeklyPublicStatsPage = () => {
   const { data: weeklyPublicStatsData } = useSbGetPublicWeeklyStats();
 
-  if (!weeklyPublicStatsData) {
-    return <LoadingSpinner type="primary" />;
-  }
-
   return (
     <div className={classes.page}>
       <Helmet>
         <title>Chad's | Sportsbook | Public Weekly Stats</title>
       </Helmet>
       <div className={classes.title}>Public Weekly Stats</div>
-      <SbWeeklyStatsTable rows={weeklyPublicStatsData} />
+      {!weeklyPublicStatsData && <LoadingSpinner />}
+      {weeklyPublicStatsData?.length === 0 && (
+        <div className={classes.noStats}>No stats yet.</div>
+      )}
+      {weeklyPublicStatsData !== undefined &&
+        weeklyPublicStatsData.length > 0 && (
+          <SbWeeklyStatsTable rows={weeklyPublicStatsData} />
+        )}
     </div>
   );
 };

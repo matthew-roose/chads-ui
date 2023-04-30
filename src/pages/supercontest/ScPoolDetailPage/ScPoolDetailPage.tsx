@@ -32,7 +32,7 @@ export const ScPoolDetailPage = () => {
   }, [currentWeekNumber]);
 
   if (!currentWeekNumber || !poolDetailData || !viewingWeek) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

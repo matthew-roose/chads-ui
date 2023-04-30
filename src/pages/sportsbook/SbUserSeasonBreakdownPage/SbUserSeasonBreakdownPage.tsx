@@ -15,13 +15,13 @@ export const SbUserSeasonBreakdownPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: seasonBreakdownData } = useSbGetUserSeasonBreakdown(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
-  }
+  // if (!allUsernames) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
+  // if (!username || !allUsernames.includes(username)) {
+  //   return <div>Invalid username in URL.</div>;
+  // }
 
   let pickedTeamDataArray;
   let fadedTeamDataArray;
@@ -32,33 +32,41 @@ export const SbUserSeasonBreakdownPage = () => {
     // turn maps into arrays
     const pickedTeamData = seasonBreakdownData.winsAndLossesByPickedTeam;
     const pickedTeams = Object.keys(pickedTeamData);
-    pickedTeamDataArray = pickedTeams.map((team) => {
-      return {
-        team,
-        ...pickedTeamData[team as keyof typeof AllTeamLogos],
-      };
-    });
+    pickedTeamDataArray = pickedTeams
+      .map((team) => {
+        return {
+          team,
+          ...pickedTeamData[team as keyof typeof AllTeamLogos],
+        };
+      })
+      .sort((a, b) => b.amountWagered - a.amountWagered);
     const fadedTeamData = seasonBreakdownData.winsAndLossesByFadedTeam;
     const fadedTeams = Object.keys(fadedTeamData);
-    fadedTeamDataArray = fadedTeams.map((team) => {
-      return {
-        team,
-        ...fadedTeamData[team as keyof typeof AllTeamLogos],
-      };
-    });
+    fadedTeamDataArray = fadedTeams
+      .map((team) => {
+        return {
+          team,
+          ...fadedTeamData[team as keyof typeof AllTeamLogos],
+        };
+      })
+      .sort((a, b) => b.amountWagered - a.amountWagered);
     const totalData = seasonBreakdownData.winsAndLossesByTotal;
     const totals = Object.keys(totalData);
-    totalDataArray = totals.map((total) => {
-      return {
-        total,
-        ...totalData[total],
-      };
-    });
+    totalDataArray = totals
+      .map((total) => {
+        return {
+          total,
+          ...totalData[total],
+        };
+      })
+      .sort((a, b) => b.amountWagered - a.amountWagered);
     const betTypeData = seasonBreakdownData.winsAndLossesByBetType;
     const betTypes = Object.keys(betTypeData);
-    betTypeDataArray = betTypes.map((betType) => {
-      return { betType, ...betTypeData[betType] };
-    });
+    betTypeDataArray = betTypes
+      .map((betType) => {
+        return { betType, ...betTypeData[betType] };
+      })
+      .sort((a, b) => b.amountWagered - a.amountWagered);
   }
 
   const getNavigateUrl = (username: string | null) => {
@@ -68,65 +76,80 @@ export const SbUserSeasonBreakdownPage = () => {
     return `/sportsbook/${username}/stats/season`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+  const hasPickedATeam =
+    pickedTeamDataArray !== undefined && pickedTeamDataArray.length > 0;
+  const hasPickedATotal =
+    totalDataArray !== undefined && totalDataArray[0].amountWagered > 0;
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Season
-          Breakdown
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username || "")}{" "}
+          Season Breakdown
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Season Breakdown
-      </div>
-      {!seasonBreakdownData && <LoadingSpinner type="secondary" />}
-      {seasonBreakdownData && (
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Season Breakdown
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
+      {!seasonBreakdownData && <LoadingSpinner />}
+      {!isInvalidUsername && (hasPickedATeam || hasPickedATotal) && (
         <div className={classes.parlayMessage}>
           *For parlay legs, the amount won is calculated as the wager multipled
           by the leg's individual odds.
         </div>
       )}
-
-      {pickedTeamDataArray !== undefined && (
+      {!isInvalidUsername &&
+        seasonBreakdownData &&
+        !hasPickedATeam &&
+        !hasPickedATotal && <div className={classes.message}>No bets yet.</div>}
+      {hasPickedATeam && (
         <>
           <SbSeasonBreakdownTable
             caption="Favorite Teams to Bet"
             firstColumnName="Team"
-            rows={pickedTeamDataArray}
+            rows={pickedTeamDataArray || []}
           />
           <Divider className={classes.divider} />
         </>
       )}
-      {fadedTeamDataArray !== undefined && (
+      {hasPickedATeam && (
         <>
           <SbSeasonBreakdownTable
             caption="Favorite Teams to Fade"
             firstColumnName="Team"
-            rows={fadedTeamDataArray}
+            rows={fadedTeamDataArray || []}
           />
           <Divider className={classes.divider} />
         </>
       )}
-      {totalDataArray !== undefined && (
+      {hasPickedATotal && (
         <>
           <SbSeasonBreakdownTable
             caption="Breakdown by Total"
             firstColumnName="Total"
-            rows={totalDataArray}
+            rows={totalDataArray || []}
           />
           <Divider className={classes.divider} />
         </>
       )}
-      {betTypeDataArray !== undefined && (
+      {(hasPickedATeam || hasPickedATotal) && (
         <SbSeasonBreakdownTable
           caption="Breakdown by Bet Type"
           firstColumnName="Bet Type"
-          rows={betTypeDataArray}
+          rows={betTypeDataArray || []}
         />
       )}
     </div>

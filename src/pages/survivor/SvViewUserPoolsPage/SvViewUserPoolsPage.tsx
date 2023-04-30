@@ -14,7 +14,7 @@ export const SvViewUserPoolsPage = () => {
   const { data: userPoolsData } = useSvGetUserPools(username);
 
   if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -56,12 +56,10 @@ export const SvViewUserPoolsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Pools
       </div>
-      {!userPoolsData && <LoadingSpinner type="secondary" />}
+      {!userPoolsData && <LoadingSpinner />}
       {pools !== undefined && pools}
       {pools?.length === 0 && (
-        <div className={classes.message}>
-          {username} hasn't joined any pools yet.
-        </div>
+        <div className={classes.message}>No pools yet.</div>
       )}
     </div>
   );

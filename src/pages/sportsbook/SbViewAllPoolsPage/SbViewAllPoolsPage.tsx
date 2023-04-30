@@ -12,11 +12,7 @@ export const SbViewAllPoolsPage = () => {
   const { data: allPoolsData } = useSbGetAllPools();
   const { data: allJoinedPoolsData } = useSbGetUserPools(loggedInUsername);
 
-  if (!allPoolsData) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const pools = allPoolsData.map((pool) => {
+  const pools = allPoolsData?.map((pool) => {
     let alreadyJoined = false;
     if (allJoinedPoolsData) {
       alreadyJoined =
@@ -44,6 +40,10 @@ export const SbViewAllPoolsPage = () => {
         <title>Chad's | Sportsbook | All Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Sportsbook Pools</div>
+      {!pools && <LoadingSpinner />}
+      {pools?.length === 0 && (
+        <div className={classes.noPools}>No pools yet.</div>
+      )}
       {pools}
     </div>
   );

@@ -7,11 +7,7 @@ import classes from "./SbBestWeeksPage.module.css";
 export const SbBestWeeksPage = () => {
   const { data: bestWeeksData } = useSbGetBestWeeks();
 
-  if (!bestWeeksData) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const leaderboardRows = bestWeeksData.filter((week) => week.profit > 0);
+  const leaderboardRows = bestWeeksData?.filter((week) => week.profit > 0);
 
   return (
     <div className={classes.page}>
@@ -19,11 +15,17 @@ export const SbBestWeeksPage = () => {
         <title>Chad's | Sportsbook | Best Weeks</title>
       </Helmet>
       <div className={classes.title}>Biggest Winning Weeks</div>
-      <SbWeeklyLeaderboard
-        rows={leaderboardRows}
-        showWeekColumn
-        showParlayColumn
-      />
+      {!leaderboardRows && <LoadingSpinner />}
+      {leaderboardRows?.length === 0 && (
+        <div className={classes.noStats}>No stats yet.</div>
+      )}
+      {leaderboardRows && leaderboardRows.length > 0 && (
+        <SbWeeklyLeaderboard
+          rows={leaderboardRows}
+          showWeekColumn
+          showParlayColumn
+        />
+      )}
     </div>
   );
 };

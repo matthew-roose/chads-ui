@@ -14,17 +14,10 @@ export const SbWeeklyLeaderboardPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
-    (i + 1).toString()
+  const allWeekNumbers = Array.from(
+    { length: currentWeekNumber || 0 },
+    (_, i) => (i + 1).toString()
   );
-
-  if (!weekNumber || !allWeekNumbers.includes(weekNumber)) {
-    return <div>Invalid week number in URL.</div>;
-  }
 
   const getNavigateUrl = (weekNumber: string | null) => {
     if (!weekNumber) {
@@ -33,19 +26,30 @@ export const SbWeeklyLeaderboardPage = () => {
     return `/sportsbook/leaderboard/week/${weekNumber}`;
   };
 
+  const isInvalidWeekNumber =
+    !weekNumber || (currentWeekNumber && !allWeekNumbers.includes(weekNumber));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>Chad's | Sportsbook | Week {weekNumber} Leaderboard</title>
       </Helmet>
       <WeekSelect
-        weekNumber={weekNumber}
+        weekNumber={weekNumber || ""}
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>Week {weekNumber} Leaderboard</div>
-      {!weeklyLeaderboardData && <LoadingSpinner type="secondary" />}
-      {weeklyLeaderboardData !== undefined && (
+      {!isInvalidWeekNumber && (
+        <div className={classes.title}>Week {weekNumber} Leaderboard</div>
+      )}
+      {isInvalidWeekNumber && (
+        <div className={classes.message}>Invalid week number in URL.</div>
+      )}
+      {!weeklyLeaderboardData && <LoadingSpinner />}
+      {!isInvalidWeekNumber && weeklyLeaderboardData?.length === 0 && (
+        <div className={classes.message}>No stats yet.</div>
+      )}
+      {weeklyLeaderboardData && weeklyLeaderboardData.length > 0 && (
         <SbWeeklyLeaderboard
           rows={weeklyLeaderboardData}
           showWeekColumn={false}

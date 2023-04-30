@@ -13,14 +13,6 @@ export const SbViewUserPoolsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: userPoolsData } = useSbGetUserPools(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div className={classes.message}>Invalid username in URL.</div>;
-  }
-
   const pools = userPoolsData?.pools
     .sort((a, b) => a.poolName.localeCompare(b.poolName))
     .map((pool) => (
@@ -43,27 +35,34 @@ export const SbViewUserPoolsPage = () => {
     return `/sportsbook/${username}/pools`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Pools
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username || "")}{" "}
+          Pools
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Sportsbook Pools
-      </div>
-      {!userPoolsData && <LoadingSpinner type="secondary" />}
-      {pools !== undefined && pools}
-      {pools?.length === 0 && (
-        <div className={classes.message}>
-          {username} hasn't joined any pools yet.
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Sportsbook Pools
         </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
+      {!userPoolsData && <LoadingSpinner />}
+      {pools}
+      {!isInvalidUsername && pools?.length === 0 && (
+        <div className={classes.message}>No pools yet.</div>
       )}
     </div>
   );

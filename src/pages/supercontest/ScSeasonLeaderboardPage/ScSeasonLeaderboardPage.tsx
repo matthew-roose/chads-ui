@@ -10,7 +10,7 @@ export const ScSeasonLeaderboardPage = () => {
   const { data: seasonLeaderboardData } = useScGetSeasonLeaderboard();
 
   if (!currentWeekNumber || !seasonLeaderboardData) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   const seasonLeaderboardRows = seasonLeaderboardData

@@ -26,7 +26,7 @@ export const SvViewPicksPage = () => {
   );
 
   if (!allUsernames || !currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -134,8 +134,11 @@ export const SvViewPicksPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Picks
       </div>
-      {!entryData && <LoadingSpinner type="secondary" />}
-      {rows !== undefined && (
+      {!entryData && <LoadingSpinner />}
+      {rows?.length === 0 && (
+        <div className={classes.noPicks}>No picks yet.</div>
+      )}
+      {rows && rows.length > 0 && (
         <Table className={classes.table}>
           <thead>
             <tr>

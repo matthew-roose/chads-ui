@@ -32,21 +32,10 @@ export const SbViewBetsPage = () => {
     weekNumber ? +weekNumber : undefined
   );
 
-  if (!allUsernames || !currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
-
-  const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
-    (i + 1).toString()
+  const allWeekNumbers = Array.from(
+    { length: currentWeekNumber || 0 },
+    (_, i) => (i + 1).toString()
   );
-
-  if (!weekNumber || !allWeekNumbers.includes(weekNumber)) {
-    return <div>Invalid week number in URL.</div>;
-  }
 
   const betRows = userBetData?.map((bet) => {
     const {
@@ -216,29 +205,44 @@ export const SbViewBetsPage = () => {
     return `/sportsbook/bet-history/${username}/week/${weekNumber}`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+  const isInvalidWeekNumber =
+    !weekNumber || (currentWeekNumber && !allWeekNumbers.includes(weekNumber));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Sportsbook | {formatUsernamePossessiveForm(username)} Week{" "}
-          {weekNumber} Bets
+          Chad's | Sportsbook | {formatUsernamePossessiveForm(username || "")}{" "}
+          Week {weekNumber} Bets
         </title>
       </Helmet>
       <UserAndWeekSelects
-        username={username}
-        allUsernames={allUsernames}
-        weekNumber={weekNumber}
+        username={username || ""}
+        allUsernames={allUsernames || []}
+        weekNumber={weekNumber || ""}
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Week {weekNumber} Bets
-      </div>
-      {!userBetData && <LoadingSpinner type="secondary" />}
-      {userBetData !== undefined && userBetData.length === 0 && (
-        <div className={classes.noBets}>No bets.</div>
+      {!isInvalidUsername && !isInvalidWeekNumber && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Week {weekNumber} Bets
+        </div>
       )}
-      {userBetData !== undefined && userBetData.length > 0 && (
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
+      {!isInvalidUsername && isInvalidWeekNumber && (
+        <div className={classes.message}>Invalid week number in URL.</div>
+      )}
+      {!userBetData && <LoadingSpinner />}
+      {!isInvalidUsername &&
+        !isInvalidWeekNumber &&
+        userBetData?.length === 0 && (
+          <div className={classes.message}>No bets.</div>
+        )}
+      {userBetData && userBetData.length > 0 && (
         <Table className={classes.table}>
           <thead>
             <tr>

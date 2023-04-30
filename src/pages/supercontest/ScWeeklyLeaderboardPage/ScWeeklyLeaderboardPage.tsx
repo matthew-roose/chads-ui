@@ -15,7 +15,7 @@ export const ScWeeklyLeaderboardPage = () => {
   );
 
   if (!currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -60,7 +60,7 @@ export const ScWeeklyLeaderboardPage = () => {
         getNavigateUrl={getNavigateUrl}
       />
       <div className={classes.title}>Week {weekNumber} Leaderboard</div>
-      {!weeklyLeaderboardData && <LoadingSpinner type="secondary" />}
+      {!weeklyLeaderboardData && <LoadingSpinner />}
       {weeklyLeaderboardRows !== undefined && (
         <ScLeaderboard
           rows={weeklyLeaderboardRows}

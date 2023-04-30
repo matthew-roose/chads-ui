@@ -14,7 +14,7 @@ export const ScMostPickedTeamsPage = () => {
   const { data: mostPickedTeamsData } = useScGetUserPickStats(username);
 
   if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -49,7 +49,7 @@ export const ScMostPickedTeamsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Most Picked Teams
       </div>
-      {!mostPickedTeamsData && <LoadingSpinner type="secondary" />}
+      {!mostPickedTeamsData && <LoadingSpinner />}
       {teamRows && <ScPickedAndFadedTable rows={teamRows} />}
     </div>
   );

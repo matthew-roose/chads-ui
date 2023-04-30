@@ -10,3 +10,10 @@
   margin-bottom: 30px;
   text-align: center;
 }
+
+.noStats {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 5rem;
+  text-align: center;
+}

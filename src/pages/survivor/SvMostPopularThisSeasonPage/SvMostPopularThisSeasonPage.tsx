@@ -9,7 +9,7 @@ import classes from "./SvMostPopularThisSeasonPage.module.css";
 export const SvMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useSvGetSeasonMostPopular();
   if (!seasonMostPopularData) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   const mostPopularPickRows = seasonMostPopularData.map((pick) => {
@@ -71,19 +71,24 @@ export const SvMostPopularThisSeasonPage = () => {
         <title>Chad's | Survivor | Season's Most Popular</title>
       </Helmet>
       <div className={classes.title}>Most Popular Picks of the Season</div>
-      <Table striped highlightOnHover className={classes.table}>
-        <thead>
-          <tr>
-            <th>Week</th>
-            <th>Team</th>
-            <th className={classes.hideForMobile}>Opponent</th>
-            <th>Count</th>
-            <th className={classes.hideForMobile}>Score</th>
-            <th>Result</th>
-          </tr>
-        </thead>
-        <tbody>{mostPopularPickRows}</tbody>
-      </Table>
+      {mostPopularPickRows.length === 0 && (
+        <div className={classes.noPicks}>No picks yet.</div>
+      )}
+      {mostPopularPickRows.length > 0 && (
+        <Table striped highlightOnHover className={classes.table}>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Team</th>
+              <th className={classes.hideForMobile}>Opponent</th>
+              <th>Count</th>
+              <th className={classes.hideForMobile}>Score</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>{mostPopularPickRows}</tbody>
+        </Table>
+      )}
     </div>
   );
 };

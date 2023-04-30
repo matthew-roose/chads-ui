@@ -18,7 +18,7 @@ export const ScMostPopularThisWeekPage = () => {
   );
 
   if (!currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -109,8 +109,11 @@ export const ScMostPopularThisWeekPage = () => {
       <div className={classes.title}>
         Most Popular Picks of Week {weekNumber}
       </div>
-      {!weekMostPopularData && <LoadingSpinner type="secondary" />}
-      {weekMostPopularData && (
+      {!weekMostPopularData && <LoadingSpinner />}
+      {mostPopularPickRows?.length === 0 && (
+        <div className={classes.noPicks}>No picks yet.</div>
+      )}
+      {mostPopularPickRows && mostPopularPickRows.length > 0 && (
         <Table striped highlightOnHover className={classes.table}>
           <thead>
             <tr>

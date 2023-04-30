@@ -16,8 +16,12 @@ export const formatTimestamp = (timestamp: number, showWeekday: boolean) =>
 export const formatEnum = (enumValue: string) =>
   `${enumValue.slice(0, 1)}${enumValue.slice(1).toLocaleLowerCase()}`;
 
-export const formatUsernamePossessiveForm = (username: string) =>
-  `${username}'${username.slice(-1) === "s" ? "" : "s"}`;
+export const formatUsernamePossessiveForm = (username: string) => {
+  if (username === "") {
+    return "";
+  }
+  return `${username}'${username.slice(-1) === "s" ? "" : "s"}`;
+};
 
 export const formatRecord = (wins: number, losses: number, pushes: number) =>
   `${wins}-${losses}${pushes > 0 ? `-${pushes}` : ""}`;

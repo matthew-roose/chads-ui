@@ -14,7 +14,7 @@ export const ScMostFadedTeamsPage = () => {
   const { data: mostFadedTeamsData } = useScGetUserFadeStats(username);
 
   if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!username || !allUsernames.includes(username)) {
@@ -49,7 +49,7 @@ export const ScMostFadedTeamsPage = () => {
       <div className={classes.title}>
         {formatUsernamePossessiveForm(username)} Most Faded Teams
       </div>
-      {!mostFadedTeamsData && <LoadingSpinner type="secondary" />}
+      {!mostFadedTeamsData && <LoadingSpinner />}
       {teamRows && <ScPickedAndFadedTable rows={teamRows} />}
     </div>
   );

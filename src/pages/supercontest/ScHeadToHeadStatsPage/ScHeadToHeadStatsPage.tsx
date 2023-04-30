@@ -38,7 +38,7 @@ export const ScHeadToHeadStatsPage = () => {
     useScGetHeadToHeadStats(firstUsername, secondUsername);
 
   if (!allUsernames) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!headToHeadData) {
@@ -291,9 +291,12 @@ export const ScHeadToHeadStatsPage = () => {
           Please choose two different users.
         </div>
       )}
-      {!invalidSelections && isHeadToHeadDataLoading && (
-        <LoadingSpinner type="secondary" />
-      )}
+      {!invalidSelections && isHeadToHeadDataLoading && <LoadingSpinner />}
+      {!isHeadToHeadDataLoading &&
+        opposingPicks.length === 0 &&
+        aligningPicks.length === 0 && (
+          <div className={classes.noStats}>No stats yet.</div>
+        )}
       {!isHeadToHeadDataLoading && opposingPicks.length > 0 && (
         <>
           <div className={classes.title}>

@@ -33,7 +33,7 @@ export const SbPoolDetailPage = () => {
   const joinPool = useSbJoinPool();
 
   if (!poolName || !currentWeekNumber || !poolDetailData) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   if (!viewingWeek) {
@@ -159,7 +159,7 @@ export const SbPoolDetailPage = () => {
       <div className={classes.leaderboardTitle}>
         Week {viewingWeek} Leaderboard
       </div>
-      {!weeklyLeaderboardData && <LoadingSpinner type="secondary" />}
+      {!weeklyLeaderboardData && <LoadingSpinner />}
       {weeklyLeaderboardRows && (
         <SbWeeklyLeaderboard
           rows={weeklyLeaderboardRows}

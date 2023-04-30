@@ -20,17 +20,10 @@ export const SbWeeklyPublicMoneyPage = () => {
     weekNumber ? +weekNumber : undefined
   );
 
-  if (!currentWeekNumber) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
-    (i + 1).toString()
+  const allWeekNumbers = Array.from(
+    { length: currentWeekNumber || 0 },
+    (_, i) => (i + 1).toString()
   );
-
-  if (!weekNumber || !allWeekNumbers.includes(weekNumber)) {
-    return <div>Invalid week number in URL.</div>;
-  }
 
   const publicMoneyRows = publicMoneyData
     ?.sort((a, b) => a.gameId - b.gameId)
@@ -140,21 +133,30 @@ export const SbWeeklyPublicMoneyPage = () => {
     return `/sportsbook/public-money/week/${weekNumber}`;
   };
 
+  const isInvalidWeekNumber =
+    !weekNumber || (currentWeekNumber && !allWeekNumbers.includes(weekNumber));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>Chad's | Sportsbook | Week {weekNumber} Public Money</title>
       </Helmet>
       <WeekSelect
-        weekNumber={weekNumber}
+        weekNumber={weekNumber || ""}
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>Week {weekNumber} Public Money</div>
-      {(!publicMoneyData || !gameLinesData) && (
-        <LoadingSpinner type="secondary" />
+      {!isInvalidWeekNumber && (
+        <div className={classes.title}>Week {weekNumber} Public Money</div>
       )}
-      {publicMoneyData && gameLinesData && (
+      {isInvalidWeekNumber && (
+        <div className={classes.message}>Invalid week number in URL.</div>
+      )}
+      {(!publicMoneyData || !gameLinesData) && <LoadingSpinner />}
+      {!isInvalidWeekNumber && publicMoneyRows?.length === 0 && (
+        <div className={classes.message}>No stats yet.</div>
+      )}
+      {publicMoneyRows && publicMoneyRows.length > 0 && (
         <Table className={classes.table}>
           <thead>
             <tr>

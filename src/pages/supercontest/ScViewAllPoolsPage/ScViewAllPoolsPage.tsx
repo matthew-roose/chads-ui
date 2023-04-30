@@ -13,7 +13,7 @@ export const ScViewAllPoolsPage = () => {
   const { data: allJoinedPoolsData } = useScGetUserPools(loggedInUsername);
 
   if (!allPoolsData) {
-    return <LoadingSpinner type="primary" />;
+    return <LoadingSpinner />;
   }
 
   const pools = allPoolsData.map((pool) => {
@@ -42,6 +42,9 @@ export const ScViewAllPoolsPage = () => {
         <title>Chad's | Supercontest | All Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Supercontest Pools</div>
+      {pools.length === 0 && (
+        <div className={classes.noPools}>No pools yet.</div>
+      )}
       {pools}
     </div>
   );

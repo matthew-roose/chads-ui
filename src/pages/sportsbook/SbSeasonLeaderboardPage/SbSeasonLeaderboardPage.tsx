@@ -7,13 +7,9 @@ import classes from "./SbSeasonLeaderboardPage.module.css";
 export const SbSeasonLeaderboardPage = () => {
   const { data: seasonLeaderboardData } = useSbGetSeasonLeaderboard();
 
-  if (!seasonLeaderboardData) {
-    return <LoadingSpinner type="primary" />;
-  }
-
-  const seasonLeaderboardRows = seasonLeaderboardData.sort(
-    (a, b) => b.winLossTotal - a.winLossTotal
-  );
+  const seasonLeaderboardRows = seasonLeaderboardData
+    ?.filter((user) => user.winLossTotal !== 0)
+    .sort((a, b) => b.winLossTotal - a.winLossTotal);
 
   return (
     <div className={classes.page}>
@@ -21,7 +17,13 @@ export const SbSeasonLeaderboardPage = () => {
         <title>Chad's | Sportsbook | Season Leaderboard</title>
       </Helmet>
       <div className={classes.title}>Season Leaderboard</div>
-      <SbSeasonLeaderboard rows={seasonLeaderboardRows} />
+      {!seasonLeaderboardRows && <LoadingSpinner />}
+      {seasonLeaderboardRows?.length === 0 && (
+        <div className={classes.noStats}>No stats yet.</div>
+      )}
+      {seasonLeaderboardRows && seasonLeaderboardRows.length > 0 && (
+        <SbSeasonLeaderboard rows={seasonLeaderboardRows} />
+      )}
     </div>
   );
 };
