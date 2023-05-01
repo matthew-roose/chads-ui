@@ -7,5 +7,6 @@ export interface ScEntryWeekAndNullablePicks {
   weekWins: number;
   weekLosses: number;
   weekPushes: number;
+  hasMadePicks: boolean;
   picks: ScNullablePickGet[];
 }

@@ -20,7 +20,8 @@ export const ScWeeklyLeaderboardPage = () => {
   );
 
   const weeklyLeaderboardRows = weeklyLeaderboardData
-    ?.sort((a, b) => a.username.localeCompare(b.username))
+    ?.filter((entryWeek) => entryWeek.hasMadePicks)
+    .sort((a, b) => a.username.localeCompare(b.username))
     .sort((a, b) => a.weekLosses - b.weekLosses)
     .sort((a, b) => b.weekScore - a.weekScore)
     .map((entryWeek) => {
@@ -62,12 +63,17 @@ export const ScWeeklyLeaderboardPage = () => {
         <div className={classes.message}>Invalid week number in URL.</div>
       )}
       {!weeklyLeaderboardData && <LoadingSpinner />}
-      {!isInvalidWeekNumber && weeklyLeaderboardRows && (
-        <ScLeaderboard
-          rows={weeklyLeaderboardRows}
-          linkedWeekNumber={parseInt(weekNumber || "1")}
-        />
+      {!isInvalidWeekNumber && weeklyLeaderboardRows?.length === 0 && (
+        <div className={classes.message}>No picks yet.</div>
       )}
+      {!isInvalidWeekNumber &&
+        weeklyLeaderboardRows &&
+        weeklyLeaderboardRows.length > 0 && (
+          <ScLeaderboard
+            rows={weeklyLeaderboardRows}
+            linkedWeekNumber={parseInt(weekNumber || "1")}
+          />
+        )}
     </div>
   );
 };

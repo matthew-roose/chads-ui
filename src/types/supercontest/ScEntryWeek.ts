@@ -5,4 +5,5 @@ export interface ScEntryWeek {
   weekWins: number;
   weekLosses: number;
   weekPushes: number;
+  hasMadePicks: boolean;
 }
