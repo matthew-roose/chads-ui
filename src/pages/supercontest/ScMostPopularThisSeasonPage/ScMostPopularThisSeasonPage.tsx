@@ -9,10 +9,8 @@ import classes from "./ScMostPopularThisSeasonPage.module.css";
 
 export const ScMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useScGetSeasonMostPopular();
-  if (!seasonMostPopularData) {
-    return <LoadingSpinner />;
-  }
-  const mostPopularPickRows = seasonMostPopularData.map((pick) => {
+
+  const mostPopularPickRows = seasonMostPopularData?.map((pick) => {
     const {
       weekNumber,
       pickedTeam,
@@ -80,8 +78,9 @@ export const ScMostPopularThisSeasonPage = () => {
         <title>Chad's | Supercontest | Season's Most Popular</title>
       </Helmet>
       <div className={classes.title}>Most Popular Picks of the Season</div>
+      {!seasonMostPopularData && <LoadingSpinner />}
       {mostPopularPickRows?.length === 0 && (
-        <div className={classes.noPicks}>No picks yet.</div>
+        <div className={classes.message}>No picks yet.</div>
       )}
       {mostPopularPickRows && mostPopularPickRows.length > 0 && (
         <Table striped highlightOnHover className={classes.table}>

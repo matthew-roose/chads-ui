@@ -160,6 +160,11 @@ export const supercontestRoutes = [
     element={<ScWeeklyUserStatsPage />}
   />,
   <Route
+    path="/supercontest/h2h-stats"
+    key="sc-h2h-stats"
+    element={<ScHeadToHeadStatsPage />}
+  />,
+  <Route
     path="/supercontest/:username/stats/most-picked"
     key="sc-most-picked"
     element={<ScMostPickedTeamsPage />}
@@ -173,11 +178,6 @@ export const supercontestRoutes = [
     path="/supercontest/public-picks/record"
     key="sc-public-record"
     element={<ScPublicRecordPage />}
-  />,
-  <Route
-    path="/supercontest/h2h-stats"
-    key="sc-h2h-stats"
-    element={<ScHeadToHeadStatsPage />}
   />,
   <Route
     path="/supercontest/public-picks/week/:weekNumber"

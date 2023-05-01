@@ -13,14 +13,6 @@ export const SbWeeklyUserStatsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: weeklyUserStatsData } = useSbGetAllWeeklyUserStats(username);
 
-  // if (!allUsernames) {
-  //   return <LoadingSpinner />;
-  // }
-
-  // if (!username || !allUsernames.includes(username)) {
-  //   return <div>Invalid username in URL.</div>;
-  // }
-
   const getNavigateUrl = (username: string | null) => {
     if (!username) {
       return "/";

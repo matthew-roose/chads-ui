@@ -10,17 +10,17 @@ export const ScPublicRecordPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: publicEntryWeeksData } = useScGetPublicEntryWeeks();
 
-  if (!publicEntryWeeksData) {
-    return <LoadingSpinner />;
-  }
+  // if (!publicEntryWeeksData) {
+  //   return <LoadingSpinner />;
+  // }
 
   let seasonWins = 0;
   let seasonLosses = 0;
   let seasonPushes = 0;
 
-  const entryWeeksSoFar = publicEntryWeeksData.slice(0, currentWeekNumber);
+  const entryWeeksSoFar = publicEntryWeeksData?.slice(0, currentWeekNumber);
 
-  const rows = entryWeeksSoFar.map((week) => {
+  const rows = entryWeeksSoFar?.map((week) => {
     const { weekNumber, weekWins, weekLosses, weekPushes } = week;
     seasonWins += weekWins;
     seasonLosses += weekLosses;
@@ -59,19 +59,24 @@ export const ScPublicRecordPage = () => {
         <title>Chad's | Supercontest | Public Record</title>
       </Helmet>
       <div className={classes.title}>Public Record</div>
-      <div className={`${classes.seasonRecord} ${recordClass}`}>
-        Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}
-      </div>
-      <Table striped highlightOnHover className={classes.table}>
-        <thead>
-          <tr>
-            <th>Week number</th>
-            <th>Record</th>
-            <th>Win pct.</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+      {!publicEntryWeeksData && <LoadingSpinner />}
+      {publicEntryWeeksData && (
+        <>
+          <div className={`${classes.seasonRecord} ${recordClass}`}>
+            Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}
+          </div>
+          <Table striped highlightOnHover className={classes.table}>
+            <thead>
+              <tr>
+                <th>Week number</th>
+                <th>Record</th>
+                <th>Win pct.</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </>
+      )}
     </div>
   );
 };

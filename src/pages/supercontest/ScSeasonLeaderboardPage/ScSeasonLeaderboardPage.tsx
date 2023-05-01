@@ -9,12 +9,8 @@ export const ScSeasonLeaderboardPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: seasonLeaderboardData } = useScGetSeasonLeaderboard();
 
-  if (!currentWeekNumber || !seasonLeaderboardData) {
-    return <LoadingSpinner />;
-  }
-
   const seasonLeaderboardRows = seasonLeaderboardData
-    .sort((a, b) => a.username.localeCompare(b.username))
+    ?.sort((a, b) => a.username.localeCompare(b.username))
     .sort((a, b) => a.seasonLosses - b.seasonLosses)
     .sort((a, b) => b.seasonScore - a.seasonScore)
     .map((entry) => {
@@ -35,10 +31,13 @@ export const ScSeasonLeaderboardPage = () => {
         <title>Chad's | Supercontest | Season Leaderboard</title>
       </Helmet>
       <div className={classes.title}>Season Leaderboard</div>
-      <ScLeaderboard
-        rows={seasonLeaderboardRows}
-        linkedWeekNumber={currentWeekNumber}
-      />
+      {(!currentWeekNumber || !seasonLeaderboardData) && <LoadingSpinner />}
+      {currentWeekNumber && seasonLeaderboardRows && (
+        <ScLeaderboard
+          rows={seasonLeaderboardRows}
+          linkedWeekNumber={currentWeekNumber}
+        />
+      )}
     </div>
   );
 };

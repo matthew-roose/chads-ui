@@ -13,14 +13,6 @@ export const ScMostFadedTeamsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: mostFadedTeamsData } = useScGetUserFadeStats(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
-
   const teamRows = mostFadedTeamsData?.map((team) => {
     const { fadedTeam, total, wins, losses, pushes } = team;
     return { team: fadedTeam, total, wins, losses, pushes };
@@ -33,24 +25,37 @@ export const ScMostFadedTeamsPage = () => {
     return `/supercontest/${username}/stats/most-faded`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Most
-          Faded Teams
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username || "")}{" "}
+          Most Faded Teams
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Most Faded Teams
-      </div>
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Most Faded Teams
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
       {!mostFadedTeamsData && <LoadingSpinner />}
-      {teamRows && <ScPickedAndFadedTable rows={teamRows} />}
+      {!isInvalidUsername && teamRows?.length === 0 && (
+        <div className={classes.message}>No stats yet.</div>
+      )}
+      {teamRows && teamRows.length > 0 && (
+        <ScPickedAndFadedTable rows={teamRows} />
+      )}
     </div>
   );
 };

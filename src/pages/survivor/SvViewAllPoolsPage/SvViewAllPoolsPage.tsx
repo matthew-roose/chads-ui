@@ -12,11 +12,7 @@ export const SvViewAllPoolsPage = () => {
   const { data: allPoolsData } = useSvGetAllPools();
   const { data: allJoinedPoolsData } = useSvGetUserPools(loggedInUsername);
 
-  if (!allPoolsData) {
-    return <LoadingSpinner />;
-  }
-
-  const pools = allPoolsData.map((pool) => {
+  const pools = allPoolsData?.map((pool) => {
     let alreadyJoined = false;
     if (allJoinedPoolsData) {
       alreadyJoined =
@@ -42,7 +38,8 @@ export const SvViewAllPoolsPage = () => {
         <title>Chad's | Survivor | All Pools</title>
       </Helmet>
       <div className={classes.allPools}>All Survivor Pools</div>
-      {pools.length === 0 && (
+      {!allPoolsData && <LoadingSpinner />}
+      {pools?.length === 0 && (
         <div className={classes.noPools}>No pools yet.</div>
       )}
       {pools}

@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useSvGetUserEntryAndNullablePicks } from "../../../hooks/survivor/useSvGetUserEntryAndNullablePicks";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
-import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { AuthContext } from "../../../store/auth-context";
 import { Helmet } from "react-helmet-async";
 import { formatUsernamePossessiveForm } from "../../../util/format";
@@ -18,20 +17,11 @@ export const SvViewPicksPage = () => {
   const { username } = useParams();
 
   const { data: allUsernames } = useGetAllUsernames();
-  const { data: currentWeekNumber } = useGetCurrentWeekNumber();
 
   const { data: entryData } = useSvGetUserEntryAndNullablePicks(
     googleJwt,
     username
   );
-
-  if (!allUsernames || !currentWeekNumber) {
-    return <LoadingSpinner />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
 
   const rows = entryData?.picks.map((pick) => {
     const {
@@ -119,24 +109,33 @@ export const SvViewPicksPage = () => {
     return `/survivor/pick-history/${username}`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Survivor | {formatUsernamePossessiveForm(username)} Picks
+          Chad's | Survivor | {formatUsernamePossessiveForm(username || "")}{" "}
+          Picks
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Picks
-      </div>
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Picks
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
       {!entryData && <LoadingSpinner />}
-      {rows?.length === 0 && (
-        <div className={classes.noPicks}>No picks yet.</div>
+      {!isInvalidUsername && rows?.length === 0 && (
+        <div className={classes.message}>No picks yet.</div>
       )}
       {rows && rows.length > 0 && (
         <Table className={classes.table}>

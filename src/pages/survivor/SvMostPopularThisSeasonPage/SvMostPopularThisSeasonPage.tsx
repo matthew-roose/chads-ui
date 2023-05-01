@@ -8,11 +8,8 @@ import classes from "./SvMostPopularThisSeasonPage.module.css";
 
 export const SvMostPopularThisSeasonPage = () => {
   const { data: seasonMostPopularData } = useSvGetSeasonMostPopular();
-  if (!seasonMostPopularData) {
-    return <LoadingSpinner />;
-  }
 
-  const mostPopularPickRows = seasonMostPopularData.map((pick) => {
+  const mostPopularPickRows = seasonMostPopularData?.map((pick) => {
     const {
       weekNumber,
       pickedTeam,
@@ -71,10 +68,11 @@ export const SvMostPopularThisSeasonPage = () => {
         <title>Chad's | Survivor | Season's Most Popular</title>
       </Helmet>
       <div className={classes.title}>Most Popular Picks of the Season</div>
-      {mostPopularPickRows.length === 0 && (
-        <div className={classes.noPicks}>No picks yet.</div>
+      {!seasonMostPopularData && <LoadingSpinner />}
+      {mostPopularPickRows?.length === 0 && (
+        <div className={classes.message}>No picks yet.</div>
       )}
-      {mostPopularPickRows.length > 0 && (
+      {mostPopularPickRows && mostPopularPickRows.length > 0 && (
         <Table striped highlightOnHover className={classes.table}>
           <thead>
             <tr>

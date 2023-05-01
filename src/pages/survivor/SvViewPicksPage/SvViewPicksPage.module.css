@@ -1,3 +1,7 @@
+.page {
+  margin-bottom: 150px;
+}
+
 .title {
   font-size: 36px;
   font-weight: bold;
@@ -7,7 +11,7 @@
   text-align: center;
 }
 
-.noPicks {
+.message {
   font-size: 32px;
   font-weight: bold;
   margin: 5rem;

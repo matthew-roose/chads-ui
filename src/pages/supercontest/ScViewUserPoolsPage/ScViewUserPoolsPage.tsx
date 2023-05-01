@@ -13,14 +13,6 @@ export const ScViewUserPoolsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: userPoolsData } = useScGetUserPools(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div className={classes.message}>Invalid username in URL.</div>;
-  }
-
   const pools = userPoolsData?.pools
     .sort((a, b) => a.poolName.localeCompare(b.poolName))
     .map((pool) => (
@@ -41,24 +33,33 @@ export const ScViewUserPoolsPage = () => {
     return `/supercontest/${username}/pools`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Pools
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username || "")}{" "}
+          Pools
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Supercontest Pools
-      </div>
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Supercontest Pools
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
       {!userPoolsData && <LoadingSpinner />}
-      {pools !== undefined && pools}
-      {pools?.length === 0 && (
+      {pools}
+      {!isInvalidUsername && pools?.length === 0 && (
         <div className={classes.message}>No pools yet.</div>
       )}
     </div>

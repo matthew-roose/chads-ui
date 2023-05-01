@@ -13,14 +13,6 @@ export const SvViewUserPoolsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: userPoolsData } = useSvGetUserPools(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div className={classes.message}>Invalid username in URL.</div>;
-  }
-
   const pools = userPoolsData?.pools
     .sort((a, b) => a.poolName.localeCompare(b.poolName))
     .map((pool) => (
@@ -41,24 +33,33 @@ export const SvViewUserPoolsPage = () => {
     return `/survivor/${username}/pools`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Survivor | {formatUsernamePossessiveForm(username)} Pools
+          Chad's | Survivor | {formatUsernamePossessiveForm(username || "")}{" "}
+          Pools
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Pools
-      </div>
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Pools
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
       {!userPoolsData && <LoadingSpinner />}
-      {pools !== undefined && pools}
-      {pools?.length === 0 && (
+      {pools}
+      {!isInvalidUsername && pools?.length === 0 && (
         <div className={classes.message}>No pools yet.</div>
       )}
     </div>

@@ -19,13 +19,13 @@ export const ScWeeklyUserStatsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: entryAndEntryWeeksData } = useScGetAllUserEntryWeeks(username);
 
-  if (!currentWeekNumber || !allUsernames) {
-    return <LoadingSpinner />;
-  }
+  // if (!currentWeekNumber || !allUsernames) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
+  // if (!username || !allUsernames.includes(username)) {
+  //   return <div>Invalid username in URL.</div>;
+  // }
 
   const entryWeeksSoFar = entryAndEntryWeeksData?.supercontestEntryWeeks.slice(
     0,
@@ -80,24 +80,32 @@ export const ScWeeklyUserStatsPage = () => {
     return `/supercontest/${username}/stats/weekly`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Supercontest | {formatUsernamePossessiveForm(username)}{" "}
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username || "")}{" "}
           Weekly Stats
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Weekly Stats
-      </div>
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Weekly Stats
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
       {!entryAndEntryWeeksData && <LoadingSpinner />}
-      {entryAndEntryWeeksData !== undefined && (
+      {!isInvalidUsername && entryAndEntryWeeksData && (
         <>
           <div className={`${classes.seasonRecord} ${recordClass}`}>
             Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}

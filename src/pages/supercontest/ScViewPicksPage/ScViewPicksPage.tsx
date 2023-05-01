@@ -30,21 +30,10 @@ export const ScViewPicksPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!allUsernames || !currentWeekNumber) {
-    return <LoadingSpinner />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
-
-  const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
-    (i + 1).toString()
+  const allWeekNumbers = Array.from(
+    { length: currentWeekNumber || 0 },
+    (_, i) => (i + 1).toString()
   );
-
-  if (!weekNumber || !allWeekNumbers.includes(weekNumber)) {
-    return <div>Invalid week number in URL.</div>;
-  }
 
   const picksLogos = entryWeekData?.picks
     .filter((pick) => pick.pickedTeam)
@@ -87,39 +76,55 @@ export const ScViewPicksPage = () => {
     return `/supercontest/pick-history/${username}/week/${weekNumber}`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+  const isInvalidWeekNumber =
+    !weekNumber || (currentWeekNumber && !allWeekNumbers.includes(weekNumber));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Week{" "}
-          {weekNumber} Picks
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username || "")}{" "}
+          Week {weekNumber} Picks
         </title>
       </Helmet>
       <UserAndWeekSelects
-        username={username}
-        allUsernames={allUsernames}
-        weekNumber={weekNumber}
+        username={username || ""}
+        allUsernames={allUsernames || []}
+        weekNumber={weekNumber || ""}
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
+      {!isInvalidUsername && !isInvalidWeekNumber && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Week {weekNumber} Picks
+          {entryWeekData &&
+            entryWeekData.picks.length > 0 &&
+            `: ${formatRecord(
+              entryWeekData.weekWins,
+              entryWeekData.weekLosses,
+              entryWeekData.weekPushes
+            )}`}
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
+      {!isInvalidUsername && isInvalidWeekNumber && (
+        <div className={classes.message}>Invalid week number in URL.</div>
+      )}
       {!entryWeekData && <LoadingSpinner />}
+      {!isInvalidUsername &&
+        !isInvalidWeekNumber &&
+        entryWeekData?.picks.length === 0 && (
+          <div className={classes.message}>No picks.</div>
+        )}
       {entryWeekData && (
         <>
-          <div className={classes.title}>
-            {formatUsernamePossessiveForm(username)} Week {weekNumber} Picks
-            {entryWeekData.picks.length > 0 &&
-              `: ${formatRecord(
-                entryWeekData.weekWins,
-                entryWeekData.weekLosses,
-                entryWeekData.weekPushes
-              )}`}
-          </div>
           <Group className={classes.pickLogoGroup} position="center">
             {picksLogos}
           </Group>
-          {entryWeekData.picks.length === 0 && (
-            <div className={classes.noPicks}>No picks.</div>
-          )}
           {entryWeekData.picks.length > 0 && (
             <Table className={classes.table}>
               <thead>

@@ -16,17 +16,10 @@ export const SvMostPopularThisWeekPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!currentWeekNumber) {
-    return <LoadingSpinner />;
-  }
-
-  const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
-    (i + 1).toString()
+  const allWeekNumbers = Array.from(
+    { length: currentWeekNumber || 0 },
+    (_, i) => (i + 1).toString()
   );
-
-  if (!weekNumber || !allWeekNumbers.includes(weekNumber)) {
-    return <div>Invalid week number in URL.</div>;
-  }
 
   const mostPopularPickRows = weekMostPopularData?.map((pick) => {
     const {
@@ -86,22 +79,30 @@ export const SvMostPopularThisWeekPage = () => {
     return `/survivor/public-picks/week/${weekNumber}`;
   };
 
+  const isInvalidWeekNumber =
+    !weekNumber || (currentWeekNumber && !allWeekNumbers.includes(weekNumber));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>Chad's | Survivor | Week {weekNumber}'s Most Popular</title>
       </Helmet>
       <WeekSelect
-        weekNumber={weekNumber}
+        weekNumber={weekNumber || ""}
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        Most Popular Picks of Week {weekNumber}
-      </div>
+      {!isInvalidWeekNumber && (
+        <div className={classes.title}>
+          Most Popular Picks of Week {weekNumber}
+        </div>
+      )}
+      {isInvalidWeekNumber && (
+        <div className={classes.message}>Invalid week number in URL.</div>
+      )}
       {!weekMostPopularData && <LoadingSpinner />}
-      {mostPopularPickRows?.length === 0 && (
-        <div className={classes.noPicks}>No picks yet.</div>
+      {!isInvalidWeekNumber && mostPopularPickRows?.length === 0 && (
+        <div className={classes.message}>No picks yet.</div>
       )}
       {mostPopularPickRows && mostPopularPickRows.length > 0 && (
         <Table striped highlightOnHover className={classes.table}>

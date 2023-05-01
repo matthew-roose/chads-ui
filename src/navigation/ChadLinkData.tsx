@@ -196,6 +196,11 @@ export const getSupercontestLinkData = (
             to: `/supercontest/${username}/stats/weekly`,
           },
           {
+            icon: <IconUsers size={24} color="darkorange" />,
+            label: "Head To Head Stats",
+            to: "/supercontest/h2h-stats",
+          },
+          {
             icon: <IconHeart size={24} color="red" />,
             label: "Most Picked Teams",
             to: `/supercontest/${username}/stats/most-picked`,
@@ -217,11 +222,6 @@ export const getSupercontestLinkData = (
             icon: <IconUsers size={24} color="green" />,
             label: "Weekly Performance",
             to: "/supercontest/public-picks/record",
-          },
-          {
-            icon: <IconUsers size={24} color="darkorange" />,
-            label: "Head To Head Stats",
-            to: "/supercontest/h2h-stats",
           },
           {
             icon: <IconUsers size={24} color="blue" />,

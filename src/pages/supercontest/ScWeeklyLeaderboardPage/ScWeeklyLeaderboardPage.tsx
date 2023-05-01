@@ -14,17 +14,10 @@ export const ScWeeklyLeaderboardPage = () => {
     weekNumber ? +weekNumber : currentWeekNumber
   );
 
-  if (!currentWeekNumber) {
-    return <LoadingSpinner />;
-  }
-
-  const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
-    (i + 1).toString()
+  const allWeekNumbers = Array.from(
+    { length: currentWeekNumber || 0 },
+    (_, i) => (i + 1).toString()
   );
-
-  if (!weekNumber || !allWeekNumbers.includes(weekNumber)) {
-    return <div>Invalid week number in URL.</div>;
-  }
 
   const weeklyLeaderboardRows = weeklyLeaderboardData
     ?.sort((a, b) => a.username.localeCompare(b.username))
@@ -49,22 +42,30 @@ export const ScWeeklyLeaderboardPage = () => {
     return `/supercontest/leaderboard/week/${weekNumber}`;
   };
 
+  const isInvalidWeekNumber =
+    !weekNumber || (currentWeekNumber && !allWeekNumbers.includes(weekNumber));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>Chad's | Supercontest | Week {weekNumber} Leaderboard</title>
       </Helmet>
       <WeekSelect
-        weekNumber={weekNumber}
+        weekNumber={weekNumber || ""}
         allWeekNumbers={allWeekNumbers}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>Week {weekNumber} Leaderboard</div>
+      {!isInvalidWeekNumber && (
+        <div className={classes.title}>Week {weekNumber} Leaderboard</div>
+      )}
+      {isInvalidWeekNumber && (
+        <div className={classes.message}>Invalid week number in URL.</div>
+      )}
       {!weeklyLeaderboardData && <LoadingSpinner />}
-      {weeklyLeaderboardRows !== undefined && (
+      {!isInvalidWeekNumber && weeklyLeaderboardRows && (
         <ScLeaderboard
           rows={weeklyLeaderboardRows}
-          linkedWeekNumber={+weekNumber}
+          linkedWeekNumber={parseInt(weekNumber || "1")}
         />
       )}
     </div>

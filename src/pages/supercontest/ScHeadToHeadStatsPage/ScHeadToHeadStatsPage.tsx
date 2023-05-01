@@ -37,9 +37,9 @@ export const ScHeadToHeadStatsPage = () => {
   let { data: headToHeadData, isLoading: isHeadToHeadDataLoading } =
     useScGetHeadToHeadStats(firstUsername, secondUsername);
 
-  if (!allUsernames) {
-    return <LoadingSpinner />;
-  }
+  // if (!allUsernames) {
+  //   return <LoadingSpinner />;
+  // }
 
   if (!headToHeadData) {
     headToHeadData = [];
@@ -57,7 +57,7 @@ export const ScHeadToHeadStatsPage = () => {
           });
           setFirstUsername(newUsername || "");
         }}
-        data={allUsernames}
+        data={allUsernames || []}
         searchable
         nothingFound="No users found"
         styles={() => ({
@@ -76,7 +76,7 @@ export const ScHeadToHeadStatsPage = () => {
           });
           setSecondUsername(newUsername || "");
         }}
-        data={allUsernames}
+        data={allUsernames || []}
         searchable
         nothingFound="No users found"
         styles={() => ({
@@ -280,19 +280,33 @@ export const ScHeadToHeadStatsPage = () => {
     firstUsername === "" ||
     secondUsername === "";
 
+  let invalidUsernames;
+  if (allUsernames) {
+    invalidUsernames =
+      (!allUsernames.includes(firstUsername) && firstUsername !== "") ||
+      (!allUsernames.includes(secondUsername) && secondUsername !== "");
+  }
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>Chad's | Supercontest | H2H Stats</title>
       </Helmet>
+      <div className={classes.title}>Head to Head Stats</div>
       {userSelects}
-      {invalidSelections && (
+      {invalidSelections && !invalidUsernames && (
         <div className={classes.invalidSelections}>
           Please choose two different users.
         </div>
       )}
+      {invalidUsernames && (
+        <div className={classes.invalidSelections}>
+          Please choose two valid users.
+        </div>
+      )}
       {!invalidSelections && isHeadToHeadDataLoading && <LoadingSpinner />}
       {!isHeadToHeadDataLoading &&
+        !invalidUsernames &&
         opposingPicks.length === 0 &&
         aligningPicks.length === 0 && (
           <div className={classes.noStats}>No stats yet.</div>

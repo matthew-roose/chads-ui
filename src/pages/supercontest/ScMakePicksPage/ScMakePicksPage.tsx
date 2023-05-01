@@ -49,12 +49,12 @@ export const ScMakePicksPage = () => {
     );
   }
 
-  if (!gameLinesData || !existingEntryWeekData) {
-    return <LoadingSpinner />;
-  }
+  // if (!gameLinesData || !existingEntryWeekData) {
+  //   return <LoadingSpinner />;
+  // }
 
   const addPickHandler = (newPick: ScPickCreate) => {
-    const game = gameLinesData.find(
+    const game = gameLinesData?.find(
       (gameLine) => gameLine.gameId === newPick.gameId
     );
     if (game && game.timestamp <= Date.now()) {
@@ -89,7 +89,7 @@ export const ScMakePicksPage = () => {
     }
   };
 
-  const gameLines = gameLinesData.map((gameLine) => {
+  const gameLines = gameLinesData?.map((gameLine) => {
     let pickedTeam;
     let result;
     // was this game previously picked?
@@ -134,7 +134,7 @@ export const ScMakePicksPage = () => {
     );
   });
 
-  const existingPicks = existingEntryWeekData.picks.map((pick) => {
+  const existingPicks = existingEntryWeekData?.picks.map((pick) => {
     return {
       gameId: pick.gameId,
       pickedTeam: pick.pickedTeam,
@@ -145,7 +145,7 @@ export const ScMakePicksPage = () => {
   const submitButton = (
     <Button
       disabled={
-        JSON.stringify(existingPicks.map((pick) => pick.pickedTeam)) ===
+        JSON.stringify(existingPicks?.map((pick) => pick.pickedTeam)) ===
         JSON.stringify(currentPicks.map((pick) => pick.pickedTeam))
       }
       variant="gradient"
@@ -173,24 +173,29 @@ export const ScMakePicksPage = () => {
       <Helmet>
         <title>Chad's | Supercontest | Make Picks</title>
       </Helmet>
-      <div className={classes.title}>Make Picks</div>
-      <Group className={classes.currentPickLogoGroup} position="center">
-        {currentPicksLogos}
-      </Group>
-      {submitButton}
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th></th>
-            <th className={classes.hideForMobile}></th>
-          </tr>
-        </thead>
-        <tbody>{gameLines}</tbody>
-      </Table>
-      <Group className={classes.currentPickLogoGroup} position="center">
-        {currentPicksLogos}
-      </Group>
-      {submitButton}
+      <div className={classes.title}>Make Supercontest Picks</div>
+      {(!gameLinesData || !existingEntryWeekData) && <LoadingSpinner />}
+      {gameLinesData && existingEntryWeekData && (
+        <>
+          <Group className={classes.currentPickLogoGroup} position="center">
+            {currentPicksLogos}
+          </Group>
+          {submitButton}
+          <Table className={classes.table}>
+            <thead>
+              <tr>
+                <th></th>
+                <th className={classes.hideForMobile}></th>
+              </tr>
+            </thead>
+            <tbody>{gameLines}</tbody>
+          </Table>
+          <Group className={classes.currentPickLogoGroup} position="center">
+            {currentPicksLogos}
+          </Group>
+          {submitButton}
+        </>
+      )}
     </div>
   );
 };

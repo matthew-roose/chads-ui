@@ -13,14 +13,6 @@ export const ScMostPickedTeamsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: mostPickedTeamsData } = useScGetUserPickStats(username);
 
-  if (!allUsernames) {
-    return <LoadingSpinner />;
-  }
-
-  if (!username || !allUsernames.includes(username)) {
-    return <div>Invalid username in URL.</div>;
-  }
-
   const teamRows = mostPickedTeamsData?.map((team) => {
     const { pickedTeam, total, wins, losses, pushes } = team;
     return { team: pickedTeam, total, wins, losses, pushes };
@@ -33,24 +25,37 @@ export const ScMostPickedTeamsPage = () => {
     return `/supercontest/${username}/stats/most-picked`;
   };
 
+  const isInvalidUsername =
+    !username || (allUsernames && !allUsernames.includes(username));
+
   return (
     <div className={classes.page}>
       <Helmet>
         <title>
-          Chad's | Supercontest | {formatUsernamePossessiveForm(username)} Most
-          Picked Teams
+          Chad's | Supercontest | {formatUsernamePossessiveForm(username || "")}{" "}
+          Most Picked Teams
         </title>
       </Helmet>
       <UserSelect
-        username={username}
-        allUsernames={allUsernames}
+        username={username || ""}
+        allUsernames={allUsernames || []}
         getNavigateUrl={getNavigateUrl}
       />
-      <div className={classes.title}>
-        {formatUsernamePossessiveForm(username)} Most Picked Teams
-      </div>
+      {!isInvalidUsername && (
+        <div className={classes.title}>
+          {formatUsernamePossessiveForm(username || "")} Most Picked Teams
+        </div>
+      )}
+      {isInvalidUsername && (
+        <div className={classes.message}>Invalid username in URL.</div>
+      )}
       {!mostPickedTeamsData && <LoadingSpinner />}
-      {teamRows && <ScPickedAndFadedTable rows={teamRows} />}
+      {!isInvalidUsername && teamRows?.length === 0 && (
+        <div className={classes.message}>No stats yet.</div>
+      )}
+      {teamRows && teamRows.length > 0 && (
+        <ScPickedAndFadedTable rows={teamRows} />
+      )}
     </div>
   );
 };

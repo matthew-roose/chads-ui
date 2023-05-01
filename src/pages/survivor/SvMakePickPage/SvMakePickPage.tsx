@@ -38,20 +38,14 @@ export const SvMakePickPage = () => {
   }, [entryData, currentWeekNumber]);
 
   if (!googleJwt || !username) {
-    return (
-      <div className={classes.notSignedIn}>Please sign in to make picks.</div>
-    );
+    return <div className={classes.message}>Please sign in to make picks.</div>;
   }
 
-  if (!gameLinesData || !entryData) {
-    return <LoadingSpinner />;
-  }
-
-  const teamsUsed = entryData.picks
+  const teamsUsed = entryData?.picks
     .filter((pick) => pick.weekNumber !== currentWeekNumber)
     .map((pick) => pick.pickedTeam);
 
-  const prevPickedTeamLogos = teamsUsed.map((team) => {
+  const prevPickedTeamLogos = teamsUsed?.map((team) => {
     return (
       <div className={`${classes.logoBackdrop}`} key={team}>
         <img
@@ -63,18 +57,18 @@ export const SvMakePickPage = () => {
     );
   });
 
-  const pickedGame = gameLinesData.find(
+  const pickedGame = gameLinesData?.find(
     (game) => game.gameId === currentPick?.gameId
   );
   const isPickLocked = pickedGame && pickedGame.timestamp <= Date.now();
 
   const addPickHandler = (newPick: SvPickCreate) => {
-    const game = gameLinesData.find(
+    const game = gameLinesData?.find(
       (gameLine) => gameLine.gameId === newPick.gameId
     );
     if (
       isPickLocked ||
-      teamsUsed.includes(newPick.pickedTeam) ||
+      teamsUsed?.includes(newPick.pickedTeam) ||
       (game && game.timestamp <= Date.now())
     ) {
       return;
@@ -86,7 +80,7 @@ export const SvMakePickPage = () => {
     }
   };
 
-  const gameRows = gameLinesData.map((gameLine) => {
+  const gameRows = gameLinesData?.map((gameLine) => {
     let pickedTeam;
     let result;
     // was this game previously picked?
@@ -99,7 +93,7 @@ export const SvMakePickPage = () => {
       gameLine;
     const hasStarted = timestamp <= Date.now();
     const homeClasses = `${classes.teamDiv} ${
-      hasStarted || isPickLocked || teamsUsed.includes(homeTeam)
+      hasStarted || isPickLocked || teamsUsed?.includes(homeTeam)
         ? classes.started
         : classes.notStarted
     } ${
@@ -114,7 +108,7 @@ export const SvMakePickPage = () => {
         : ""
     }`;
     const awayClasses = `${classes.teamDiv} ${
-      hasStarted || isPickLocked || teamsUsed.includes(awayTeam)
+      hasStarted || isPickLocked || teamsUsed?.includes(awayTeam)
         ? classes.started
         : classes.notStarted
     } ${
@@ -131,7 +125,7 @@ export const SvMakePickPage = () => {
     const atClasses = `${classes.at} ${
       hasStarted ||
       isPickLocked ||
-      (teamsUsed.includes(homeTeam) && teamsUsed.includes(awayTeam))
+      (teamsUsed?.includes(homeTeam) && teamsUsed.includes(awayTeam))
         ? classes.started
         : classes.notStarted
     }`;
@@ -179,7 +173,7 @@ export const SvMakePickPage = () => {
       disabled={
         !currentPick ||
         JSON.stringify(
-          entryData.picks.find((pick) => pick.weekNumber === currentWeekNumber)
+          entryData?.picks.find((pick) => pick.weekNumber === currentWeekNumber)
             ?.pickedTeam
         ) === JSON.stringify(currentPick?.pickedTeam)
       }
@@ -202,30 +196,36 @@ export const SvMakePickPage = () => {
   return (
     <div className={classes.page}>
       <Helmet>
-        <title>Chad's | Survivor | Make Picks</title>
+        <title>Chad's | Survivor | Make a Pick</title>
       </Helmet>
-      <div className={classes.title}>Make a Pick</div>
-      <div className={classes.teamsUsed}>
-        Teams Used: {prevPickedTeamLogos.length === 0 && "None"}
-      </div>
-      <SimpleGrid
-        cols={8}
-        className={classes.prevPickedGrid}
-        breakpoints={[{ maxWidth: 1000, cols: 6 }]}
-      >
-        {prevPickedTeamLogos}
-      </SimpleGrid>
-      {submitButton}
-      <Table className={classes.table}>
-        <thead>
-          <tr>
-            <th></th>
-            <th className={classes.hideForMobile}></th>
-          </tr>
-        </thead>
-        <tbody>{gameRows}</tbody>
-      </Table>
-      {submitButton}
+      <div className={classes.title}>Make a Survivor Pick</div>
+      {!currentWeekNumber || !gameLinesData || !entryData ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <div className={classes.teamsUsed}>
+            Teams Used: {prevPickedTeamLogos?.length === 0 && "None"}
+          </div>
+          <SimpleGrid
+            cols={8}
+            className={classes.prevPickedGrid}
+            breakpoints={[{ maxWidth: 1000, cols: 6 }]}
+          >
+            {prevPickedTeamLogos}
+          </SimpleGrid>
+          {submitButton}
+          <Table className={classes.table}>
+            <thead>
+              <tr>
+                <th></th>
+                <th className={classes.hideForMobile}></th>
+              </tr>
+            </thead>
+            <tbody>{gameRows}</tbody>
+          </Table>
+          {submitButton}
+        </>
+      )}
     </div>
   );
 };
