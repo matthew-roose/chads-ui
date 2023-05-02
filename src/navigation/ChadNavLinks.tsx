@@ -11,7 +11,6 @@ export interface LinkData {
   label: string;
   to: string;
   public?: boolean;
-  privateChild?: boolean;
   childLinks?: LinkData[];
 }
 
@@ -19,6 +18,16 @@ interface LinksProps {
   closeNavbar: () => void;
   getLinkData: (username: string, currentWeekNumber: number) => LinkData[];
 }
+
+const filterChildLinks = (link: LinkData) => {
+  if (link.childLinks) {
+    link.childLinks = link.childLinks.filter((childLink) => childLink.public);
+    link.childLinks.forEach((childLink) => {
+      filterChildLinks(childLink);
+    });
+  }
+  return link;
+};
 
 export const ChadNavLinks = ({ closeNavbar, getLinkData }: LinksProps) => {
   const { username } = useContext(AuthContext);
@@ -30,13 +39,9 @@ export const ChadNavLinks = ({ closeNavbar, getLinkData }: LinksProps) => {
   }
   if (!username) {
     // only show links that don't require user to be logged in
-    links = getLinkData("", currentWeekNumber).filter((link) => link.public);
+    links = getLinkData("", currentWeekNumber);
     chadLinks = links.map((link) => {
-      if (link.childLinks) {
-        link.childLinks = link.childLinks.filter(
-          (childLink) => !childLink.privateChild
-        );
-      }
+      filterChildLinks(link);
       return (
         <ChadNavLink {...link} key={link.label} closeNavbar={closeNavbar} />
       );

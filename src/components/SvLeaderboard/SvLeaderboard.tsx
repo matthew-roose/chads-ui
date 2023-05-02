@@ -17,7 +17,7 @@ export const SvLeaderboard = ({
   rows,
   currentWeekNumber,
 }: SvLeaderboardProps) => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
   const [viewAllPicks, setViewAllPicks] = useState(false);
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>
@@ -27,8 +27,8 @@ export const SvLeaderboard = ({
   const leaderboardRows = rows.map((entry) => {
     const { username, wins, losses, pushes, currentStreak, picks } = entry;
     const rowClasses = `${classes.leaderboardRow} ${
-      username === loggedInUsername ? classes.loggedInRow : ""
-    }`;
+      username === loggedInUsername ? classes.loggedInRow : classes.otherRow
+    } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
     const currentPick = picks.find(
       (pick) => pick.weekNumber === currentWeekNumber
     );
@@ -76,11 +76,14 @@ export const SvLeaderboard = ({
                 </div>
               )}
               {pick.pickedTeam === null && (
-                <img
-                  className={`${classes.logo} ${classes.hiddenLogo}`}
-                  src={require("../../assets/mystery_team.png")}
-                  alt="Mystery Team"
-                />
+                <div className={classes.logoBackdrop}>
+                  <img
+                    className={`${classes.logo} ${classes.hiddenLogo}`}
+                    src={require("../../assets/mystery_team.png")}
+                    alt="Mystery Team"
+                    style={{ borderRadius: "4px" }}
+                  />
+                </div>
               )}
             </td>
           );

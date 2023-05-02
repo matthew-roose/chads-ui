@@ -10,10 +10,11 @@ import {
   Burger,
   Text,
   useMantineTheme,
+  MantineProvider,
 } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { IconHome } from "@tabler/icons";
+import { IconHome, IconSettings } from "@tabler/icons";
 import { AuthContext } from "./store/auth-context";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { ChadNavLinks } from "./navigation/ChadNavLinks";
@@ -22,18 +23,20 @@ import {
   supercontestRoutes,
   survivorRoutes,
 } from "./navigation/ChadRoutes";
-import "./App.css";
 import { ChadNavLink } from "./navigation/ChadNavLink";
 import {
   getSportsbookLinkData,
   getSupercontestLinkData,
   getSurvivorLinkData,
 } from "./navigation/ChadLinkData";
+import { SettingsPage } from "./pages/SettingsPage/SettingsPage";
+import "./App.css";
 
 declare var google: any;
 
 const App = () => {
-  const { isLoggedIn, username, login, logout } = useContext(AuthContext);
+  const { isLoggedIn, username, useDarkMode, login, logout } =
+    useContext(AuthContext);
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -83,111 +86,137 @@ const App = () => {
     }
   }, [isGoogleLoaded, isLoggedIn, login]);
 
+  console.log(useDarkMode);
   const closeNavbarHandler = () => {
     setOpen(false);
   };
 
   return (
-    <AppShell
-      styles={{
-        main: {
-          background: theme.colors.gray[0],
-        },
-      }}
-      header={
-        <Header height={100} p="md">
-          <div className="header">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                <Burger
-                  opened={open}
-                  onClick={() => setOpen((open) => !open)}
-                  size="md"
-                  color={theme.colors.gray[6]}
-                  mr="xl"
-                />
-              </MediaQuery>
-              <Link to="/">
-                <img src={require("./assets/gigachad.png")} alt="logo" />
-              </Link>
-              <Link to="/" style={{ textDecoration: "none" }}>
-                <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-                  <Text ml="xl" className="chadsText">
-                    Chad's SuperBook
-                  </Text>
-                </MediaQuery>
-              </Link>
-            </div>
-            {!isLoggedIn && <div id="signInDiv" />}
-            {isLoggedIn && (
-              <div>
-                <div className="signedInAs">{username}</div>
-                <Button
-                  variant="gradient"
-                  gradient={{ from: "teal", to: "blue" }}
-                  className="button"
-                  onClick={logout}
-                >
-                  <span style={{ fontWeight: "bold" }}>Sign out</span>
-                </Button>
-              </div>
-            )}
-          </div>
-        </Header>
-      }
-      navbarOffsetBreakpoint="sm"
-      navbar={
-        <Navbar
-          p="md"
-          hiddenBreakpoint="sm"
-          hidden={!open}
-          width={{ sm: 220, lg: 300 }}
-          style={{ zIndex: 101 }}
-        >
-          <Navbar.Section grow component={ScrollArea} type="never">
-            <ChadNavLink
-              to="/"
-              label="Home"
-              icon={<IconHome size={24} color="red" />}
-              closeNavbar={closeNavbarHandler}
-            />
-            <ChadNavLinks
-              closeNavbar={closeNavbarHandler}
-              getLinkData={getSportsbookLinkData}
-            />
-            <ChadNavLinks
-              closeNavbar={closeNavbarHandler}
-              getLinkData={getSupercontestLinkData}
-            />
-            <ChadNavLinks
-              closeNavbar={closeNavbarHandler}
-              getLinkData={getSurvivorLinkData}
-            />
-            <div style={{ height: "10rem" }}></div>
-          </Navbar.Section>
-        </Navbar>
-      }
+    <MantineProvider
+      theme={useDarkMode ? { colorScheme: "dark" } : {}}
+      withGlobalStyles
+      withNormalizeCSS
     >
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        newestOnTop
-        closeOnClick
-        pauseOnHover={false}
-        pauseOnFocusLoss={false}
-      />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {sportsbookRoutes}
-        {supercontestRoutes}
-        {survivorRoutes}
-      </Routes>
-    </AppShell>
+      <AppShell
+        styles={
+          useDarkMode
+            ? {
+                main: {
+                  background: theme.colors.dark[6],
+                },
+              }
+            : {
+                main: {
+                  background: theme.colors.gray[0],
+                },
+              }
+        }
+        header={
+          <Header height={100} p="md">
+            <div className="header">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                  <Burger
+                    opened={open}
+                    onClick={() => setOpen((open) => !open)}
+                    size="md"
+                    color={theme.colors.gray[6]}
+                    mr="xl"
+                  />
+                </MediaQuery>
+                <Link to="/">
+                  <img src={require("./assets/gigachad.png")} alt="logo" />
+                </Link>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+                    <Text
+                      ml="xl"
+                      className="chadsText"
+                      style={{ color: useDarkMode ? "lightgray" : "black" }}
+                    >
+                      Chad's SuperBook
+                    </Text>
+                  </MediaQuery>
+                </Link>
+              </div>
+              {!isLoggedIn && <div id="signInDiv" />}
+              {isLoggedIn && (
+                <div>
+                  <div className="signedInAs">{username}</div>
+                  <Button
+                    variant="gradient"
+                    gradient={{ from: "teal", to: "blue" }}
+                    className="button"
+                    onClick={logout}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Sign out</span>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Header>
+        }
+        navbarOffsetBreakpoint="sm"
+        navbar={
+          <Navbar
+            p="md"
+            hiddenBreakpoint="sm"
+            hidden={!open}
+            width={{ sm: 220, lg: 300 }}
+            style={{ zIndex: 101 }}
+          >
+            <Navbar.Section grow component={ScrollArea} type="never">
+              <ChadNavLink
+                to="/"
+                label="Home"
+                icon={<IconHome size={24} color="red" />}
+                closeNavbar={closeNavbarHandler}
+              />
+              <ChadNavLinks
+                closeNavbar={closeNavbarHandler}
+                getLinkData={getSportsbookLinkData}
+              />
+              <ChadNavLinks
+                closeNavbar={closeNavbarHandler}
+                getLinkData={getSupercontestLinkData}
+              />
+              <ChadNavLinks
+                closeNavbar={closeNavbarHandler}
+                getLinkData={getSurvivorLinkData}
+              />
+              <ChadNavLink
+                to="/settings"
+                label="Settings"
+                icon={<IconSettings size={24} color="gray" />}
+                closeNavbar={closeNavbarHandler}
+              />
+              <div style={{ height: "10rem" }}></div>
+            </Navbar.Section>
+          </Navbar>
+        }
+      >
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          newestOnTop
+          closeOnClick
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+        />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {sportsbookRoutes}
+          {supercontestRoutes}
+          {survivorRoutes}
+          <Route path="/settings" element={<SettingsPage />} />
+        </Routes>
+      </AppShell>
+    </MantineProvider>
   );
 };
 

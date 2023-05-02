@@ -12,7 +12,7 @@ interface SbSeasonLeaderboardProps {
   rows: SbAccount[];
 }
 export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
 
   if (!currentWeekNumber) {
@@ -31,7 +31,7 @@ export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
     } = account;
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
-    }`;
+    } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
     const winTotalClass =
       winLossTotal > 0
         ? classes.positive

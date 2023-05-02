@@ -12,20 +12,15 @@ import {
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import classes from "./ScWeeklyUserStatsPage.module.css";
+import { useContext } from "react";
+import { AuthContext } from "../../../store/auth-context";
 
 export const ScWeeklyUserStatsPage = () => {
+  const { useDarkMode } = useContext(AuthContext);
   const { username } = useParams();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: allUsernames } = useGetAllUsernames();
   const { data: entryAndEntryWeeksData } = useScGetAllUserEntryWeeks(username);
-
-  // if (!currentWeekNumber || !allUsernames) {
-  //   return <LoadingSpinner />;
-  // }
-
-  // if (!username || !allUsernames.includes(username)) {
-  //   return <div>Invalid username in URL.</div>;
-  // }
 
   const entryWeeksSoFar = entryAndEntryWeeksData?.supercontestEntryWeeks.slice(
     0,
@@ -35,6 +30,9 @@ export const ScWeeklyUserStatsPage = () => {
     const { weekNumber, weekScore, weekWins, weekLosses, weekPushes } =
       entryWeek;
     const winPct = calculateWinPct(weekWins, weekLosses, weekPushes);
+    const rowClasses = `${classes.row} ${
+      useDarkMode ? classes.darkMode : classes.lightMode
+    }`;
     const recordClass =
       weekWins - weekLosses > 0
         ? classes.positive
@@ -42,7 +40,7 @@ export const ScWeeklyUserStatsPage = () => {
         ? classes.negative
         : "";
     return (
-      <tr key={weekNumber} className={classes.row}>
+      <tr key={weekNumber} className={rowClasses}>
         <td>
           <Link
             to={`/supercontest/pick-history/${username}/week/${weekNumber}`}

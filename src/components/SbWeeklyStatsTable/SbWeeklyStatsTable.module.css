@@ -7,8 +7,12 @@
   font-weight: bold;
 }
 
-.leaderboardRow a {
+.leaderboardRow.lightMode a {
   color: black;
+}
+
+.leaderboardRow.darkMode a {
+  color: #c1c2c5;
 }
 
 .leaderboardRow a:link {

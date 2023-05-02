@@ -2,6 +2,8 @@ import { Table } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { SbWeeklyUserStats } from "../../types/sportsbook/SbWeeklyUserStats";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
+import { useContext } from "react";
+import { AuthContext } from "../../store/auth-context";
 import classes from "./SbWeeklyStatsTable.module.css";
 
 interface SbWeeklyStatsTableProps {
@@ -9,6 +11,7 @@ interface SbWeeklyStatsTableProps {
 }
 
 export const SbWeeklyStatsTable = ({ rows }: SbWeeklyStatsTableProps) => {
+  const { useDarkMode } = useContext(AuthContext);
   const statsRows = rows.map((row) => {
     const {
       weekNumber,
@@ -19,6 +22,9 @@ export const SbWeeklyStatsTable = ({ rows }: SbWeeklyStatsTableProps) => {
       profit,
       bestParlayOdds,
     } = row;
+    const rowClasses = `${classes.leaderboardRow} ${
+      useDarkMode ? classes.darkMode : classes.lightMode
+    }`;
     const profitClass =
       profit > 0 ? classes.positive : profit < 0 ? classes.negative : "";
     // this component is used for both user and public weekly stats which link to different pages
@@ -27,7 +33,7 @@ export const SbWeeklyStatsTable = ({ rows }: SbWeeklyStatsTableProps) => {
         ? `/sportsbook/bet-history/${username}/week/${weekNumber}`
         : `/sportsbook/public-money/week/${weekNumber}`;
     return (
-      <tr key={weekNumber} className={classes.leaderboardRow}>
+      <tr key={weekNumber} className={rowClasses}>
         <td>
           <Link to={linkUrl}>{weekNumber}</Link>
         </td>

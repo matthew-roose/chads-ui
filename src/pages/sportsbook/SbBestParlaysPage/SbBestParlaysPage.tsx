@@ -9,7 +9,7 @@ import { convertOddsFromDecimal, formatCurrency } from "../../../util/format";
 import classes from "./SbBestParlaysPage.module.css";
 
 export const SbBestParlaysPage = () => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
   const { data: bestParlaysData } = useSbGetBestParlays();
 
   const leaderboardRows = bestParlaysData?.map((week) => {
@@ -23,7 +23,7 @@ export const SbBestParlaysPage = () => {
     } = week;
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
-    }`;
+    } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
     return (
       <tr key={id} className={rowClasses}>
         <td>

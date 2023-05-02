@@ -16,16 +16,32 @@
   height: 65px;
 }
 
-.leaderboardRow a {
+.leaderboardRow.lightMode a {
   color: black;
+}
+
+.leaderboardRow.darkMode a {
+  color: #c1c2c5;
 }
 
 .leaderboardRow a:link {
   text-decoration: underline;
 }
 
-.loggedInRow {
+.loggedInRow.lightMode {
   background-color: lightgray;
+}
+
+.loggedInRow.darkMode {
+  background-color: darkgray;
+}
+
+.loggedInRow {
+  color: black;
+}
+
+.loggedInRow.darkMode a {
+  color: black;
 }
 
 .win {
@@ -56,4 +72,22 @@
 .logo {
   height: 2rem;
   width: 2rem;
+}
+
+@media only screen and (min-width: 1300px) {
+  .loggedInRow.lightMode:hover {
+    background-color: darkgray;
+  }
+
+  .loggedInRow.darkMode:hover {
+    background-color: gray;
+  }
+
+  .otherRow.lightMode:hover {
+    background-color: darkgray;
+  }
+
+  .otherRow.darkMode:hover {
+    background-color: gray;
+  }
 }

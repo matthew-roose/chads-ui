@@ -143,12 +143,14 @@ export const SbViewBetsPage = () => {
                       className={`${classes.viewBetLogo} ${classes.hiddenBet}`}
                       src={require("../../../assets/mystery_team.png")}
                       alt="Mystery Team"
+                      style={{ borderRadius: "4px" }}
                     />
                     <span className={classes.atSymbol}>@</span>
                     <img
                       className={`${classes.viewBetLogo} ${classes.hiddenBet}`}
                       src={require("../../../assets/mystery_team.png")}
                       alt="Mystery Team"
+                      style={{ borderRadius: "4px" }}
                     />
                   </div>
                 )}

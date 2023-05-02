@@ -12,8 +12,10 @@ export const AuthContext = React.createContext({
   username: "",
   firstName: "",
   lastName: "",
+  useDarkMode: "",
   login: (googleJwt: string, userInfo: UserInfo) => {},
   logout: () => {},
+  toggleDarkMode: () => {},
 });
 
 const retrieveLocalStorage = () => {
@@ -21,34 +23,25 @@ const retrieveLocalStorage = () => {
   const storedUsername = localStorage.getItem("username");
   const storedFirstName = localStorage.getItem("firstName");
   const storedLastName = localStorage.getItem("lastName");
+  const storedUseDarkMode = localStorage.getItem("useDarkMode");
 
   return {
     googleJwt: storedGoogleJwt,
     username: storedUsername,
     firstName: storedFirstName,
     lastName: storedLastName,
+    useDarkMode: storedUseDarkMode,
   };
 };
 
 export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const storedData = retrieveLocalStorage();
 
-  let initialGoogleJwt;
-  let initialUsername;
-  let initialFirstName;
-  let initialLastName;
-
-  if (storedData) {
-    initialGoogleJwt = storedData.googleJwt;
-    initialUsername = storedData.username;
-    initialFirstName = storedData.firstName;
-    initialLastName = storedData.lastName;
-  }
-
-  const [googleJwt, setGoogleJwt] = useState(initialGoogleJwt);
-  const [username, setUsername] = useState(initialUsername);
-  const [firstName, setFirstName] = useState(initialFirstName);
-  const [lastName, setLastName] = useState(initialLastName);
+  const [googleJwt, setGoogleJwt] = useState(storedData.googleJwt);
+  const [username, setUsername] = useState(storedData.username);
+  const [firstName, setFirstName] = useState(storedData.firstName);
+  const [lastName, setLastName] = useState(storedData.lastName);
+  const [useDarkMode, setUseDarkMode] = useState(storedData.useDarkMode);
 
   const isLoggedIn = !!googleJwt;
 
@@ -76,14 +69,24 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     window.location.reload();
   };
 
+  const toggleDarkModeHandler = () => {
+    setUseDarkMode((prevUseDarkMode) => (!prevUseDarkMode ? "true" : ""));
+    localStorage.setItem(
+      "useDarkMode",
+      localStorage.getItem("useDarkMode") ? "" : "true"
+    );
+  };
+
   const contextValue = {
     googleJwt: googleJwt || "",
     isLoggedIn: isLoggedIn,
     username: username || "",
     firstName: firstName || "",
     lastName: lastName || "",
+    useDarkMode: useDarkMode || "",
     login: loginHandler,
     logout: logoutHandler,
+    toggleDarkMode: toggleDarkModeHandler,
   };
 
   return (

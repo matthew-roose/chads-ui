@@ -34,8 +34,12 @@
   font-weight: bold;
 }
 
-.row a {
+.row.lightMode a {
   color: black;
+}
+
+.row.darkMode a {
+  color: #c1c2c5;
 }
 
 .row a:link {

@@ -17,7 +17,7 @@ export const SbWeeklyLeaderboard = ({
   showWeekColumn,
   showParlayColumn,
 }: SbWeeklyLeaderboardProps) => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
 
   const leaderboardRows = rows.map((week) => {
     const {
@@ -31,7 +31,7 @@ export const SbWeeklyLeaderboard = ({
     } = week;
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
-    }`;
+    } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
     const profitClass =
       profit > 0 ? classes.positive : profit < 0 ? classes.negative : "";
     return (

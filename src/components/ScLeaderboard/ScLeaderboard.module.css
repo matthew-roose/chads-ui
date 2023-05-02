@@ -7,16 +7,32 @@
   font-weight: bold;
 }
 
-.leaderboardRow a {
+.leaderboardRow.lightMode a {
   color: black;
+}
+
+.leaderboardRow.darkMode a {
+  color: #c1c2c5;
 }
 
 .leaderboardRow a:link {
   text-decoration: underline;
 }
 
+.loggedInRow.lightMode {
+  background-color: lightgray;
+}
+
+.loggedInRow.darkMode {
+  background-color: darkgray;
+}
+
 .loggedInRow {
-  background-color: lightgreen;
+  color: black;
+}
+
+.loggedInRow.darkMode a {
+  color: black;
 }
 
 .positive {
@@ -28,11 +44,19 @@
 }
 
 @media only screen and (min-width: 1300px) {
-  .loggedInRow:hover {
-    background-color: limegreen;
+  .loggedInRow.lightMode:hover {
+    background-color: darkgray;
   }
 
-  .otherRow:hover {
-    background-color: lightgray;
+  .loggedInRow.darkMode:hover {
+    background-color: gray;
+  }
+
+  .otherRow.lightMode:hover {
+    background-color: darkgray;
+  }
+
+  .otherRow.darkMode:hover {
+    background-color: gray;
   }
 }

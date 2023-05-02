@@ -10,10 +10,6 @@ export const ScPublicRecordPage = () => {
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: publicEntryWeeksData } = useScGetPublicEntryWeeks();
 
-  // if (!publicEntryWeeksData) {
-  //   return <LoadingSpinner />;
-  // }
-
   let seasonWins = 0;
   let seasonLosses = 0;
   let seasonPushes = 0;

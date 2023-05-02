@@ -22,13 +22,13 @@ export const ScLeaderboard = ({
   rows,
   linkedWeekNumber,
 }: ScLeaderboardProps) => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
   const leaderboardRows = rows.map((entry) => {
     const { username, score, wins, losses, pushes } = entry;
     const winPct = calculateWinPct(wins, losses, pushes);
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
-    }`;
+    } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
     const recordClass =
       wins - losses > 0
         ? classes.positive

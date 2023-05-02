@@ -43,7 +43,7 @@ export const ScViewPicksGame = ({
         <td>
           <div className={classes.mobileOnly}>Not started</div>
           <div className={classes.teams}>
-            <div className={classes.teamDiv}>
+            <div className={`${classes.teamDiv} ${classes.mysteryDiv}`}>
               <img
                 className={classes.logo}
                 src={require("../../assets/mystery_team.png")}
@@ -51,7 +51,7 @@ export const ScViewPicksGame = ({
               />
             </div>
             <div className={classes.at}>@</div>
-            <div className={classes.teamDiv}>
+            <div className={`${classes.teamDiv} ${classes.mysteryDiv}`}>
               <img
                 className={classes.logo}
                 src={require("../../assets/mystery_team.png")}

@@ -31,6 +31,10 @@
   border-radius: 12px;
 }
 
+.mysteryDiv {
+  background-color: #f8f9fa;
+}
+
 .timestamp {
   font-weight: bold;
 }

@@ -42,6 +42,7 @@ export const SvViewPicksPage = () => {
               className={`${classes.logo} ${classes.hiddenLogo}`}
               src={require("../../../assets/mystery_team.png")}
               alt="Mystery Team"
+              style={{ borderRadius: "4px" }}
             />
           </td>
           <td>
@@ -49,6 +50,7 @@ export const SvViewPicksPage = () => {
               className={`${classes.logo} ${classes.hiddenLogo}`}
               src={require("../../../assets/mystery_team.png")}
               alt="Mystery Team"
+              style={{ borderRadius: "4px" }}
             />
           </td>
           <td></td>
@@ -88,7 +90,7 @@ export const SvViewPicksPage = () => {
           </div>
         </td>
         <td>
-          <div>
+          <div className={classes.logoBackdrop}>
             <img
               className={classes.logo}
               src={AllTeamLogos[opposingTeam] as unknown as string}
