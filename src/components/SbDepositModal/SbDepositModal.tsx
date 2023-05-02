@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { toast } from "react-toastify";
 import { useSbDeposit } from "../../hooks/sportsbook/useSbDeposit";
 import { useSbGetUserPools } from "../../hooks/sportsbook/useSbGetUserPools";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import { formatCurrency } from "../../util/format";
 import classes from "./SbDepositModal.module.css";
 
@@ -22,7 +22,7 @@ export const SbDepositModal = ({
   pendingBalance,
   onClose,
 }: SbDepositModalProps) => {
-  const { googleJwt, username } = useContext(AuthContext);
+  const { googleJwt, username } = useContext(ChadContext);
   const { refetch: refetchUserBalances } = useSbGetUserPools(username);
 
   const deposit = useSbDeposit();

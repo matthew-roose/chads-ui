@@ -4,12 +4,12 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useSbGetBestParlays } from "../../../hooks/sportsbook/useSbGetBestParlays";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { convertOddsFromDecimal, formatCurrency } from "../../../util/format";
 import classes from "./SbBestParlaysPage.module.css";
 
 export const SbBestParlaysPage = () => {
-  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(ChadContext);
   const { data: bestParlaysData } = useSbGetBestParlays();
 
   const leaderboardRows = bestParlaysData?.map((week) => {

@@ -6,7 +6,7 @@ import { ScViewPicksGame } from "../../../components/ScViewPicksGame/ScViewPicks
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { useScGetUserEntryWeekAndNullablePicks } from "../../../hooks/supercontest/useScGetUserEntryWeekAndNullablePicks";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import {
   formatRecord,
   formatUsernamePossessiveForm,
@@ -18,7 +18,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./ScViewPicksPage.module.css";
 
 export const ScViewPicksPage = () => {
-  const { googleJwt } = useContext(AuthContext);
+  const { googleJwt } = useContext(ChadContext);
   const { username, weekNumber } = useParams();
 
   const { data: allUsernames } = useGetAllUsernames();

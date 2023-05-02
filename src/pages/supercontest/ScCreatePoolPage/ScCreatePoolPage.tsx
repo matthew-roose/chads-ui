@@ -10,11 +10,11 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import { useScCreatePool } from "../../../hooks/supercontest/useScCreatePool";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import classes from "./ScCreatePoolPage.module.css";
 
 export const ScCreatePoolPage = () => {
-  const { isLoggedIn, googleJwt } = useContext(AuthContext);
+  const { isLoggedIn, googleJwt } = useContext(ChadContext);
   const navigate = useNavigate();
   const [poolName, setPoolName] = useState("");
   const [buyIn, setBuyIn] = useState(0);

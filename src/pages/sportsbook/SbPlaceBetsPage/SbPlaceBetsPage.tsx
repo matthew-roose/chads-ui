@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import {
   Aside,
   Button,
@@ -31,7 +31,7 @@ import classes from "./SbPlaceBetsPage.module.css";
 type TeaserPointOption = 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10;
 
 export const SbPlaceBetsPage = () => {
-  const { googleJwt, username } = useContext(AuthContext);
+  const { googleJwt, username } = useContext(ChadContext);
   // only used for screens <993px
   const [showBetSlip, setShowBetSlip] = useState(false);
   const [parlayOrTeaser, setParlayOrTeaser] = useState<"Parlay" | "Teaser">(

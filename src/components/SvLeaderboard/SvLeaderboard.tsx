@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import { SvEntryAndNullablePicks } from "../../types/survivor/SvEntryAndNullablePicks";
 import { formatRecord } from "../../util/format";
 import { Button, ScrollArea, Table } from "@mantine/core";
@@ -17,7 +17,7 @@ export const SvLeaderboard = ({
   rows,
   currentWeekNumber,
 }: SvLeaderboardProps) => {
-  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(ChadContext);
   const [viewAllPicks, setViewAllPicks] = useState(false);
 
   const allWeekNumbers = Array.from({ length: currentWeekNumber }, (_, i) =>

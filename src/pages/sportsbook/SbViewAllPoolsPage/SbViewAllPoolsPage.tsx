@@ -3,12 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { PoolCard } from "../../../components/PoolCard/PoolCard";
 import { useSbGetAllPools } from "../../../hooks/sportsbook/useSbGetAllPools";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import classes from "./SbViewAllPoolsPage.module.css";
 
 export const SbViewAllPoolsPage = () => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername } = useContext(ChadContext);
   const { data: allPoolsData } = useSbGetAllPools();
   const { data: allJoinedPoolsData } = useSbGetUserPools(loggedInUsername);
 

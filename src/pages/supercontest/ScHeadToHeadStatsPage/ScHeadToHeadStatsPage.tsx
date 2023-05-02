@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Select, Table } from "@mantine/core";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { useScGetHeadToHeadStats } from "../../../hooks/supercontest/useScGetHeadToHeadStats";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { ScHeadToHeadStats } from "../../../types/supercontest/ScHeadToHeadStats";
@@ -18,7 +18,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./ScHeadToHeadStatsPage.module.css";
 
 export const ScHeadToHeadStatsPage = () => {
-  const { username: loggedInUsername } = useContext(AuthContext);
+  const { username: loggedInUsername } = useContext(ChadContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [firstUsername, setFirstUsername] = useState(
     searchParams.get("firstUser") || loggedInUsername || ""

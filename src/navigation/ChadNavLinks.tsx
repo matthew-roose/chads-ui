@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Navbar } from "@mantine/core";
 
 import { ChadNavLink } from "./ChadNavLink";
-import { AuthContext } from "../store/auth-context";
+import { ChadContext } from "../store/chad-context";
 import { useGetCurrentWeekNumber } from "../hooks/useGetCurrentWeekNumber";
 
 export interface LinkData {
@@ -30,7 +30,7 @@ const filterChildLinks = (link: LinkData) => {
 };
 
 export const ChadNavLinks = ({ closeNavbar, getLinkData }: LinksProps) => {
-  const { username } = useContext(AuthContext);
+  const { username } = useContext(ChadContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   let links;
   let chadLinks;

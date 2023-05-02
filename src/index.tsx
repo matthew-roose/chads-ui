@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "./index.css";
 import App from "./App";
-import { AuthContextProvider } from "./store/auth-context";
+import { ChadContextProvider } from "./store/chad-context";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
+    <ChadContextProvider>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
           <BrowserRouter>
@@ -24,6 +24,6 @@ root.render(
           </BrowserRouter>
         </HelmetProvider>
       </QueryClientProvider>
-    </AuthContextProvider>
+    </ChadContextProvider>
   </React.StrictMode>
 );

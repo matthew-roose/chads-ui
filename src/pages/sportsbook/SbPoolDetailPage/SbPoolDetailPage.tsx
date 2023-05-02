@@ -7,7 +7,7 @@ import { useSbGetPoolDetail } from "../../../hooks/sportsbook/useSbGetPoolDetail
 import { useSbGetWeeklyLeaderboard } from "../../../hooks/sportsbook/useSbGetWeeklyLeaderboard";
 import { useSbJoinPool } from "../../../hooks/sportsbook/useSbJoinPool";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { formatEnum, formatCurrency } from "../../../util/format";
 import { SbWeeklyLeaderboard } from "../../../components/SbWeeklyLeaderboard/SbWeeklyLeaderboard";
 import { SbSeasonLeaderboard } from "../../../components/SbSeasonLeaderboard/SbSeasonLeaderboard";
@@ -19,7 +19,7 @@ export const SbPoolDetailPage = () => {
     googleJwt,
     isLoggedIn,
     username: loggedInUsername,
-  } = useContext(AuthContext);
+  } = useContext(ChadContext);
   const { poolName } = useParams();
   const [viewingWeek, setViewingWeek] = useState("");
   const [passwordValue, setPasswordValue] = useState("");

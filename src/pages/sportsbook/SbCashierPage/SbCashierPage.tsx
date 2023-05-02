@@ -5,12 +5,12 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import { SbCashOutModal } from "../../../components/SbCashOutModal/SbCashOutModal";
 import { SbDepositModal } from "../../../components/SbDepositModal/SbDepositModal";
 import { useSbGetUserPools } from "../../../hooks/sportsbook/useSbGetUserPools";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { formatCurrency } from "../../../util/format";
 import classes from "./SbCashierPage.module.css";
 
 export const SbCashierPage = () => {
-  const { username } = useContext(AuthContext);
+  const { username } = useContext(ChadContext);
   const [depositModalOpen, setDepositModalOpen] = useState(false);
   const [cashOutModalOpen, setCashOutModalOpen] = useState(false);
 

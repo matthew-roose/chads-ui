@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { useSbCashOut } from "../../hooks/sportsbook/useSbCashOut";
 import { useSbGetUserPools } from "../../hooks/sportsbook/useSbGetUserPools";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import { formatCurrency } from "../../util/format";
 import classes from "./SbCashOutModal.module.css";
 
@@ -22,7 +22,7 @@ export const SbCashOutModal = ({
   pendingBalance,
   onClose,
 }: SbCashOutModalProps) => {
-  const { googleJwt, username } = useContext(AuthContext);
+  const { googleJwt, username } = useContext(ChadContext);
   const [cashOutAmount, setCashOutAmount] = useState(0);
   const { refetch: refetchUserBalances } = useSbGetUserPools(username);
 

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { useParams } from "react-router-dom";
 import { useSvGetPoolDetail } from "../../../hooks/survivor/useSvGetPoolDetail";
 import { useSvJoinPool } from "../../../hooks/survivor/useSvJoinPool";
@@ -17,7 +17,7 @@ export const SvPoolDetailPage = () => {
     googleJwt,
     isLoggedIn,
     username: loggedInUsername,
-  } = useContext(AuthContext);
+  } = useContext(ChadContext);
   const { poolName } = useParams();
   const [passwordValue, setPasswordValue] = useState("");
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();

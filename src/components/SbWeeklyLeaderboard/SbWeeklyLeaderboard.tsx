@@ -1,7 +1,7 @@
 import { Table } from "@mantine/core";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import { SbWeeklyUserStats } from "../../types/sportsbook/SbWeeklyUserStats";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
 import classes from "./SbWeeklyLeaderboard.module.css";
@@ -17,7 +17,7 @@ export const SbWeeklyLeaderboard = ({
   showWeekColumn,
   showParlayColumn,
 }: SbWeeklyLeaderboardProps) => {
-  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(ChadContext);
 
   const leaderboardRows = rows.map((week) => {
     const {

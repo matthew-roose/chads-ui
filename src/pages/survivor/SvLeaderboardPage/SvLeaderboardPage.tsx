@@ -3,12 +3,12 @@ import { SvLeaderboard } from "../../../components/SvLeaderboard/SvLeaderboard";
 import { useSvGetLeaderboard } from "../../../hooks/survivor/useSvGetLeaderboard";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { useContext } from "react";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import classes from "./SvLeaderboardPage.module.css";
 
 export const SvLeaderboardPage = () => {
-  const { googleJwt } = useContext(AuthContext);
+  const { googleJwt } = useContext(ChadContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: leaderboardData } = useSvGetLeaderboard(googleJwt);
 

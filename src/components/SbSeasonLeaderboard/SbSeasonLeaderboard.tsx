@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { useGetCurrentWeekNumber } from "../../hooks/useGetCurrentWeekNumber";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import { SbAccount } from "../../types/sportsbook/SbAccount";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
 import classes from "./SbSeasonLeaderboard.module.css";
@@ -12,7 +12,7 @@ interface SbSeasonLeaderboardProps {
   rows: SbAccount[];
 }
 export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
-  const { username: loggedInUsername, useDarkMode } = useContext(AuthContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(ChadContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
 
   if (!currentWeekNumber) {

@@ -7,7 +7,7 @@ import { UserAndWeekSelects } from "../../../components/UserAndWeekSelects/UserA
 import { useSbGetUserBetsForWeek } from "../../../hooks/sportsbook/useSbGetUserBetsForWeek";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { Result } from "../../../types/Result";
 import { SbBetLegType } from "../../../types/sportsbook/SbBetLegType";
 import {
@@ -22,7 +22,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./SbViewBetsPage.module.css";
 
 export const SbViewBetsPage = () => {
-  const { googleJwt } = useContext(AuthContext);
+  const { googleJwt } = useContext(ChadContext);
   const { username, weekNumber } = useParams();
   const { data: allUsernames } = useGetAllUsernames();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();

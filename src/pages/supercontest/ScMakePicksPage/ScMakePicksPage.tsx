@@ -9,7 +9,7 @@ import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber"
 import { useGetCurrentGameLines } from "../../../hooks/useGetCurrentGameLines";
 import { useScGetUserEntryWeekAndPicks } from "../../../hooks/supercontest/useScGetUserEntryWeekAndPicks";
 import { useScSubmitPicks } from "../../../hooks/supercontest/useScSubmitPicks";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { ScPickCreate } from "../../../types/supercontest/ScPickCreate";
 import { Result } from "../../../types/Result";
@@ -17,7 +17,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./ScMakePicksPage.module.css";
 
 export const ScMakePicksPage = () => {
-  const { googleJwt, username } = useContext(AuthContext);
+  const { googleJwt, username } = useContext(ChadContext);
   const [currentPicks, setCurrentPicks] = useState<ScPickCreate[]>([]);
 
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { SbWeeklyUserStats } from "../../types/sportsbook/SbWeeklyUserStats";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
 import { useContext } from "react";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import classes from "./SbWeeklyStatsTable.module.css";
 
 interface SbWeeklyStatsTableProps {
@@ -11,7 +11,7 @@ interface SbWeeklyStatsTableProps {
 }
 
 export const SbWeeklyStatsTable = ({ rows }: SbWeeklyStatsTableProps) => {
-  const { useDarkMode } = useContext(AuthContext);
+  const { useDarkMode } = useContext(ChadContext);
   const statsRows = rows.map((row) => {
     const {
       weekNumber,

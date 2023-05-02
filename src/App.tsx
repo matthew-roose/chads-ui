@@ -15,7 +15,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { IconHome, IconSettings } from "@tabler/icons";
-import { AuthContext } from "./store/auth-context";
+import { ChadContext } from "./store/chad-context";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { ChadNavLinks } from "./navigation/ChadNavLinks";
 import {
@@ -36,7 +36,7 @@ declare var google: any;
 
 const App = () => {
   const { isLoggedIn, username, useDarkMode, login, logout } =
-    useContext(AuthContext);
+    useContext(ChadContext);
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
   const [open, setOpen] = useState(false);
 

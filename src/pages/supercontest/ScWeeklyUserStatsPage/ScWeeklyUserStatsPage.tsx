@@ -13,10 +13,10 @@ import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import classes from "./ScWeeklyUserStatsPage.module.css";
 import { useContext } from "react";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 
 export const ScWeeklyUserStatsPage = () => {
-  const { useDarkMode } = useContext(AuthContext);
+  const { useDarkMode } = useContext(ChadContext);
   const { username } = useParams();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: allUsernames } = useGetAllUsernames();

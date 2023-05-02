@@ -6,7 +6,7 @@ interface UserInfo {
   lastName: string;
 }
 
-export const AuthContext = React.createContext({
+export const ChadContext = React.createContext({
   googleJwt: "",
   isLoggedIn: false,
   username: "",
@@ -34,7 +34,7 @@ const retrieveLocalStorage = () => {
   };
 };
 
-export const AuthContextProvider = ({ children }: PropsWithChildren) => {
+export const ChadContextProvider = ({ children }: PropsWithChildren) => {
   const storedData = retrieveLocalStorage();
 
   const [googleJwt, setGoogleJwt] = useState(storedData.googleJwt);
@@ -90,6 +90,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <ChadContext.Provider value={contextValue}>{children}</ChadContext.Provider>
   );
 };

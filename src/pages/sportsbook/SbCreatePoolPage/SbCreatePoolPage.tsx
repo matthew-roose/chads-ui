@@ -10,11 +10,11 @@ import {
   Button,
 } from "@mantine/core";
 import { useSbCreatePool } from "../../../hooks/sportsbook/useSbCreatePool";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import classes from "./SbCreatePoolPage.module.css";
 
 export const SbCreatePoolPage = () => {
-  const { isLoggedIn, googleJwt } = useContext(AuthContext);
+  const { isLoggedIn, googleJwt } = useContext(ChadContext);
   const navigate = useNavigate();
   const [poolName, setPoolName] = useState("");
   const [buyIn, setBuyIn] = useState(0);

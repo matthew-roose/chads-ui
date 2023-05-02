@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useSvGetUserEntryAndPicks } from "../../../hooks/survivor/useSvGetUserEntryAndPicks";
 import { useGetCurrentGameLines } from "../../../hooks/useGetCurrentGameLines";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { SvPickCreate } from "../../../types/survivor/SvPickCreate";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
 import { Result } from "../../../types/Result";
@@ -15,7 +15,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./SvMakePickPage.module.css";
 
 export const SvMakePickPage = () => {
-  const { googleJwt, username } = useContext(AuthContext);
+  const { googleJwt, username } = useContext(ChadContext);
   const [currentPick, setCurrentPick] = useState<SvPickCreate>();
 
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();

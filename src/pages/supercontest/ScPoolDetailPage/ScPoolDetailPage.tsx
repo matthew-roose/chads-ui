@@ -5,7 +5,7 @@ import { Button, Divider, PasswordInput, Select } from "@mantine/core";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { useScGetPoolDetail } from "../../../hooks/supercontest/useScGetPoolDetail";
 import { useScJoinPool } from "../../../hooks/supercontest/useScJoinPool";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { formatEnum } from "../../../util/format";
 import { toast } from "react-toastify";
 import { ScLeaderboard } from "../../../components/ScLeaderboard/ScLeaderboard";
@@ -17,7 +17,7 @@ export const ScPoolDetailPage = () => {
     googleJwt,
     isLoggedIn,
     username: loggedInUsername,
-  } = useContext(AuthContext);
+  } = useContext(ChadContext);
   const { poolName } = useParams();
   const [viewingWeek, setViewingWeek] = useState("");
   const [passwordValue, setPasswordValue] = useState("");

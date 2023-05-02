@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useSvGetUserEntryAndNullablePicks } from "../../../hooks/survivor/useSvGetUserEntryAndNullablePicks";
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import { Helmet } from "react-helmet-async";
 import { formatUsernamePossessiveForm } from "../../../util/format";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
@@ -13,7 +13,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./SvViewPicksPage.module.css";
 
 export const SvViewPicksPage = () => {
-  const { googleJwt } = useContext(AuthContext);
+  const { googleJwt } = useContext(ChadContext);
   const { username } = useParams();
 
   const { data: allUsernames } = useGetAllUsernames();

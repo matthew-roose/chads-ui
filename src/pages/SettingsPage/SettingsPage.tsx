@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { AuthContext } from "../../store/auth-context";
+import { ChadContext } from "../../store/chad-context";
 import { Switch, useMantineTheme } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons";
 import classes from "./SettingsPage.module.css";
 
 export const SettingsPage = () => {
-  const { useDarkMode, toggleDarkMode } = useContext(AuthContext);
+  const { useDarkMode, toggleDarkMode } = useContext(ChadContext);
   const theme = useMantineTheme();
 
   return (

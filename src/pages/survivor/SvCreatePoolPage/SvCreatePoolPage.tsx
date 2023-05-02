@@ -10,11 +10,11 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSvCreatePool } from "../../../hooks/survivor/useSvCreatePool";
-import { AuthContext } from "../../../store/auth-context";
+import { ChadContext } from "../../../store/chad-context";
 import classes from "./SvCreatePoolPage.module.css";
 
 export const SvCreatePoolPage = () => {
-  const { isLoggedIn, googleJwt } = useContext(AuthContext);
+  const { isLoggedIn, googleJwt } = useContext(ChadContext);
   const navigate = useNavigate();
   const [poolName, setPoolName] = useState("");
   const [buyIn, setBuyIn] = useState(0);
