@@ -76,12 +76,14 @@ export const SvLeaderboard = ({
                 </div>
               )}
               {pick.pickedTeam === null && (
-                <div className={classes.logoBackdrop}>
+                <div
+                  className={classes.logoBackdrop}
+                  style={{ backgroundColor: "#f8f9fa" }}
+                >
                   <img
                     className={`${classes.logo} ${classes.hiddenLogo}`}
                     src={require("../../assets/mystery_team.png")}
                     alt="Mystery Team"
-                    style={{ borderRadius: "4px" }}
                   />
                 </div>
               )}

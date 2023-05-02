@@ -38,20 +38,28 @@ export const SvViewPicksPage = () => {
         <tr className={classes.row} key={weekNumber}>
           <td>{weekNumber}</td>
           <td>
-            <img
-              className={`${classes.logo} ${classes.hiddenLogo}`}
-              src={require("../../../assets/mystery_team.png")}
-              alt="Mystery Team"
-              style={{ borderRadius: "4px" }}
-            />
+            <div
+              className={classes.logoBackdrop}
+              style={{ backgroundColor: "#f8f9fa" }}
+            >
+              <img
+                className={`${classes.logo} ${classes.hiddenLogo}`}
+                src={require("../../../assets/mystery_team.png")}
+                alt="Mystery Team"
+              />
+            </div>
           </td>
           <td>
-            <img
-              className={`${classes.logo} ${classes.hiddenLogo}`}
-              src={require("../../../assets/mystery_team.png")}
-              alt="Mystery Team"
-              style={{ borderRadius: "4px" }}
-            />
+            <div
+              className={classes.logoBackdrop}
+              style={{ backgroundColor: "#f8f9fa" }}
+            >
+              <img
+                className={`${classes.logo} ${classes.hiddenLogo}`}
+                src={require("../../../assets/mystery_team.png")}
+                alt="Mystery Team"
+              />
+            </div>
           </td>
           <td></td>
           <td></td>
@@ -90,7 +98,7 @@ export const SvViewPicksPage = () => {
           </div>
         </td>
         <td>
-          <div className={classes.logoBackdrop}>
+          <div>
             <img
               className={classes.logo}
               src={AllTeamLogos[opposingTeam] as unknown as string}
