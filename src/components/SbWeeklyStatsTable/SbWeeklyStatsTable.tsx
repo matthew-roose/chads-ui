@@ -1,8 +1,8 @@
+import { useContext } from "react";
 import { Table } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { SbWeeklyUserStats } from "../../types/sportsbook/SbWeeklyUserStats";
 import { formatCurrency, convertOddsFromDecimal } from "../../util/format";
-import { useContext } from "react";
 import { ChadContext } from "../../store/chad-context";
 import classes from "./SbWeeklyStatsTable.module.css";
 
@@ -25,8 +25,9 @@ export const SbWeeklyStatsTable = ({ rows }: SbWeeklyStatsTableProps) => {
     const rowClasses = `${classes.leaderboardRow} ${
       useDarkMode ? classes.darkMode : classes.lightMode
     }`;
-    const profitClass =
-      profit > 0 ? classes.positive : profit < 0 ? classes.negative : "";
+    const profitClasses = `${
+      profit > 0 ? classes.positive : profit < 0 ? classes.negative : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     // this component is used for both user and public weekly stats which link to different pages
     const linkUrl =
       username !== ""
@@ -37,7 +38,7 @@ export const SbWeeklyStatsTable = ({ rows }: SbWeeklyStatsTableProps) => {
         <td>
           <Link to={linkUrl}>{weekNumber}</Link>
         </td>
-        <td className={profitClass}>{formatCurrency(profit, 0)}</td>
+        <td className={profitClasses}>{formatCurrency(profit, 0)}</td>
         <td>
           {bestParlayOdds ? convertOddsFromDecimal(bestParlayOdds) : "N/A"}
         </td>

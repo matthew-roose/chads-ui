@@ -32,12 +32,13 @@ export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
     } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
-    const winTotalClass =
+    const winTotalClasses = `${
       winLossTotal > 0
         ? classes.positive
         : winLossTotal < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr key={username} className={rowClasses}>
         <td>
@@ -47,7 +48,7 @@ export const SbSeasonLeaderboard = ({ rows }: SbSeasonLeaderboardProps) => {
             {username}
           </Link>
         </td>
-        <td className={winTotalClass}>{formatCurrency(winLossTotal, 0)}</td>
+        <td className={winTotalClasses}>{formatCurrency(winLossTotal, 0)}</td>
         <td>
           {bestParlayOdds ? convertOddsFromDecimal(bestParlayOdds) : "N/A"}
         </td>

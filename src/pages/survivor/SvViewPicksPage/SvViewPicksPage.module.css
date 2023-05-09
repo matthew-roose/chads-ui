@@ -61,12 +61,16 @@
   color: green;
 }
 
+.winText.darkMode {
+  color: lightgreen;
+}
+
 .lossText {
-  color: red;
+  color: crimson;
 }
 
 .pushText {
-  color: goldenrod;
+  color: gold;
 }
 
 @media only screen and (max-width: 500px) {

@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
+import { Table } from "@mantine/core";
+import { ChadContext } from "../../../store/chad-context";
 import { useScGetPublicEntryWeeks } from "../../../hooks/supercontest/useScGetPublicEntryWeeks";
 import { calculateWinPct, formatRecord } from "../../../util/format";
-import { Table } from "@mantine/core";
 import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import classes from "./ScPublicRecordPage.module.css";
 
 export const ScPublicRecordPage = () => {
+  const { useDarkMode } = useContext(ChadContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: publicEntryWeeksData } = useScGetPublicEntryWeeks();
 
@@ -22,19 +25,20 @@ export const ScPublicRecordPage = () => {
     seasonLosses += weekLosses;
     seasonPushes += weekPushes;
     const winPct = calculateWinPct(weekWins, weekLosses, weekPushes);
-    const recordClass =
+    const recordClasses = `${
       weekWins - weekLosses > 0
         ? classes.positive
         : weekWins - weekLosses < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr className={classes.row} key={weekNumber}>
         <td>{weekNumber}</td>
         <td className={classes.recordClass}>
           {formatRecord(weekWins, weekLosses, weekPushes)}
         </td>
-        <td className={recordClass}>{winPct ? `${winPct}%` : "N/A"}</td>
+        <td className={recordClasses}>{winPct ? `${winPct}%` : "N/A"}</td>
       </tr>
     );
   });
@@ -42,12 +46,13 @@ export const ScPublicRecordPage = () => {
   const seasonRecord = formatRecord(seasonWins, seasonLosses, seasonPushes);
   const winPct = calculateWinPct(seasonWins, seasonLosses, seasonPushes);
 
-  const recordClass =
+  const recordClasses = `${
     seasonWins - seasonLosses > 0
       ? classes.positive
       : seasonWins - seasonLosses < 0
       ? classes.negative
-      : "";
+      : ""
+  } ${useDarkMode ? classes.darkMode : ""}`;
 
   return (
     <div className={classes.page}>
@@ -58,7 +63,7 @@ export const ScPublicRecordPage = () => {
       {!publicEntryWeeksData && <LoadingSpinner />}
       {publicEntryWeeksData && (
         <>
-          <div className={`${classes.seasonRecord} ${recordClass}`}>
+          <div className={`${classes.seasonRecord} ${recordClasses}`}>
             Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}
           </div>
           <Table striped highlightOnHover className={classes.table}>

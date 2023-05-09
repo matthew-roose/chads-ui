@@ -37,6 +37,10 @@
   color: green;
 }
 
+.buyInAndPurse.darkMode {
+  color: lightgreen;
+}
+
 .joinButton {
   margin: 1rem auto;
   display: block;

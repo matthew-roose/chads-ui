@@ -18,8 +18,11 @@ import { Result } from "../../types/Result";
 import { SbBetLegType } from "../../types/sportsbook/SbBetLegType";
 import { useSvGetPrevWeekLosses } from "../../hooks/survivor/useSvGetPrevWeekLosses";
 import classes from "./HomePage.module.css";
+import { useContext } from "react";
+import { ChadContext } from "../../store/chad-context";
 
 export const HomePage = () => {
+  const { useDarkMode } = useContext(ChadContext);
   const { data: gameLinesData } = useGetCurrentGameLines();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: prevWeekBestParlayData } =
@@ -90,8 +93,9 @@ export const HomePage = () => {
               awayTeam,
               result,
             } = betLeg;
-            const betLegResultClass =
-              result === Result.WIN ? classes.win : classes.push;
+            const betLegResultClass = `${
+              result === Result.WIN ? classes.win : classes.push
+            } ${useDarkMode ? classes.darkMode : ""}`;
             let textToShow;
             if (betLegType === SbBetLegType.HOME_SPREAD) {
               textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
@@ -161,12 +165,13 @@ export const HomePage = () => {
         <td>
           {picks.map((pick) => {
             const { pickedTeam, homeTeam, awayTeam, homeSpread, result } = pick;
-            const pickResultClass =
+            const pickResultClass = `${
               result === Result.WIN
                 ? classes.win
                 : result === Result.LOSS
                 ? classes.loss
-                : classes.push;
+                : classes.push
+            } ${useDarkMode ? classes.darkMode : ""}`;
             const spread =
               pickedTeam === homeTeam ? homeSpread : homeSpread * -1;
             const pickText = `${pickedTeam.split("_").pop()} ${formatSpread(
@@ -218,35 +223,32 @@ export const HomePage = () => {
     let displayScore;
     if (homeScore !== null && awayScore !== null) {
       displayScore =
-        homeScore > awayScore
-          ? `${homeScore}-${awayScore} ${formatTeamMascot(homeTeam)}`
-          : homeScore < awayScore
-          ? `${awayScore}-${homeScore} ${formatTeamMascot(awayTeam)}`
-          : `${homeScore}-${awayScore} Tie`;
+        pickedTeam === homeTeam
+          ? `${homeScore}-${awayScore}`
+          : `${awayScore}-${homeScore}`;
     }
+    const opposingTeam = pickedTeam === homeTeam ? awayTeam : homeTeam;
     return (
       <tr className={classes.row} key={username}>
         <td>{username}</td>
         <td className={classes.matchup}>
           <img
             className={classes.matchupLogo}
-            src={AllTeamLogos[awayTeam] as unknown as string}
-            alt={awayTeam}
+            src={AllTeamLogos[pickedTeam] as unknown as string}
+            alt={pickedTeam}
           />
-          <div className={classes.atSymbol}>@</div>
+        </td>
+        <td>
           <img
             className={classes.matchupLogo}
-            src={AllTeamLogos[homeTeam] as unknown as string}
-            alt={homeTeam}
+            src={AllTeamLogos[opposingTeam] as unknown as string}
+            alt={opposingTeam}
           />
-          <div className={`${classes.viewPickText} ${classes.text}`}>
-            {formatTeamMascot(pickedTeam)}
-          </div>
         </td>
-        <td className={classes.hideForMobile}>
-          <div className={classes.text}>{displayScore}</div>
+        <td className={`${classes.loss}`}>
+          <div>{displayScore}</div>
         </td>
-        <td className={classes.loss}>{result}</td>
+        <td className={`${classes.loss} ${classes.hideForMobile}`}>{result}</td>
       </tr>
     );
   });
@@ -289,7 +291,7 @@ export const HomePage = () => {
       )}
       {prevWeekBestParlayData?.length === 0 && currentWeekNumber !== 1 && (
         <div className={classes.week1Message}>
-          No one hit a parlay last week!
+          No one won a parlay last week!
         </div>
       )}
       {bestParlayRows.length > 0 && (
@@ -353,8 +355,9 @@ export const HomePage = () => {
             <tr>
               <th>Username</th>
               <th>Pick</th>
-              <th className={classes.hideForMobile}>Score</th>
-              <th>Result</th>
+              <th>Opponent</th>
+              <th>Score</th>
+              <th className={classes.hideForMobile}>Result</th>
             </tr>
           </thead>
           <tbody>{losersRows}</tbody>

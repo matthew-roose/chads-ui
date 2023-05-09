@@ -22,7 +22,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./SbViewBetsPage.module.css";
 
 export const SbViewBetsPage = () => {
-  const { googleJwt } = useContext(ChadContext);
+  const { googleJwt, useDarkMode } = useContext(ChadContext);
   const { username, weekNumber } = useParams();
   const { data: allUsernames } = useGetAllUsernames();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
@@ -49,14 +49,15 @@ export const SbViewBetsPage = () => {
       result,
       betLegs,
     } = bet;
-    const betResultClass =
+    const betResultClass = `${
       result === Result.WIN
         ? classes.win
         : result === Result.LOSS
         ? classes.loss
         : result === Result.PUSH
         ? classes.push
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr key={placedTimestamp}>
         <td className={classes.hideFirstForMobile}>
@@ -77,14 +78,15 @@ export const SbViewBetsPage = () => {
               awayTeam,
               result,
             } = betLeg;
-            const betLegResultClass =
+            const betLegResultClasses = `${
               result === Result.WIN
                 ? classes.win
                 : result === Result.LOSS
                 ? classes.loss
                 : result === Result.PUSH
                 ? classes.push
-                : "";
+                : ""
+            } ${useDarkMode ? classes.darkMode : ""}`;
             let textToShow;
             if (
               betLegType === null ||
@@ -157,7 +159,7 @@ export const SbViewBetsPage = () => {
                 <div className={classes.viewBetText}>
                   {textToShow}
                   <span>{result ? `: ` : ""}</span>
-                  <span className={betLegResultClass}>
+                  <span className={betLegResultClasses}>
                     {result ? `${result}` : ""}
                   </span>
                 </div>

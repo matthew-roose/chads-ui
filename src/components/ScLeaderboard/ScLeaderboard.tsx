@@ -29,12 +29,13 @@ export const ScLeaderboard = ({
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
     } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
-    const recordClass =
+    const recordClasses = `${
       wins - losses > 0
         ? classes.positive
         : wins - losses < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr className={rowClasses} key={username}>
         <td>
@@ -44,9 +45,9 @@ export const ScLeaderboard = ({
             {username}
           </Link>
         </td>
-        <td className={recordClass}>{formatRecord(wins, losses, pushes)}</td>
+        <td className={recordClasses}>{formatRecord(wins, losses, pushes)}</td>
         <td>{score.toFixed(1)}</td>
-        <td className={recordClass}>{winPct ? `${winPct}%` : "N/A"}</td>
+        <td className={recordClasses}>{winPct ? `${winPct}%` : "N/A"}</td>
       </tr>
     );
   });

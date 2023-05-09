@@ -8,8 +8,11 @@ import { useGetCurrentWeekNumber } from "../../../hooks/useGetCurrentWeekNumber"
 import { Result } from "../../../types/Result";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import classes from "./SvMostPopularThisWeekPage.module.css";
+import { useContext } from "react";
+import { ChadContext } from "../../../store/chad-context";
 
 export const SvMostPopularThisWeekPage = () => {
+  const { useDarkMode } = useContext(ChadContext);
   const { weekNumber } = useParams();
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   const { data: weekMostPopularData } = useSvGetWeekMostPopular(
@@ -42,32 +45,53 @@ export const SvMostPopularThisWeekPage = () => {
     }
     const gameScore =
       homeScore !== null ? `${pickedTeamScore}-${opposingTeamScore}` : "";
-    const resultClassName = result
-      ? result === Result.WIN
-        ? classes.win
-        : result === Result.LOSS
-        ? classes.loss
-        : classes.push
-      : "";
+    let winLossFillClassName;
+    let winLossTextClassName;
+    if (result === Result.WIN) {
+      winLossFillClassName = classes.winFill;
+      winLossTextClassName = classes.winText;
+    } else if (result === Result.LOSS) {
+      winLossFillClassName = classes.lossFill;
+      winLossTextClassName = classes.lossText;
+    } else if (result === Result.PUSH) {
+      winLossFillClassName = classes.pushFill;
+      winLossTextClassName = classes.pushText;
+    }
     return (
       <tr className={classes.row} key={pickedTeam}>
         <td>
-          <img
-            className={classes.logo}
-            src={AllTeamLogos[pickedTeam] as unknown as string}
-            alt={pickedTeam}
-          />
+          <div className={`${classes.logoBackdrop} ${winLossFillClassName}`}>
+            <img
+              className={classes.logo}
+              src={AllTeamLogos[pickedTeam] as unknown as string}
+              alt={pickedTeam}
+            />
+          </div>
         </td>
-        <td className={classes.hideForMobile}>
-          <img
-            className={classes.logo}
-            src={AllTeamLogos[opposingTeam] as unknown as string}
-            alt={opposingTeam}
-          />
+        <td>
+          <div>
+            <img
+              className={classes.logo}
+              src={AllTeamLogos[opposingTeam] as unknown as string}
+              alt={opposingTeam}
+            />
+          </div>
         </td>
         <td>{timesPicked}</td>
-        <td>{gameScore}</td>
-        <td className={resultClassName}>{result}</td>
+        <td
+          className={`${winLossTextClassName} ${
+            useDarkMode ? classes.darkMode : ""
+          }`}
+        >
+          {gameScore}
+        </td>
+        <td
+          className={`${winLossTextClassName} ${
+            useDarkMode ? classes.darkMode : ""
+          } ${classes.hideForMobile}`}
+        >
+          {result}
+        </td>
       </tr>
     );
   });
@@ -109,10 +133,10 @@ export const SvMostPopularThisWeekPage = () => {
           <thead>
             <tr>
               <th>Team</th>
-              <th className={classes.hideForMobile}>Opponent</th>
+              <th>Opponent</th>
               <th>Count</th>
               <th>Score</th>
-              <th>Result</th>
+              <th className={classes.hideForMobile}>Result</th>
             </tr>
           </thead>
           <tbody>{mostPopularPickRows}</tbody>

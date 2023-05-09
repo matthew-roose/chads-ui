@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
+import { ChadContext } from "../../store/chad-context";
 import { Result } from "../../types/Result";
 import { formatSpread, formatTimestamp } from "../../util/format";
 import classes from "./ScViewPicksGame.module.css";
@@ -26,6 +28,7 @@ export const ScViewPicksGame = ({
   awayScore,
   result,
 }: ScViewPicksGameProps) => {
+  const { useDarkMode } = useContext(ChadContext);
   // not logged in as this user should it should be a mystery until final
   if (
     !gameId ||
@@ -74,7 +77,7 @@ export const ScViewPicksGame = ({
           : classes.push
         : classes.pending
       : ""
-  }`;
+  } ${useDarkMode ? classes.darkMode : ""}`;
   const awayClasses = `${classes.teamDiv} ${
     awayTeam === pickedTeam
       ? result
@@ -85,7 +88,7 @@ export const ScViewPicksGame = ({
           : classes.push
         : classes.pending
       : ""
-  }`;
+  } ${useDarkMode ? classes.darkMode : ""}`;
 
   return (
     <tr>

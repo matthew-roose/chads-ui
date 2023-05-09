@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Table } from "@mantine/core";
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
 import { calculateWinPct, formatRecord } from "../../util/format";
+import { ChadContext } from "../../store/chad-context";
 import classes from "./ScPickedAndFadedTable.module.css";
 
 interface ScPickedAndFadedRow {
@@ -16,15 +18,17 @@ interface ScPickedAndFadedTableProps {
 }
 
 export const ScPickedAndFadedTable = ({ rows }: ScPickedAndFadedTableProps) => {
+  const { useDarkMode } = useContext(ChadContext);
   const teamRows = rows.map((row) => {
     const { team, total, wins, losses, pushes } = row;
     const winPct = calculateWinPct(wins, losses, pushes);
-    const recordClass =
+    const recordClasses = `${
       wins - losses > 0
         ? classes.positive
         : wins - losses < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr key={team} className={classes.row}>
         <td>
@@ -35,8 +39,8 @@ export const ScPickedAndFadedTable = ({ rows }: ScPickedAndFadedTableProps) => {
           />
         </td>
         <td>{total}</td>
-        <td className={recordClass}>{formatRecord(wins, losses, pushes)}</td>
-        <td className={recordClass}>{winPct ? `${winPct}%` : "N/A"}</td>
+        <td className={recordClasses}>{formatRecord(wins, losses, pushes)}</td>
+        <td className={recordClasses}>{winPct ? `${winPct}%` : "N/A"}</td>
       </tr>
     );
   });

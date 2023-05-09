@@ -31,6 +31,10 @@
   background-color: lightgreen;
 }
 
+.win.darkMode {
+  color: gray;
+}
+
 .loss {
   background-color: crimson;
 }
@@ -124,10 +128,10 @@
 }
 
 .started {
-  opacity: 40%;
+  opacity: 30%;
 }
 
-.started:hover {
+.started.teamDiv:hover {
   cursor: not-allowed;
 }
 

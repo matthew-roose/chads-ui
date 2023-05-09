@@ -247,7 +247,7 @@ export const SbPlaceBetsPage = () => {
           <IconTrash
             className={classes.deleteLegIcon}
             size={24}
-            color="red"
+            color="crimson"
             onClick={() =>
               setBetLegs((prevState) =>
                 prevState.filter(
@@ -298,7 +298,7 @@ export const SbPlaceBetsPage = () => {
   const clearBetSlipButton = (
     <Button
       variant="gradient"
-      gradient={{ from: "orange", to: "red" }}
+      gradient={{ from: "orange", to: "crimson" }}
       className={`${classes.button}`}
       onClick={() => setBetLegs([])}
     >

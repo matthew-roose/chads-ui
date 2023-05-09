@@ -17,6 +17,7 @@ export const ScPoolDetailPage = () => {
     googleJwt,
     isLoggedIn,
     username: loggedInUsername,
+    useDarkMode,
   } = useContext(ChadContext);
   const { poolName } = useParams();
   const [viewingWeek, setViewingWeek] = useState("");
@@ -62,30 +63,33 @@ export const ScPoolDetailPage = () => {
       };
     });
 
-  const weeklyLeaderboardRows = poolDetailData?.entries
-    .sort((a, b) => a.username.localeCompare(b.username))
-    .sort(
-      (a, b) =>
-        a.supercontestEntryWeeks[+viewingWeek - 1].weekLosses -
-        b.supercontestEntryWeeks[+viewingWeek - 1].weekLosses
-    )
-    .sort(
-      (a, b) =>
-        b.supercontestEntryWeeks[+viewingWeek - 1].weekScore -
-        a.supercontestEntryWeeks[+viewingWeek - 1].weekScore
-    )
-    .map((entry) => {
-      const entryWeek = entry.supercontestEntryWeeks[+viewingWeek - 1];
-      const { username, weekScore, weekWins, weekLosses, weekPushes } =
-        entryWeek;
-      return {
-        username,
-        score: weekScore,
-        wins: weekWins,
-        losses: weekLosses,
-        pushes: weekPushes,
-      };
-    });
+  let weeklyLeaderboardRows;
+  if (viewingWeek) {
+    weeklyLeaderboardRows = poolDetailData?.entries
+      .sort((a, b) => a.username.localeCompare(b.username))
+      .sort(
+        (a, b) =>
+          a.supercontestEntryWeeks[+viewingWeek - 1].weekLosses -
+          b.supercontestEntryWeeks[+viewingWeek - 1].weekLosses
+      )
+      .sort(
+        (a, b) =>
+          b.supercontestEntryWeeks[+viewingWeek - 1].weekScore -
+          a.supercontestEntryWeeks[+viewingWeek - 1].weekScore
+      )
+      .map((entry) => {
+        const entryWeek = entry.supercontestEntryWeeks[+viewingWeek - 1];
+        const { username, weekScore, weekWins, weekLosses, weekPushes } =
+          entryWeek;
+        return {
+          username,
+          score: weekScore,
+          wins: weekWins,
+          losses: weekLosses,
+          pushes: weekPushes,
+        };
+      });
+  }
 
   const isDataLoading =
     !currentWeekNumber ||
@@ -93,6 +97,10 @@ export const ScPoolDetailPage = () => {
     allWeekNumbers.length === 0 ||
     !seasonLeaderboardRows ||
     !weeklyLeaderboardRows;
+
+  const buyInAndPurseClasses = `${classes.buyInAndPurse} ${
+    useDarkMode ? classes.darkMode : ""
+  }`;
 
   return (
     <div className={classes.page}>
@@ -114,7 +122,7 @@ export const ScPoolDetailPage = () => {
           <div className={classes.joinType}>
             {formatEnum(poolDetailData.joinType)}
           </div>
-          <div className={classes.buyInAndPurse}>
+          <div className={buyInAndPurseClasses}>
             {poolDetailData.buyIn > 0
               ? `$${poolDetailData.buyIn} ($${
                   poolDetailData.buyIn * poolDetailData.entries.length
@@ -172,25 +180,32 @@ export const ScPoolDetailPage = () => {
             linkedWeekNumber={currentWeekNumber}
           />
           <Divider className={classes.divider} />
-          <Select
-            className={classes.dropdown}
-            label="Week"
-            value={viewingWeek}
-            onChange={(newWeek) => setViewingWeek(newWeek || "")}
-            data={allWeekNumbers}
-            styles={() => ({
-              label: { fontSize: "16px" },
-              input: { fontSize: "16px" },
-              itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
-            })}
-          />
-          <div className={classes.leaderboardTitle}>
-            Week {viewingWeek} Leaderboard
-          </div>
-          <ScLeaderboard
-            rows={weeklyLeaderboardRows}
-            linkedWeekNumber={+viewingWeek}
-          />
+          {weeklyLeaderboardRows ? (
+            <>
+              <Select
+                className={classes.dropdown}
+                label="Week"
+                value={viewingWeek}
+                onChange={(newWeek) => setViewingWeek(newWeek || "")}
+                data={allWeekNumbers}
+                styles={() => ({
+                  label: { fontSize: "16px" },
+                  input: { fontSize: "16px" },
+                })}
+              />
+              <div className={classes.leaderboardTitle}>
+                Week {viewingWeek} Leaderboard
+              </div>
+              <ScLeaderboard
+                rows={weeklyLeaderboardRows}
+                linkedWeekNumber={+viewingWeek}
+              />
+            </>
+          ) : (
+            <>
+              <LoadingSpinner />
+            </>
+          )}
         </>
       )}
     </div>

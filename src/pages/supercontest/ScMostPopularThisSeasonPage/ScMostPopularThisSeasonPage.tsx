@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { Table } from "@mantine/core";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
+import { ChadContext } from "../../../store/chad-context";
 import { useScGetSeasonMostPopular } from "../../../hooks/supercontest/useScGetSeasonMostPopular";
 import { formatSpread } from "../../../util/format";
 import { Result } from "../../../types/Result";
@@ -8,6 +10,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./ScMostPopularThisSeasonPage.module.css";
 
 export const ScMostPopularThisSeasonPage = () => {
+  const { useDarkMode } = useContext(ChadContext);
   const { data: seasonMostPopularData } = useScGetSeasonMostPopular();
 
   const mostPopularPickRows = seasonMostPopularData?.map((pick) => {
@@ -36,18 +39,27 @@ export const ScMostPopularThisSeasonPage = () => {
     }
     const gameScore =
       homeScore !== null ? `${pickedTeamScore}-${opposingTeamScore}` : "";
-    const resultClassName = result
-      ? result === Result.WIN
-        ? classes.win
-        : result === Result.LOSS
-        ? classes.loss
-        : classes.push
-      : "";
+    let winLossFillClassName;
+    let winLossTextClassName;
+    if (result === Result.WIN) {
+      winLossFillClassName = classes.winFill;
+      winLossTextClassName = classes.winText;
+    } else if (result === Result.LOSS) {
+      winLossFillClassName = classes.lossFill;
+      winLossTextClassName = classes.lossText;
+    } else if (result === Result.PUSH) {
+      winLossFillClassName = classes.pushFill;
+      winLossTextClassName = classes.pushText;
+    }
     return (
       <tr className={classes.row} key={weekNumber + pickedTeam}>
         <td className={classes.hideForMobile}>{weekNumber}</td>
         <td>
-          <div className={classes.flexRow}>
+          <div
+            className={`${classes.flexRow} ${
+              classes.logoBackdrop
+            } ${winLossFillClassName} ${useDarkMode ? classes.darkMode : ""}`}
+          >
             <img
               className={classes.logo}
               src={AllTeamLogos[pickedTeam] as unknown as string}
@@ -66,8 +78,20 @@ export const ScMostPopularThisSeasonPage = () => {
           />
         </td>
         <td>{timesPicked}</td>
-        <td className={classes.hideForMobile}>{gameScore}</td>
-        <td className={resultClassName}>{result}</td>
+        <td
+          className={`${winLossTextClassName} ${
+            useDarkMode ? classes.darkMode : ""
+          }`}
+        >
+          {gameScore}
+        </td>
+        <td
+          className={`${winLossTextClassName} ${
+            useDarkMode ? classes.darkMode : ""
+          } ${classes.hideForMobile}`}
+        >
+          {result}
+        </td>
       </tr>
     );
   });
@@ -90,8 +114,8 @@ export const ScMostPopularThisSeasonPage = () => {
               <th>Pick</th>
               <th>Opponent</th>
               <th>Count</th>
-              <th className={classes.hideForMobile}>Score</th>
-              <th>Result</th>
+              <th>Score</th>
+              <th className={classes.hideForMobile}>Result</th>
             </tr>
           </thead>
           <tbody>{mostPopularPickRows}</tbody>

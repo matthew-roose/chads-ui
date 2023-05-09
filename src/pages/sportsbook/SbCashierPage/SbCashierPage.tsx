@@ -59,7 +59,7 @@ export const SbCashierPage = () => {
               <Button
                 onClick={() => setDepositModalOpen(true)}
                 variant="gradient"
-                gradient={{ from: "orange", to: "red" }}
+                gradient={{ from: "orange", to: "crimson" }}
               >
                 Deposit
               </Button>

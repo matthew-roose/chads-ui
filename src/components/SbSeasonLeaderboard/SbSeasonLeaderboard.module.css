@@ -39,8 +39,12 @@
   color: green;
 }
 
+.positive.darkMode {
+  color: lightgreen;
+}
+
 .negative {
-  color: red;
+  color: crimson;
 }
 
 @media only screen and (min-width: 1300px) {

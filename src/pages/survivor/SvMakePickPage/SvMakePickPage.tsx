@@ -15,7 +15,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./SvMakePickPage.module.css";
 
 export const SvMakePickPage = () => {
-  const { googleJwt, username } = useContext(ChadContext);
+  const { googleJwt, username, useDarkMode } = useContext(ChadContext);
   const [currentPick, setCurrentPick] = useState<SvPickCreate>();
 
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
@@ -106,7 +106,7 @@ export const SvMakePickPage = () => {
             : classes.push
           : classes.pending
         : ""
-    }`;
+    } ${useDarkMode ? classes.darkMode : ""}`;
     const awayClasses = `${classes.teamDiv} ${
       hasStarted || isPickLocked || teamsUsed?.includes(awayTeam)
         ? classes.started
@@ -121,7 +121,7 @@ export const SvMakePickPage = () => {
             : classes.push
           : classes.pending
         : ""
-    }`;
+    } ${useDarkMode ? classes.darkMode : ""}`;
     const atClasses = `${classes.at} ${
       hasStarted ||
       isPickLocked ||

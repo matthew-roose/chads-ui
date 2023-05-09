@@ -37,11 +37,19 @@
   color: green;
 }
 
+.buyInAndPurse.darkMode {
+  color: lightgreen;
+}
+
 .prizePct {
   font-weight: bold;
   text-align: center;
   margin-top: 5px;
   color: green;
+}
+
+.prizePct.darkMode {
+  color: lightgreen;
 }
 
 .joinButton {

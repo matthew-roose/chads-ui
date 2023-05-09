@@ -86,7 +86,6 @@ const App = () => {
     }
   }, [isGoogleLoaded, isLoggedIn, login]);
 
-  console.log(useDarkMode);
   const closeNavbarHandler = () => {
     setOpen(false);
   };
@@ -174,7 +173,7 @@ const App = () => {
               <ChadNavLink
                 to="/"
                 label="Home"
-                icon={<IconHome size={24} color="red" />}
+                icon={<IconHome size={24} color="crimson" />}
                 closeNavbar={closeNavbarHandler}
               />
               <ChadNavLinks
@@ -192,7 +191,12 @@ const App = () => {
               <ChadNavLink
                 to="/settings"
                 label="Settings"
-                icon={<IconSettings size={24} color="gray" />}
+                icon={
+                  <IconSettings
+                    size={24}
+                    color={useDarkMode ? "lightgray" : "gray"}
+                  />
+                }
                 closeNavbar={closeNavbarHandler}
               />
               <div style={{ height: "10rem" }}></div>

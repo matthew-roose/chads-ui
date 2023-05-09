@@ -19,6 +19,7 @@ export const SbPoolDetailPage = () => {
     googleJwt,
     isLoggedIn,
     username: loggedInUsername,
+    useDarkMode,
   } = useContext(ChadContext);
   const { poolName } = useParams();
   const [viewingWeek, setViewingWeek] = useState("");
@@ -75,6 +76,14 @@ export const SbPoolDetailPage = () => {
     allWeekNumbers.length === 0 ||
     !seasonLeaderboardRows;
 
+  const buyInAndPurseClasses = `${classes.buyInAndPurse} ${
+    useDarkMode ? classes.darkMode : ""
+  }`;
+
+  const prizePctClasses = `${classes.prizePct} ${
+    useDarkMode ? classes.darkMode : ""
+  }`;
+
   return (
     <div className={classes.page}>
       <Helmet>
@@ -91,11 +100,11 @@ export const SbPoolDetailPage = () => {
         <>
           <div className={classes.creator}>Created by {creatorUsername}</div>
           <div className={classes.joinType}>{formatEnum(joinType)}</div>
-          <div className={classes.buyInAndPurse}>
+          <div className={buyInAndPurseClasses}>
             {buyIn > 0 ? `$${buyIn} ($${purse} total)` : "FREE"}
           </div>
           {buyIn > 0 && winLossPrizePct > 0 && (
-            <div className={classes.prizePct}>
+            <div className={prizePctClasses}>
               {`${winLossPrizePct}% for best win/loss (${
                 winLossPurse % 1 === 0
                   ? `$${winLossPurse}`
@@ -104,7 +113,7 @@ export const SbPoolDetailPage = () => {
             </div>
           )}
           {buyIn > 0 && bestParlayPrizePct > 0 && (
-            <div className={classes.prizePct}>
+            <div className={prizePctClasses}>
               {`${bestParlayPrizePct}% for best parlay (${
                 bestParlayPurse % 1 === 0
                   ? `$${bestParlayPurse}`
@@ -167,7 +176,6 @@ export const SbPoolDetailPage = () => {
             styles={() => ({
               label: { fontSize: "16px" },
               input: { fontSize: "16px" },
-              itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
             })}
           />
           <div className={classes.leaderboardTitle}>

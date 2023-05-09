@@ -32,8 +32,9 @@ export const SbWeeklyLeaderboard = ({
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
     } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
-    const profitClass =
-      profit > 0 ? classes.positive : profit < 0 ? classes.negative : "";
+    const profitClasses = `${
+      profit > 0 ? classes.positive : profit < 0 ? classes.negative : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr key={weekNumber + username} className={rowClasses}>
         <td>
@@ -42,7 +43,7 @@ export const SbWeeklyLeaderboard = ({
           </Link>
         </td>
         {showWeekColumn && <td>{weekNumber}</td>}
-        <td className={profitClass}>{formatCurrency(profit, 0)}</td>
+        <td className={profitClasses}>{formatCurrency(profit, 0)}</td>
         {showParlayColumn && (
           <td>
             {bestParlayOdds ? convertOddsFromDecimal(bestParlayOdds) : "N/A"}

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Table } from "@mantine/core";
+import { ChadContext } from "../../store/chad-context";
 import { formatCurrency, formatEnum } from "../../util/format";
 import classes from "./SbSeasonBreakdownTable.module.css";
 
@@ -24,6 +26,7 @@ export const SbSeasonBreakdownTable = ({
   firstColumnName,
   rows,
 }: SbSeasonBreakdownTableProps) => {
+  const { useDarkMode } = useContext(ChadContext);
   const breakdownRows = rows.map((row) => {
     const {
       team,
@@ -34,12 +37,13 @@ export const SbSeasonBreakdownTable = ({
       amountLost,
       amountProfited,
     } = row;
-    const amountProfitedClass =
+    const amountProfitedClasses = `${
       amountProfited > 0
         ? classes.positive
         : amountProfited < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr key={`${team}${total}${betType}`} className={classes.leaderboardRow}>
         <td>
@@ -60,7 +64,7 @@ export const SbSeasonBreakdownTable = ({
         <td className={classes.hideForMobile}>
           {amountLost > 0 ? formatCurrency(amountLost * -1, 0) : "$0"}
         </td>
-        <td className={amountProfitedClass}>
+        <td className={amountProfitedClasses}>
           {formatCurrency(amountProfited, 0)}
         </td>
       </tr>

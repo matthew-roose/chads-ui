@@ -59,6 +59,10 @@
   color: green;
 }
 
+.parlayOdds.darkMode {
+  color: lightgreen;
+}
+
 @media only screen and (min-width: 1300px) {
   .loggedInRow.lightMode:hover {
     background-color: darkgray;

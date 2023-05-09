@@ -8,11 +8,20 @@
 .loader {
   width: 6rem;
   height: 6rem;
-  border: 5px solid black;
-  border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
+}
+
+.lightMode {
+  border: 5px solid black;
+  border-bottom-color: transparent;
+  animation: rotation 1s linear infinite;
+}
+
+.darkMode {
+  border: 5px solid #c1c2c5;
+  border-bottom-color: transparent;
   animation: rotation 1s linear infinite;
 }
 

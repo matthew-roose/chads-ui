@@ -16,6 +16,10 @@
   color: green;
 }
 
+.positive.darkMode {
+  color: lightgreen;
+}
+
 .negative {
-  color: red;
+  color: crimson;
 }

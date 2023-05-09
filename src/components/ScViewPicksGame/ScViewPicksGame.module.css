@@ -2,6 +2,10 @@
   background-color: lightgreen;
 }
 
+.win.darkMode {
+  color: gray;
+}
+
 .loss {
   background-color: crimson;
 }

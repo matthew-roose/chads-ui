@@ -67,13 +67,17 @@
   font-weight: bold;
 }
 
+.win.darkMode {
+  color: lightgreen;
+}
+
 .loss {
-  color: red;
+  color: crimson;
   font-weight: bold;
 }
 
 .push {
-  color: goldenrod;
+  color: gold;
   font-weight: bold;
 }
 

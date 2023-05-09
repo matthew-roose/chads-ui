@@ -16,7 +16,11 @@ export interface LinkData {
 
 interface LinksProps {
   closeNavbar: () => void;
-  getLinkData: (username: string, currentWeekNumber: number) => LinkData[];
+  getLinkData: (
+    username: string,
+    currentWeekNumber: number,
+    useDarkMode: string
+  ) => LinkData[];
 }
 
 const filterChildLinks = (link: LinkData) => {
@@ -30,16 +34,13 @@ const filterChildLinks = (link: LinkData) => {
 };
 
 export const ChadNavLinks = ({ closeNavbar, getLinkData }: LinksProps) => {
-  const { username } = useContext(ChadContext);
+  const { username, useDarkMode } = useContext(ChadContext);
   const { data: currentWeekNumber } = useGetCurrentWeekNumber();
   let links;
   let chadLinks;
-  if (!currentWeekNumber) {
-    return null;
-  }
   if (!username) {
     // only show links that don't require user to be logged in
-    links = getLinkData("", currentWeekNumber);
+    links = getLinkData("", currentWeekNumber || 1, useDarkMode);
     chadLinks = links.map((link) => {
       filterChildLinks(link);
       return (
@@ -48,7 +49,7 @@ export const ChadNavLinks = ({ closeNavbar, getLinkData }: LinksProps) => {
     });
   } else {
     // can show all links if user is logged in
-    links = getLinkData(username, currentWeekNumber);
+    links = getLinkData(username, currentWeekNumber || 1, useDarkMode);
     chadLinks = links.map((link) => (
       <ChadNavLink {...link} key={link.label} closeNavbar={closeNavbar} />
     ));

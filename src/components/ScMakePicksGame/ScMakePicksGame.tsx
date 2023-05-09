@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { AllTeamLogos } from "../../assets/AllTeamLogos";
 import { formatSpread, formatTimestamp } from "../../util/format";
+import { ChadContext } from "../../store/chad-context";
 import { ScPickCreate } from "../../types/supercontest/ScPickCreate";
 import { Result } from "../../types/Result";
 import classes from "./ScMakePicksGame.module.css";
@@ -29,6 +31,8 @@ export const ScMakePicksGame = ({
   result,
   onPickTeam,
 }: ScMakePicksGameProps) => {
+  const { useDarkMode } = useContext(ChadContext);
+
   const hasStarted = timestamp <= Date.now();
 
   const homeClasses = `${classes.teamDiv} ${
@@ -43,7 +47,7 @@ export const ScMakePicksGame = ({
           : classes.push
         : classes.pending
       : ""
-  }`;
+  } ${useDarkMode ? classes.darkMode : ""}`;
   const awayClasses = `${classes.teamDiv} ${
     hasStarted ? classes.started : classes.notStarted
   } ${
@@ -56,7 +60,7 @@ export const ScMakePicksGame = ({
           : classes.push
         : classes.pending
       : ""
-  }`;
+  } ${useDarkMode ? classes.darkMode : ""}`;
   const atClasses = `${classes.at} ${
     hasStarted ? classes.started : classes.notStarted
   }`;

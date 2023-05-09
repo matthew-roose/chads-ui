@@ -99,7 +99,7 @@ export const SvLeaderboard = ({
       <Button
         onClick={() => setViewAllPicks(!viewAllPicks)}
         variant="gradient"
-        gradient={{ from: "orange", to: "red" }}
+        gradient={{ from: "orange", to: "crimson" }}
         className={classes.button}
       >
         {viewAllPicks ? "Show only current pick" : "Show all picks"}

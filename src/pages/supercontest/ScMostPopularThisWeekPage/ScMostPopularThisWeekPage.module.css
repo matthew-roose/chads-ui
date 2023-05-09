@@ -39,24 +39,53 @@
 }
 
 .logo {
-  height: 3rem;
-  width: 3rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+.logoBackdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.75rem;
+  width: 5rem;
+  border-radius: 4px;
+}
+
+.winFill {
+  background-color: lightgreen;
+}
+
+.winFill.darkMode {
+  color: gray;
+}
+
+.lossFill {
+  background-color: crimson;
+}
+
+.pushFill {
+  background-color: gold;
+}
+
+.winText {
+  color: green;
+}
+
+.winText.darkMode {
+  color: lightgreen;
+}
+
+.lossText {
+  color: crimson;
+}
+
+.pushText {
+  color: gold;
 }
 
 .spread {
   margin-left: 5px;
-}
-
-.win {
-  color: green;
-}
-
-.loss {
-  color: red;
-}
-
-.push {
-  color: goldenrod;
 }
 
 @media only screen and (max-width: 500px) {

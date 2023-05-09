@@ -20,16 +20,27 @@ import { LinkData } from "./ChadNavLinks";
 
 export const getSportsbookLinkData = (
   username: string,
-  currentWeekNumber: number
+  currentWeekNumber: number,
+  useDarkMode: string
 ): LinkData[] => [
   {
-    icon: <IconCurrencyDollar size={24} color="green" />,
+    icon: (
+      <IconCurrencyDollar
+        size={24}
+        color={useDarkMode ? "lightgreen" : "green"}
+      />
+    ),
     label: "Sportsbook",
     to: "",
     public: true,
     childLinks: [
       {
-        icon: <IconBallAmericanFootball size={24} color="maroon" />,
+        icon: (
+          <IconBallAmericanFootball
+            size={24}
+            color={useDarkMode ? "crimson" : "maroon"}
+          />
+        ),
         label: "Place Bets",
         to: "/sportsbook/place-bets",
         public: true,
@@ -40,24 +51,34 @@ export const getSportsbookLinkData = (
         to: `/sportsbook/bet-history/${username}/week/${currentWeekNumber}`,
       },
       {
-        icon: <IconUsers size={24} color="blue" />,
+        icon: <IconUsers size={24} color={useDarkMode ? "skyblue" : "blue"} />,
         label: "Pools",
         to: "",
         public: true,
         childLinks: [
           {
-            icon: <IconCurrencyDollar size={24} color="green" />,
+            icon: (
+              <IconCurrencyDollar
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "My Pools",
             to: `/sportsbook/${username}/pools`,
           },
           {
-            icon: <IconCircles size={24} color="red" />,
+            icon: <IconCircles size={24} color="crimson" />,
             label: "View All Pools",
             to: "/sportsbook/pools",
             public: true,
           },
           {
-            icon: <IconCirclePlus size={24} color="green" />,
+            icon: (
+              <IconCirclePlus
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Create Pool",
             to: "/sportsbook/create-pool",
             public: true,
@@ -65,17 +86,27 @@ export const getSportsbookLinkData = (
         ],
       },
       {
-        icon: <IconReportAnalytics size={24} color="green" />,
+        icon: (
+          <IconReportAnalytics
+            size={24}
+            color={useDarkMode ? "lightgreen" : "green"}
+          />
+        ),
         label: "My Stats",
         to: "",
         childLinks: [
           {
-            icon: <IconTimeline size={24} color="blue" />,
+            icon: (
+              <IconTimeline
+                size={24}
+                color={useDarkMode ? "skyblue" : "blue"}
+              />
+            ),
             label: "Weekly Performance",
             to: `/sportsbook/${username}/stats/weekly`,
           },
           {
-            icon: <IconCalendar size={24} color="red" />,
+            icon: <IconCalendar size={24} color="crimson" />,
             label: "Season Breakdown",
             to: `/sportsbook/${username}/stats/season`,
           },
@@ -88,13 +119,23 @@ export const getSportsbookLinkData = (
         public: true,
         childLinks: [
           {
-            icon: <IconTimeline size={24} color="blue" />,
+            icon: (
+              <IconTimeline
+                size={24}
+                color={useDarkMode ? "skyblue" : "blue"}
+              />
+            ),
             label: "Weekly Performance",
             to: "/sportsbook/public-stats/weekly",
             public: true,
           },
           {
-            icon: <IconCurrencyDollar size={24} color="green" />,
+            icon: (
+              <IconCurrencyDollar
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Public Money",
             to: `/sportsbook/public-money/week/${currentWeekNumber}`,
             public: true,
@@ -102,13 +143,20 @@ export const getSportsbookLinkData = (
         ],
       },
       {
-        icon: <IconChartBar size={24} color="blue" />,
+        icon: (
+          <IconChartBar size={24} color={useDarkMode ? "skyblue" : "blue"} />
+        ),
         label: "Leaderboards",
         to: "",
         public: true,
         childLinks: [
           {
-            icon: <IconTimeline size={24} color="blue" />,
+            icon: (
+              <IconTimeline
+                size={24}
+                color={useDarkMode ? "skyblue" : "blue"}
+              />
+            ),
             label: "Weekly Leaderboard",
             to: `/sportsbook/leaderboard/week/${currentWeekNumber}`,
             public: true,
@@ -120,7 +168,12 @@ export const getSportsbookLinkData = (
             public: true,
           },
           {
-            icon: <IconCurrencyDollar size={24} color="green" />,
+            icon: (
+              <IconCurrencyDollar
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Best Weeks",
             to: "/sportsbook/leaderboard/best-weeks",
             public: true,
@@ -132,7 +185,12 @@ export const getSportsbookLinkData = (
             public: true,
           },
           {
-            icon: <IconMultiplier2x size={24} color="green" />,
+            icon: (
+              <IconMultiplier2x
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Best Parlays",
             to: "/sportsbook/leaderboard/best-parlays",
             public: true,
@@ -140,7 +198,9 @@ export const getSportsbookLinkData = (
         ],
       },
       {
-        icon: <IconWallet size={24} color="green" />,
+        icon: (
+          <IconWallet size={24} color={useDarkMode ? "lightgreen" : "green"} />
+        ),
         label: "Cashier",
         to: "/sportsbook/cashier",
         public: true,
@@ -151,7 +211,8 @@ export const getSportsbookLinkData = (
 
 export const getSupercontestLinkData = (
   username: string,
-  currentWeekNumber: number
+  currentWeekNumber: number,
+  useDarkMode: string
 ): LinkData[] => [
   {
     icon: <IconTrophy size={24} color="gold" />,
@@ -160,7 +221,12 @@ export const getSupercontestLinkData = (
     public: true,
     childLinks: [
       {
-        icon: <IconBallAmericanFootball size={24} color="maroon" />,
+        icon: (
+          <IconBallAmericanFootball
+            size={24}
+            color={useDarkMode ? "crimson" : "maroon"}
+          />
+        ),
         label: "Make Picks",
         to: "/supercontest/make-picks",
         public: true,
@@ -171,24 +237,34 @@ export const getSupercontestLinkData = (
         to: `/supercontest/pick-history/${username}/week/${currentWeekNumber}`,
       },
       {
-        icon: <IconUsers size={24} color="blue" />,
+        icon: <IconUsers size={24} color={useDarkMode ? "skyblue" : "blue"} />,
         label: "Pools",
         to: "",
         public: true,
         childLinks: [
           {
-            icon: <IconCurrencyDollar size={24} color="green" />,
+            icon: (
+              <IconCurrencyDollar
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "My Pools",
             to: `/supercontest/${username}/pools`,
           },
           {
-            icon: <IconCircles size={24} color="red" />,
+            icon: <IconCircles size={24} color="crimson" />,
             label: "View All Pools",
             to: "/supercontest/pools",
             public: true,
           },
           {
-            icon: <IconCirclePlus size={24} color="green" />,
+            icon: (
+              <IconCirclePlus
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Create Pool",
             to: "/supercontest/create-pool",
             public: true,
@@ -196,13 +272,23 @@ export const getSupercontestLinkData = (
         ],
       },
       {
-        icon: <IconReportAnalytics size={24} color="green" />,
+        icon: (
+          <IconReportAnalytics
+            size={24}
+            color={useDarkMode ? "lightgreen" : "green"}
+          />
+        ),
         label: "My Stats",
         to: "",
         public: true,
         childLinks: [
           {
-            icon: <IconTimeline size={24} color="blue" />,
+            icon: (
+              <IconTimeline
+                size={24}
+                color={useDarkMode ? "skyblue" : "blue"}
+              />
+            ),
             label: "Weekly Performance",
             to: `/supercontest/${username}/stats/weekly`,
           },
@@ -213,7 +299,7 @@ export const getSupercontestLinkData = (
             public: true,
           },
           {
-            icon: <IconHeart size={24} color="red" />,
+            icon: <IconHeart size={24} color="crimson" />,
             label: "Most Picked Teams",
             to: `/supercontest/${username}/stats/most-picked`,
           },
@@ -231,19 +317,26 @@ export const getSupercontestLinkData = (
         public: true,
         childLinks: [
           {
-            icon: <IconUsers size={24} color="green" />,
+            icon: (
+              <IconUsers
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Weekly Performance",
             to: "/supercontest/public-picks/record",
             public: true,
           },
           {
-            icon: <IconUsers size={24} color="blue" />,
+            icon: (
+              <IconUsers size={24} color={useDarkMode ? "skyblue" : "blue"} />
+            ),
             label: "Most Popular This Week",
             to: `/supercontest/public-picks/week/${currentWeekNumber}`,
             public: true,
           },
           {
-            icon: <IconUsers size={24} color="red" />,
+            icon: <IconUsers size={24} color="crimson" />,
             label: "Most Popular This Season",
             to: "/supercontest/public-picks/season",
             public: true,
@@ -251,13 +344,20 @@ export const getSupercontestLinkData = (
         ],
       },
       {
-        icon: <IconChartBar size={24} color="blue" />,
+        icon: (
+          <IconChartBar size={24} color={useDarkMode ? "skyblue" : "blue"} />
+        ),
         label: "Leaderboards",
         to: "",
         public: true,
         childLinks: [
           {
-            icon: <IconTimeline size={24} color="blue" />,
+            icon: (
+              <IconTimeline
+                size={24}
+                color={useDarkMode ? "skyblue" : "blue"}
+              />
+            ),
             label: "Weekly Leaderboard",
             to: `/supercontest/leaderboard/week/${currentWeekNumber}`,
             public: true,
@@ -276,16 +376,22 @@ export const getSupercontestLinkData = (
 
 export const getSurvivorLinkData = (
   username: string,
-  currentWeekNumber: number
+  currentWeekNumber: number,
+  useDarkMode: string
 ): LinkData[] => [
   {
-    icon: <IconTimeline size={24} color="blue" />,
+    icon: <IconTimeline size={24} color={useDarkMode ? "skyblue" : "blue"} />,
     label: "Survivor",
     to: "",
     public: true,
     childLinks: [
       {
-        icon: <IconBallAmericanFootball size={24} color="maroon" />,
+        icon: (
+          <IconBallAmericanFootball
+            size={24}
+            color={useDarkMode ? "crimson" : "maroon"}
+          />
+        ),
         label: "Make Picks",
         to: "/survivor/make-picks",
         public: true,
@@ -296,24 +402,34 @@ export const getSurvivorLinkData = (
         to: `/survivor/pick-history/${username}`,
       },
       {
-        icon: <IconUsers size={24} color="blue" />,
+        icon: <IconUsers size={24} color={useDarkMode ? "skyblue" : "blue"} />,
         label: "Pools",
         to: "",
         public: true,
         childLinks: [
           {
-            icon: <IconCurrencyDollar size={24} color="green" />,
+            icon: (
+              <IconCurrencyDollar
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "My Pools",
             to: `/survivor/${username}/pools`,
           },
           {
-            icon: <IconCircles size={24} color="red" />,
+            icon: <IconCircles size={24} color="crimson" />,
             label: "View All Pools",
             to: "/survivor/pools",
             public: true,
           },
           {
-            icon: <IconCirclePlus size={24} color="green" />,
+            icon: (
+              <IconCirclePlus
+                size={24}
+                color={useDarkMode ? "lightgreen" : "green"}
+              />
+            ),
             label: "Create Pool",
             to: "/survivor/create-pool",
             public: true,
@@ -327,13 +443,15 @@ export const getSurvivorLinkData = (
         public: true,
         childLinks: [
           {
-            icon: <IconUsers size={24} color="blue" />,
+            icon: (
+              <IconUsers size={24} color={useDarkMode ? "skyblue" : "blue"} />
+            ),
             label: "Most Popular This Week",
             to: `/survivor/public-picks/week/${currentWeekNumber}`,
             public: true,
           },
           {
-            icon: <IconUsers size={24} color="red" />,
+            icon: <IconUsers size={24} color="crimson" />,
             label: "Most Popular This Season",
             to: "/survivor/public-picks/season",
             public: true,
@@ -341,7 +459,9 @@ export const getSurvivorLinkData = (
         ],
       },
       {
-        icon: <IconChartBar size={24} color="blue" />,
+        icon: (
+          <IconChartBar size={24} color={useDarkMode ? "skyblue" : "blue"} />
+        ),
         label: "Leaderboard",
         to: "/survivor/leaderboard",
         public: true,

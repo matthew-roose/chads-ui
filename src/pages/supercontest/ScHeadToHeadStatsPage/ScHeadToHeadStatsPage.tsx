@@ -18,7 +18,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./ScHeadToHeadStatsPage.module.css";
 
 export const ScHeadToHeadStatsPage = () => {
-  const { username: loggedInUsername } = useContext(ChadContext);
+  const { username: loggedInUsername, useDarkMode } = useContext(ChadContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [firstUsername, setFirstUsername] = useState(
     searchParams.get("firstUser") || loggedInUsername || ""
@@ -36,10 +36,6 @@ export const ScHeadToHeadStatsPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   let { data: headToHeadData, isLoading: isHeadToHeadDataLoading } =
     useScGetHeadToHeadStats(firstUsername, secondUsername);
-
-  // if (!allUsernames) {
-  //   return <LoadingSpinner />;
-  // }
 
   if (!headToHeadData) {
     headToHeadData = [];
@@ -63,7 +59,6 @@ export const ScHeadToHeadStatsPage = () => {
         styles={() => ({
           label: { fontSize: "16px" },
           input: { fontSize: "16px" },
-          itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
         })}
       />
       <Select
@@ -82,7 +77,6 @@ export const ScHeadToHeadStatsPage = () => {
         styles={() => ({
           label: { fontSize: "16px" },
           input: { fontSize: "16px" },
-          itemsWrapper: { padding: "4px", width: "calc(100% - 8px)" },
         })}
       />
     </form>
@@ -142,32 +136,29 @@ export const ScHeadToHeadStatsPage = () => {
           ? secondUser.username
           : "PUSH";
     }
+    let fillClasses;
+    let textClasses;
     if (winner === firstUser.username) {
       firstUserWins++;
+      fillClasses = `${classes.winFill} ${useDarkMode ? classes.darkMode : ""}`;
+      textClasses = `${classes.winText} ${useDarkMode ? classes.darkMode : ""}`;
     } else if (winner === "PUSH") {
       firstUserPushes++;
+      fillClasses = classes.pushFill;
+      textClasses = classes.pushText;
     } else {
       firstUserLosses++;
-    }
-
-    let winnerClass;
-    if (
-      loggedInUsername === firstUsername ||
-      loggedInUsername === secondUsername
-    ) {
-      winnerClass =
-        winner === loggedInUsername
-          ? classes.win
-          : winner === "PUSH"
-          ? classes.push
-          : classes.loss;
+      fillClasses = classes.lossFill;
+      textClasses = classes.lossText;
     }
 
     return (
       <tr className={classes.row} key={gameId}>
         <td className={classes.hideSecondForMobile}>{weekNumber}</td>
         <td>
-          <div className={classes.flexRow}>
+          <div
+            className={`${classes.flexRow} ${classes.logoBackdrop} ${fillClasses}`}
+          >
             <img
               className={classes.logo}
               src={AllTeamLogos[firstUser.pickedTeam] as unknown as string}
@@ -194,8 +185,10 @@ export const ScHeadToHeadStatsPage = () => {
             </span>
           </div>
         </td>
-        <td className={classes.hideFirstForMobile}>{score}</td>
-        <td className={winnerClass}>{winner}</td>
+        <td className={textClasses}>{score}</td>
+        <td className={`${textClasses} ${classes.hideFirstForMobile}`}>
+          {winner}
+        </td>
       </tr>
     );
   });
@@ -227,17 +220,25 @@ export const ScHeadToHeadStatsPage = () => {
           : `${homeScore}-${awayScore} Tie`;
     }
 
-    let winLossClass;
+    let fillClasses;
+    let textClasses;
     if (result !== null) {
       if (result === Result.WIN) {
         alignedWins++;
-        winLossClass = classes.win;
+        fillClasses = `${classes.winFill} ${
+          useDarkMode ? classes.darkMode : ""
+        }`;
+        textClasses = `${classes.winText} ${
+          useDarkMode ? classes.darkMode : ""
+        }`;
       } else if (result === Result.LOSS) {
         alignedLosses++;
-        winLossClass = classes.loss;
+        fillClasses = classes.lossFill;
+        textClasses = classes.lossText;
       } else {
         alignedPushes++;
-        winLossClass = classes.push;
+        fillClasses = classes.pushFill;
+        textClasses = classes.pushText;
       }
     }
 
@@ -247,7 +248,9 @@ export const ScHeadToHeadStatsPage = () => {
       <tr className={classes.row} key={gameId}>
         <td className={classes.hideSecondForMobile}>{weekNumber}</td>
         <td>
-          <div className={classes.flexRow}>
+          <div
+            className={`${classes.flexRow} ${classes.logoBackdrop} ${fillClasses}`}
+          >
             <img
               className={classes.logo}
               src={AllTeamLogos[pickedTeam] as unknown as string}
@@ -261,7 +264,7 @@ export const ScHeadToHeadStatsPage = () => {
           </div>
         </td>
         <td>
-          <div className={classes.flexRow}>
+          <div>
             <img
               className={classes.logo}
               src={AllTeamLogos[opposingTeam] as unknown as string}
@@ -269,8 +272,10 @@ export const ScHeadToHeadStatsPage = () => {
             />
           </div>
         </td>
-        <td className={classes.hideFirstForMobile}>{score}</td>
-        <td className={winLossClass}>{result}</td>
+        <td className={textClasses}>{score}</td>
+        <td className={`${textClasses} ${classes.hideFirstForMobile}`}>
+          {result}
+        </td>
       </tr>
     );
   });
@@ -324,8 +329,8 @@ export const ScHeadToHeadStatsPage = () => {
                 <th className={classes.hideSecondForMobile}>Week</th>
                 <th>{formatUsernamePossessiveForm(firstUsername)} Pick</th>
                 <th>{formatUsernamePossessiveForm(secondUsername)} Pick</th>
-                <th className={classes.hideFirstForMobile}>Score</th>
-                <th>Winner</th>
+                <th>Score</th>
+                <th className={classes.hideFirstForMobile}>Winner</th>
               </tr>
             </thead>
             <tbody>{opposingPicksRows}</tbody>
@@ -345,8 +350,8 @@ export const ScHeadToHeadStatsPage = () => {
                 <th className={classes.hideSecondForMobile}>Week</th>
                 <th>Pick</th>
                 <th>Opponent</th>
-                <th className={classes.hideFirstForMobile}>Score</th>
-                <th>Result</th>
+                <th>Score</th>
+                <th className={classes.hideFirstForMobile}>Result</th>
               </tr>
             </thead>
             <tbody>{alignedPicksRows}</tbody>

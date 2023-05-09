@@ -45,7 +45,7 @@
 }
 
 .negative {
-  color: red;
+  color: crimson;
 }
 
 @media only screen and (max-width: 500px) {

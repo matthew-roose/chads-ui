@@ -4,7 +4,10 @@ import { useSvGetUserEntryAndNullablePicks } from "../../../hooks/survivor/useSv
 import { useGetAllUsernames } from "../../../hooks/useGetAllUsernames";
 import { ChadContext } from "../../../store/chad-context";
 import { Helmet } from "react-helmet-async";
-import { formatUsernamePossessiveForm } from "../../../util/format";
+import {
+  formatRecord,
+  formatUsernamePossessiveForm,
+} from "../../../util/format";
 import { UserSelect } from "../../../components/UserSelect/UserSelect";
 import { Table } from "@mantine/core";
 import { AllTeamLogos } from "../../../assets/AllTeamLogos";
@@ -13,7 +16,7 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinne
 import classes from "./SvViewPicksPage.module.css";
 
 export const SvViewPicksPage = () => {
-  const { googleJwt } = useContext(ChadContext);
+  const { googleJwt, useDarkMode } = useContext(ChadContext);
   const { username } = useParams();
 
   const { data: allUsernames } = useGetAllUsernames();
@@ -106,8 +109,20 @@ export const SvViewPicksPage = () => {
             />
           </div>
         </td>
-        <td className={classes.hideForMobile}>{formattedScore}</td>
-        <td className={winLossTextClassName}>{result}</td>
+        <td
+          className={`${
+            useDarkMode ? classes.darkMode : ""
+          } ${winLossTextClassName}`}
+        >
+          {formattedScore}
+        </td>
+        <td
+          className={`${
+            useDarkMode ? classes.darkMode : ""
+          } ${winLossTextClassName} ${classes.hideForMobile}`}
+        >
+          {result}
+        </td>
       </tr>
     );
   });
@@ -138,6 +153,13 @@ export const SvViewPicksPage = () => {
       {!isInvalidUsername && (
         <div className={classes.title}>
           {formatUsernamePossessiveForm(username || "")} Picks
+          {rows && rows.length > 0 && entryData
+            ? `: ${formatRecord(
+                entryData.wins,
+                entryData.losses,
+                entryData.pushes
+              )}`
+            : ""}
         </div>
       )}
       {isInvalidUsername && (
@@ -154,8 +176,8 @@ export const SvViewPicksPage = () => {
               <th>Week</th>
               <th>Pick</th>
               <th>Opponent</th>
-              <th className={classes.hideForMobile}>Score</th>
-              <th>Result</th>
+              <th>Score</th>
+              <th className={classes.hideForMobile}>Result</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>

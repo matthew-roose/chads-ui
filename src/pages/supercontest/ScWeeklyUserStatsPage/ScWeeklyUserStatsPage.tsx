@@ -33,12 +33,13 @@ export const ScWeeklyUserStatsPage = () => {
     const rowClasses = `${classes.row} ${
       useDarkMode ? classes.darkMode : classes.lightMode
     }`;
-    const recordClass =
+    const recordClasses = `${
       weekWins - weekLosses > 0
         ? classes.positive
         : weekWins - weekLosses < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
     return (
       <tr key={weekNumber} className={rowClasses}>
         <td>
@@ -48,27 +49,28 @@ export const ScWeeklyUserStatsPage = () => {
             {weekNumber}
           </Link>
         </td>
-        <td className={recordClass}>
+        <td className={recordClasses}>
           {formatRecord(weekWins, weekLosses, weekPushes)}
         </td>
         <td>{weekScore.toFixed(1)}</td>
-        <td className={recordClass}>{winPct ? `${winPct}%` : "N/A"}</td>
+        <td className={recordClasses}>{winPct ? `${winPct}%` : "N/A"}</td>
       </tr>
     );
   });
   let seasonRecord;
   let winPct;
-  let recordClass;
+  let recordClasses;
   if (entryAndEntryWeeksData) {
     const { seasonWins, seasonLosses, seasonPushes } = entryAndEntryWeeksData;
     seasonRecord = formatRecord(seasonWins, seasonLosses, seasonPushes);
     winPct = calculateWinPct(seasonWins, seasonLosses, seasonPushes);
-    recordClass =
+    recordClasses = `${
       seasonWins - seasonLosses > 0
         ? classes.positive
         : seasonWins - seasonLosses < 0
         ? classes.negative
-        : "";
+        : ""
+    } ${useDarkMode ? classes.darkMode : ""}`;
   }
 
   const getNavigateUrl = (username: string | null) => {
@@ -105,7 +107,7 @@ export const ScWeeklyUserStatsPage = () => {
       {!entryAndEntryWeeksData && <LoadingSpinner />}
       {!isInvalidUsername && entryAndEntryWeeksData && (
         <>
-          <div className={`${classes.seasonRecord} ${recordClass}`}>
+          <div className={`${classes.seasonRecord} ${recordClasses}`}>
             Season: {seasonRecord} {winPct ? `(${winPct}%)` : ""}
           </div>
           <Table striped highlightOnHover className={classes.table}>

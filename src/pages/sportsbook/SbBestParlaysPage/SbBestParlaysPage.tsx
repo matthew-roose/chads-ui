@@ -24,6 +24,9 @@ export const SbBestParlaysPage = () => {
     const rowClasses = `${classes.leaderboardRow} ${
       username === loggedInUsername ? classes.loggedInRow : classes.otherRow
     } ${useDarkMode ? classes.darkMode : classes.lightMode}`;
+    const parlayClasses = `${classes.parlayOdds} ${
+      useDarkMode ? classes.darkMode : ""
+    }`;
     return (
       <tr key={id} className={rowClasses}>
         <td>
@@ -32,7 +35,7 @@ export const SbBestParlaysPage = () => {
           </Link>
         </td>
         <td>{weekNumber}</td>
-        <td className={classes.parlayOdds}>
+        <td className={parlayClasses}>
           {convertOddsFromDecimal(effectiveOdds)}
         </td>
         <td className={classes.hideForMobile}>{formatCurrency(wager, 0)}</td>

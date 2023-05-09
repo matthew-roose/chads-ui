@@ -17,6 +17,7 @@ export const SvPoolDetailPage = () => {
     googleJwt,
     isLoggedIn,
     username: loggedInUsername,
+    useDarkMode,
   } = useContext(ChadContext);
   const { poolName } = useParams();
   const [passwordValue, setPasswordValue] = useState("");
@@ -43,6 +44,10 @@ export const SvPoolDetailPage = () => {
   const isDataLoading =
     !currentWeekNumber || !poolDetailData || !leaderboardRows;
 
+  const buyInAndPurseClasses = `${classes.buyInAndPurse} ${
+    useDarkMode ? classes.darkMode : ""
+  }`;
+
   return (
     <div className={classes.page}>
       <Helmet>
@@ -63,7 +68,7 @@ export const SvPoolDetailPage = () => {
           <div className={classes.joinType}>
             {formatEnum(poolDetailData.joinType)}
           </div>
-          <div className={classes.buyInAndPurse}>
+          <div className={buyInAndPurseClasses}>
             {poolDetailData.buyIn > 0
               ? `$${poolDetailData.buyIn} ($${
                   poolDetailData.buyIn * poolDetailData.entries.length
