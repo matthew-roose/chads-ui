@@ -4,6 +4,7 @@ import { ChadContext } from "../../../store/chad-context";
 import {
   Aside,
   Button,
+  Divider,
   NativeSelect,
   NumberInput,
   ScrollArea,
@@ -28,7 +29,8 @@ import {
 import { TEASER_LEG_ODDS } from "../../../util/constants";
 import classes from "./SbPlaceBetsPage.module.css";
 
-type TeaserPointOption = 6 | 6.5 | 7 | 7.5 | 8 | 8.5 | 9 | 9.5 | 10;
+type TeaserPointOption = 6.0 | 6.5 | 7.0 | 7.5 | 8.0 | 8.5 | 9.0 | 9.5 | 10;
+type BuyPointOption = 0.5 | 1.0 | 1.5 | 2.0;
 
 export const SbPlaceBetsPage = () => {
   const { googleJwt, username } = useContext(ChadContext);
@@ -228,39 +230,53 @@ export const SbPlaceBetsPage = () => {
       }
 
       return (
-        <div key={`${gameId}${betLegType}`} className={classes.betSlipItem}>
-          <div className={classes.betSlipItemLogoAndText}>
-            <img
-              className={classes.betSlipItemLogo}
-              src={AllTeamLogos[awayTeam] as unknown as string}
-              alt={awayTeam}
-            />
-            <span className={classes.atSymbol}>@</span>
-            <img
-              className={classes.betSlipItemLogo}
-              src={AllTeamLogos[homeTeam] as unknown as string}
-              alt={homeTeam}
-            />
-            <div className={classes.betSlipItemText}>{textToShow}</div>
-          </div>
+        <>
+          <div key={`${gameId}${betLegType}`} className={classes.betSlipItem}>
+            <div className={classes.betSlipItemLogoAndText}>
+              <img
+                className={classes.betSlipItemLogo}
+                src={AllTeamLogos[awayTeam] as unknown as string}
+                alt={awayTeam}
+              />
+              <span className={classes.atSymbol}>@</span>
+              <img
+                className={classes.betSlipItemLogo}
+                src={AllTeamLogos[homeTeam] as unknown as string}
+                alt={homeTeam}
+              />
+              <div className={classes.betSlipItemText}>{textToShow}</div>
+            </div>
 
-          <IconTrash
-            className={classes.deleteLegIcon}
-            size={24}
-            color="crimson"
-            onClick={() =>
-              setBetLegs((prevState) =>
-                prevState.filter(
-                  (oldBetLeg) =>
-                    !(
-                      oldBetLeg.gameId === betLeg.gameId &&
-                      oldBetLeg.betLegType === betLeg.betLegType
-                    )
+            <IconTrash
+              className={classes.deleteLegIcon}
+              size={24}
+              color="crimson"
+              onClick={() =>
+                setBetLegs((prevState) =>
+                  prevState.filter(
+                    (oldBetLeg) =>
+                      !(
+                        oldBetLeg.gameId === betLeg.gameId &&
+                        oldBetLeg.betLegType === betLeg.betLegType
+                      )
+                  )
                 )
-              )
-            }
-          />
-        </div>
+              }
+            />
+          </div>
+          <div>
+            <NativeSelect
+              data={[
+                { value: "0", label: "Buy 0 points" },
+                { value: "0.5", label: "Buy 0.5 points (-125)" },
+                { value: "1.0", label: "Buy 1 point (-150)" },
+                { value: "1.5", label: "Buy 1.5 points (-175)" },
+                { value: "2.0", label: "Buy 2 points (-200)" },
+              ]}
+            />
+          </div>
+          <Divider />
+        </>
       );
     });
 
@@ -400,36 +416,38 @@ export const SbPlaceBetsPage = () => {
                   <div className={classes.betTypeSelect}>
                     <NativeSelect
                       data={[
-                        `6 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[6]
+                        `6.0 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[6.0]
                         )} per leg)`,
                         `6.5 (${convertOddsFromDecimal(
                           TEASER_LEG_ODDS[6.5]
                         )} per leg)`,
-                        `7 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[7]
+                        `7.0 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[7.0]
                         )} per leg)`,
                         `7.5 (${convertOddsFromDecimal(
                           TEASER_LEG_ODDS[7.5]
                         )} per leg)`,
-                        `8 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[8]
+                        `8.0 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[8.0]
                         )} per leg)`,
                         `8.5 (${convertOddsFromDecimal(
                           TEASER_LEG_ODDS[8.5]
                         )} per leg)`,
-                        `9 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[9]
+                        `9.0 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[9.0]
                         )} per leg)`,
                         `9.5 (${convertOddsFromDecimal(
                           TEASER_LEG_ODDS[9.5]
                         )} per leg)`,
-                        `10 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[10]
+                        `10.0 (${convertOddsFromDecimal(
+                          TEASER_LEG_ODDS[10.0]
                         )} per leg)`,
                       ]}
                       label="Teaser points"
-                      value={`${teaserPoints} (${convertOddsFromDecimal(
+                      value={`${teaserPoints.toFixed(
+                        1
+                      )} (${convertOddsFromDecimal(
                         TEASER_LEG_ODDS[teaserPoints]
                       )} per leg)`}
                       onChange={(newValue) =>
