@@ -102,7 +102,7 @@ export const getSportsbookLinkData = (
                 color={useDarkMode ? "skyblue" : "blue"}
               />
             ),
-            label: "Weekly Performance",
+            label: "Weekly Stats",
             to: `/sportsbook/${username}/stats/weekly`,
           },
           {
@@ -125,7 +125,7 @@ export const getSportsbookLinkData = (
                 color={useDarkMode ? "skyblue" : "blue"}
               />
             ),
-            label: "Weekly Performance",
+            label: "Weekly Stats",
             to: "/sportsbook/public-stats/weekly",
             public: true,
           },
@@ -289,7 +289,7 @@ export const getSupercontestLinkData = (
                 color={useDarkMode ? "skyblue" : "blue"}
               />
             ),
-            label: "Weekly Performance",
+            label: "Weekly Record",
             to: `/supercontest/${username}/stats/weekly`,
           },
           {
@@ -323,7 +323,7 @@ export const getSupercontestLinkData = (
                 color={useDarkMode ? "lightgreen" : "green"}
               />
             ),
-            label: "Weekly Performance",
+            label: "Weekly Record",
             to: "/supercontest/public-picks/record",
             public: true,
           },
@@ -438,7 +438,7 @@ export const getSurvivorLinkData = (
       },
       {
         icon: <IconReportAnalytics size={24} color="darkorange" />,
-        label: "Public Picks",
+        label: "Public Stats",
         to: "",
         public: true,
         childLinks: [

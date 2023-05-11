@@ -26,7 +26,7 @@ import {
   formatCurrency,
   formatSpread,
 } from "../../../util/format";
-import { TEASER_LEG_ODDS } from "../../../util/constants";
+import { BUY_POINTS_ODDS, TEASER_LEG_ODDS } from "../../../util/constants";
 import classes from "./SbPlaceBetsPage.module.css";
 
 type TeaserPointOption = 6.0 | 6.5 | 7.0 | 7.5 | 8.0 | 8.5 | 9.0 | 9.5 | 10;
@@ -136,7 +136,7 @@ export const SbPlaceBetsPage = () => {
     if (!betLegToRemove || !(betLegToRemove.betLegType === newBetLegType)) {
       setBetLegs((prevBetLegs) => [
         ...prevBetLegs,
-        { gameId, betLegType: newBetLegType },
+        { gameId, betLegType: newBetLegType, boughtPoints: null },
       ]);
     }
   };
@@ -161,11 +161,6 @@ export const SbPlaceBetsPage = () => {
       );
     });
 
-  const spreadAndTotalOdds =
-    betLegs.length === 1 || parlayOrTeaser === "Parlay"
-      ? 1.90909
-      : TEASER_LEG_ODDS[teaserPoints as TeaserPointOption];
-  const spreadAndTotalOddsString = convertOddsFromDecimal(spreadAndTotalOdds);
   let betOdds = 1;
   const getBetLegTypeSortValue = (betLegType: SbBetLegType) =>
     isBetLegOnATeam(betLegType) ? 1 : 2;
@@ -177,7 +172,7 @@ export const SbPlaceBetsPage = () => {
         getBetLegTypeSortValue(b.betLegType)
     )
     .sort((a, b) => a.gameId - b.gameId)
-    .map((betLeg) => {
+    .map((betLeg, index) => {
       const gameLine = currentWeekGameLines.find(
         (gameLine) => gameLine.gameId === betLeg.gameId
       );
@@ -193,19 +188,31 @@ export const SbPlaceBetsPage = () => {
         awayMoneyline,
         gameTotal,
       } = gameLine;
-      const { betLegType } = betLeg;
+      const { betLegType, boughtPoints } = betLeg;
       let textToShow;
-      const teaserPointsIfApplicable =
-        parlayOrTeaser === "Teaser" ? teaserPoints : 0;
+      const spreadAndTotalOdds =
+        betLegs.length === 1 || parlayOrTeaser === "Parlay"
+          ? boughtPoints
+            ? BUY_POINTS_ODDS[boughtPoints]
+            : 1.90909
+          : TEASER_LEG_ODDS[teaserPoints as TeaserPointOption];
+      const spreadAndTotalOddsString =
+        convertOddsFromDecimal(spreadAndTotalOdds);
+      const lineAdjustmentIfApplicable =
+        parlayOrTeaser === "Teaser" && betLegs.length > 1
+          ? teaserPoints
+          : boughtPoints
+          ? boughtPoints
+          : 0;
       if (betLegType === SbBetLegType.HOME_SPREAD) {
         betOdds *= spreadAndTotalOdds;
         textToShow = `${homeTeam.split("_").pop()} ${formatSpread(
-          homeSpread + teaserPointsIfApplicable
+          homeSpread + lineAdjustmentIfApplicable
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.AWAY_SPREAD) {
         betOdds *= spreadAndTotalOdds;
         textToShow = `${awayTeam.split("_").pop()} ${formatSpread(
-          homeSpread * -1 + teaserPointsIfApplicable
+          homeSpread * -1 + lineAdjustmentIfApplicable
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.HOME_MONEYLINE) {
         betOdds *= homeMoneyline;
@@ -219,19 +226,19 @@ export const SbPlaceBetsPage = () => {
         )}`;
       } else if (betLegType === SbBetLegType.OVER_TOTAL) {
         betOdds *= spreadAndTotalOdds;
-        textToShow = `Over ${(gameTotal - teaserPointsIfApplicable).toFixed(
+        textToShow = `Over ${(gameTotal - lineAdjustmentIfApplicable).toFixed(
           1
         )} ${spreadAndTotalOddsString}`;
       } else if (betLegType === SbBetLegType.UNDER_TOTAL) {
         betOdds *= spreadAndTotalOdds;
-        textToShow = `Under ${(gameTotal + teaserPointsIfApplicable).toFixed(
+        textToShow = `Under ${(gameTotal + lineAdjustmentIfApplicable).toFixed(
           1
         )} ${spreadAndTotalOddsString}`;
       }
 
       return (
-        <>
-          <div key={`${gameId}${betLegType}`} className={classes.betSlipItem}>
+        <div key={`${gameId}${betLegType}`}>
+          <div className={classes.betSlipItem}>
             <div className={classes.betSlipItemLogoAndText}>
               <img
                 className={classes.betSlipItemLogo}
@@ -264,19 +271,32 @@ export const SbPlaceBetsPage = () => {
               }
             />
           </div>
-          <div>
-            <NativeSelect
-              data={[
-                { value: "0", label: "Buy 0 points" },
-                { value: "0.5", label: "Buy 0.5 points (-125)" },
-                { value: "1.0", label: "Buy 1 point (-150)" },
-                { value: "1.5", label: "Buy 1.5 points (-175)" },
-                { value: "2.0", label: "Buy 2 points (-200)" },
-              ]}
-            />
-          </div>
-          <Divider />
-        </>
+          {(parlayOrTeaser !== "Teaser" || betLegs.length === 1) &&
+            betLegType !== SbBetLegType.HOME_MONEYLINE &&
+            betLegType !== SbBetLegType.AWAY_MONEYLINE && (
+              <NativeSelect
+                className={classes.buyPoints}
+                data={[
+                  { value: "0", label: "Buy 0 points" },
+                  { value: "0.5", label: "Buy 0.5 points (-125)" },
+                  { value: "1", label: "Buy 1 point (-150)" },
+                  { value: "1.5", label: "Buy 1.5 points (-175)" },
+                  { value: "2", label: "Buy 2 points (-200)" },
+                ]}
+                value={betLegs[index].boughtPoints || 0}
+                onChange={(newValue) =>
+                  setBetLegs((prevBetLegs) => {
+                    prevBetLegs[index].boughtPoints =
+                      newValue.target.value !== "0"
+                        ? (parseFloat(newValue.target.value) as BuyPointOption)
+                        : null;
+                    return [...prevBetLegs];
+                  })
+                }
+              />
+            )}
+          <Divider className={classes.divider} />
+        </div>
       );
     });
 
@@ -346,7 +366,13 @@ export const SbPlaceBetsPage = () => {
               googleJwt,
               bet: {
                 wager,
-                betLegs,
+                betLegs:
+                  betLegs.length > 1 && parlayOrTeaser === "Teaser"
+                    ? betLegs.map((betLeg) => {
+                        betLeg.boughtPoints = null;
+                        return betLeg;
+                      })
+                    : betLegs,
                 teaserPoints: parlayOrTeaser === "Teaser" ? teaserPoints : null,
               },
             }),
@@ -416,45 +442,66 @@ export const SbPlaceBetsPage = () => {
                   <div className={classes.betTypeSelect}>
                     <NativeSelect
                       data={[
-                        `6.0 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[6.0]
-                        )} per leg)`,
-                        `6.5 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[6.5]
-                        )} per leg)`,
-                        `7.0 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[7.0]
-                        )} per leg)`,
-                        `7.5 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[7.5]
-                        )} per leg)`,
-                        `8.0 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[8.0]
-                        )} per leg)`,
-                        `8.5 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[8.5]
-                        )} per leg)`,
-                        `9.0 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[9.0]
-                        )} per leg)`,
-                        `9.5 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[9.5]
-                        )} per leg)`,
-                        `10.0 (${convertOddsFromDecimal(
-                          TEASER_LEG_ODDS[10.0]
-                        )} per leg)`,
+                        {
+                          value: "6",
+                          label: `6.0 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[6.0]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "6.5",
+                          label: `6.5 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[6.5]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "7",
+                          label: `7.0 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[7.0]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "7.5",
+                          label: `7.5 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[7.5]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "8",
+                          label: `8.0 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[8.0]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "8.5",
+                          label: `8.5 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[8.5]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "9",
+                          label: `9.0 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[9.0]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "9.5",
+                          label: `9.5 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[9.5]
+                          )} per leg)`,
+                        },
+                        {
+                          value: "10",
+                          label: `10.0 (${convertOddsFromDecimal(
+                            TEASER_LEG_ODDS[10.0]
+                          )} per leg)`,
+                        },
                       ]}
                       label="Teaser points"
-                      value={`${teaserPoints.toFixed(
-                        1
-                      )} (${convertOddsFromDecimal(
-                        TEASER_LEG_ODDS[teaserPoints]
-                      )} per leg)`}
+                      value={teaserPoints}
                       onChange={(newValue) =>
                         setTeaserPoints(
-                          parseFloat(
-                            newValue.target.value.split(" ")[0]
-                          ) as TeaserPointOption
+                          parseFloat(newValue.target.value) as TeaserPointOption
                         )
                       }
                     />

@@ -66,7 +66,7 @@ export const SbViewBetsPage = () => {
         <td className={classes.hideFirstForMobile}>
           {formatEnum(betType.toString())}
         </td>
-        <td>
+        <td className={classes.betLegs}>
           {betLegs.map((betLeg) => {
             const {
               id,
@@ -167,7 +167,6 @@ export const SbViewBetsPage = () => {
             );
           })}
         </td>
-        <td>{formatCurrency(wager, 0)}</td>
         <td className={classes.hideSecondForMobile}>
           {odds === effectiveOdds || result === Result.PUSH ? (
             convertOddsFromDecimal(odds)
@@ -180,6 +179,7 @@ export const SbViewBetsPage = () => {
             </>
           )}
         </td>
+        <td>{formatCurrency(wager, 0)}</td>
         <td>
           {toWinAmount === effectiveToWinAmount || result === Result.PUSH ? (
             formatCurrency(toWinAmount, 0)
@@ -253,8 +253,8 @@ export const SbViewBetsPage = () => {
               <th className={classes.hideFirstForMobile}>Placed</th>
               <th className={classes.hideFirstForMobile}>Type</th>
               <th>Bet</th>
-              <th>Wager</th>
               <th className={classes.hideSecondForMobile}>Odds</th>
+              <th>Wager</th>
               <th>To Win</th>
               <th>Result</th>
             </tr>

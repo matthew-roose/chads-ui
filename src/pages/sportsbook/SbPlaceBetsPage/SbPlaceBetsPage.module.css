@@ -59,7 +59,7 @@
   align-items: center;
   font-weight: bold;
   max-width: 350px;
-  margin: 20px auto;
+  margin: auto;
 }
 
 .betSlipItemLogoAndText {
@@ -79,6 +79,14 @@
 
 .betSlipItemText {
   margin-left: 10px;
+}
+
+.buyPoints {
+  margin-top: 5px;
+}
+
+.divider {
+  margin: 10px 0;
 }
 
 .availableBalance {
