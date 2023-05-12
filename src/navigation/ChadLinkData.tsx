@@ -179,7 +179,9 @@ export const getSportsbookLinkData = (
             public: true,
           },
           {
-            icon: <IconPoo size={24} color="brown" />,
+            icon: (
+              <IconPoo size={24} color={useDarkMode ? "crimson" : "brown"} />
+            ),
             label: "Worst Weeks",
             to: "/sportsbook/leaderboard/worst-weeks",
             public: true,
