@@ -127,7 +127,7 @@ export const SettingsPage = () => {
           <TextInput
             style={{ marginTop: "1rem", maxWidth: "200px" }}
             placeholder="xxx-xxx-xxxx"
-            label="Phone number"
+            label="Phone number (U.S. only)"
             size="md"
             withAsterisk
             error={phoneNumberErrorMessage}

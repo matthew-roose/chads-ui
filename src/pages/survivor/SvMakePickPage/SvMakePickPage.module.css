@@ -43,6 +43,10 @@
   background-color: gold;
 }
 
+.push.darkMode {
+  color: gray;
+}
+
 .pending {
   background-color: gray;
 }
