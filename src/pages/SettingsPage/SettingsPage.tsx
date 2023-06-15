@@ -1,7 +1,18 @@
 import { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { ChadContext } from "../../store/chad-context";
-import { Button, Switch, TextInput, useMantineTheme } from "@mantine/core";
-import { IconSun, IconMoonStars } from "@tabler/icons";
+import {
+  Button,
+  NativeSelect,
+  Switch,
+  TextInput,
+  useMantineTheme,
+} from "@mantine/core";
+import {
+  IconSun,
+  IconMoonStars,
+  IconBuildingBroadcastTower,
+} from "@tabler/icons";
 import classes from "./SettingsPage.module.css";
 import { useGetUserPreferences } from "../../hooks/useGetUserPreferences";
 import { useSaveUserPreferences } from "../../hooks/useSaveUserPreferences";
@@ -10,12 +21,13 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
 export const SettingsPage = () => {
   const { googleJwt, useDarkMode, toggleDarkMode } = useContext(ChadContext);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
+  const [carrier, setCarrier] = useState<string | null>(null);
   const [optInNewGamesNotification, setOptInNewGamesNotification] = useState<
     boolean | null
   >(null);
   const [optInMissingPicksNotification, setOptInMissingPicksNotification] =
     useState<boolean | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const [hasTriedToSubmit, setHasTriedToSubmit] = useState(false);
 
   const { data: savedUserPreferences, refetch: refetchUserPreferences } =
@@ -27,13 +39,14 @@ export const SettingsPage = () => {
 
   useEffect(() => {
     if (savedUserPreferences) {
+      setPhoneNumber(savedUserPreferences.phoneNumber);
+      setCarrier(savedUserPreferences.carrier);
       setOptInNewGamesNotification(
         savedUserPreferences.optInNewGamesNotification
       );
       setOptInMissingPicksNotification(
         savedUserPreferences.optInMissingPicksNotification
       );
-      setPhoneNumber(savedUserPreferences.phoneNumber);
     }
   }, [savedUserPreferences]);
 
@@ -44,14 +57,18 @@ export const SettingsPage = () => {
 
   const haveUserPreferencesChanged =
     savedUserPreferences &&
-    (optInNewGamesNotification !==
-      savedUserPreferences.optInNewGamesNotification ||
+    (phoneNumber !== savedUserPreferences.phoneNumber ||
+      carrier !== savedUserPreferences.carrier ||
+      optInNewGamesNotification !==
+        savedUserPreferences.optInNewGamesNotification ||
       optInMissingPicksNotification !==
-        savedUserPreferences.optInMissingPicksNotification ||
-      phoneNumber !== savedUserPreferences.phoneNumber);
+        savedUserPreferences.optInMissingPicksNotification);
 
   return (
     <div className={classes.page}>
+      <Helmet>
+        <title>Chad's | Settings</title>
+      </Helmet>
       <div className={classes.title}>Settings</div>
       <Switch
         style={{ fontWeight: "bold" }}
@@ -76,7 +93,10 @@ export const SettingsPage = () => {
           },
         })}
       />
-      <div style={{ marginTop: "100px" }} className={classes.title}>
+      <div
+        style={{ marginTop: "70px", marginBottom: "50px" }}
+        className={classes.title}
+      >
         Notification Preferences
       </div>
       {!savedUserPreferences ? (
@@ -125,7 +145,7 @@ export const SettingsPage = () => {
             />
           </div>
           <TextInput
-            style={{ marginTop: "1rem", maxWidth: "200px" }}
+            style={{ marginTop: "2rem", width: "220px" }}
             placeholder="xxx-xxx-xxxx"
             label="Phone number (U.S. only)"
             size="md"
@@ -134,9 +154,23 @@ export const SettingsPage = () => {
             value={phoneNumber || ""}
             onChange={(event) => setPhoneNumber(event.target.value)}
           />
+          <NativeSelect
+            style={{ marginTop: "1rem", width: "220px" }}
+            data={["Verizon", "AT&T", "T-Mobile", "Sprint"]}
+            label="Carrier"
+            icon={<IconBuildingBroadcastTower size="1rem" />}
+            size="md"
+            withAsterisk
+            value={carrier || ""}
+            onChange={(event) => setCarrier(event.target.value)}
+          />
           <Button
-            style={{ marginTop: "1rem" }}
-            disabled={phoneNumber === null || !haveUserPreferencesChanged}
+            style={{ marginTop: "2rem" }}
+            disabled={
+              phoneNumber === null ||
+              carrier === null ||
+              !haveUserPreferencesChanged
+            }
             variant="gradient"
             gradient={{ from: "teal", to: "lime" }}
             className={classes.button}
@@ -151,6 +185,7 @@ export const SettingsPage = () => {
                     googleJwt,
                     userPreferences: {
                       phoneNumber,
+                      carrier,
                       optInNewGamesNotification,
                       optInMissingPicksNotification,
                     },
