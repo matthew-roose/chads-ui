@@ -99,7 +99,16 @@ export const SettingsPage = () => {
       >
         Notification Preferences
       </div>
-      {!savedUserPreferences ? (
+      {!googleJwt ? (
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: "20px",
+          }}
+        >
+          Please log in to set notification preferences.
+        </div>
+      ) : !savedUserPreferences ? (
         <LoadingSpinner />
       ) : (
         <>

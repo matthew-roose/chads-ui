@@ -12,10 +12,6 @@ export const ScViewAllPoolsPage = () => {
   const { data: allPoolsData } = useScGetAllPools();
   const { data: allJoinedPoolsData } = useScGetUserPools(loggedInUsername);
 
-  // if (!allPoolsData) {
-  //   return <LoadingSpinner />;
-  // }
-
   const pools = allPoolsData?.map((pool) => {
     let alreadyJoined = false;
     if (allJoinedPoolsData) {

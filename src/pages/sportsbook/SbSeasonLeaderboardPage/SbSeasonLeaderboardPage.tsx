@@ -8,7 +8,12 @@ export const SbSeasonLeaderboardPage = () => {
   const { data: seasonLeaderboardData } = useSbGetSeasonLeaderboard();
 
   const seasonLeaderboardRows = seasonLeaderboardData
-    ?.filter((user) => user.winLossTotal !== 0)
+    ?.filter(
+      (user) =>
+        user.winLossTotal !== 0 ||
+        user.pendingBalance !== 0 ||
+        user.availableBalance !== 10000
+    )
     .sort((a, b) => b.winLossTotal - a.winLossTotal);
 
   return (

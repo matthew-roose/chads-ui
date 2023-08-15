@@ -49,10 +49,6 @@ export const ScMakePicksPage = () => {
     );
   }
 
-  // if (!gameLinesData || !existingEntryWeekData) {
-  //   return <LoadingSpinner />;
-  // }
-
   const addPickHandler = (newPick: ScPickCreate) => {
     const game = gameLinesData?.find(
       (gameLine) => gameLine.gameId === newPick.gameId

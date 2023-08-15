@@ -13,7 +13,8 @@ export const SvLeaderboardPage = () => {
   const { data: leaderboardData } = useSvGetLeaderboard(googleJwt);
 
   const leaderboardRows = leaderboardData
-    ?.sort((a, b) => a.username.localeCompare(b.username))
+    ?.filter((a) => a.picks.length > 0)
+    .sort((a, b) => a.username.localeCompare(b.username))
     .sort((a, b) => b.currentStreak - a.currentStreak)
     .sort((a, b) => a.losses - b.losses)
     .sort((a, b) => b.score - a.score);

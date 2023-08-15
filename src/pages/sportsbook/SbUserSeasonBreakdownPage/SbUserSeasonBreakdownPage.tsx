@@ -15,14 +15,6 @@ export const SbUserSeasonBreakdownPage = () => {
   const { data: allUsernames } = useGetAllUsernames();
   const { data: seasonBreakdownData } = useSbGetUserSeasonBreakdown(username);
 
-  // if (!allUsernames) {
-  //   return <LoadingSpinner />;
-  // }
-
-  // if (!username || !allUsernames.includes(username)) {
-  //   return <div>Invalid username in URL.</div>;
-  // }
-
   let pickedTeamDataArray;
   let fadedTeamDataArray;
   let totalDataArray;

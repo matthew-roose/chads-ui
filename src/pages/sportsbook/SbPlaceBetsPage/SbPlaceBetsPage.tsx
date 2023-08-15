@@ -44,7 +44,7 @@ export const SbPlaceBetsPage = () => {
   const [betLegs, setBetLegs] = useState<SbBetLegCreate[]>([]);
 
   const { data: currentWeekGameLines } = useGetCurrentGameLines();
-  const { data: currentAccountBalance, refetch: refetchAccountBalance } =
+  const { data: currentSbAccountData, refetch: refetchAccountBalance } =
     useSbGetUserPools(username);
 
   const placeBet = useSbPlaceBet();
@@ -74,7 +74,7 @@ export const SbPlaceBetsPage = () => {
   }
 
   // temporarily define as 0 so loading spinner can be shown in bet slip
-  const { availableBalance } = currentAccountBalance || { availableBalance: 0 };
+  const { availableBalance } = currentSbAccountData || { availableBalance: 0 };
 
   const isBetLegOnATeam = (betLegType: SbBetLegType) =>
     betLegType === SbBetLegType.HOME_SPREAD ||
@@ -410,8 +410,8 @@ export const SbPlaceBetsPage = () => {
       <Aside.Section grow component={ScrollArea} type="never">
         {closeBetSlipButton}
         <div className={classes.betSlip}>BET SLIP</div>
-        {currentAccountBalance === undefined && <LoadingSpinner />}
-        {currentAccountBalance !== undefined && (
+        {currentSbAccountData === undefined && <LoadingSpinner />}
+        {currentSbAccountData !== undefined && (
           <>
             {betLegs.length === 0 && (
               <div className={classes.noBets}>No bets selected.</div>

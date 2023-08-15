@@ -16,10 +16,6 @@ export const SbCashierPage = () => {
 
   const { data: sbAccountData } = useSbGetUserPools(username);
 
-  // if (!sbAccountData) {
-  //   return <LoadingSpinner />;
-  // }
-
   let availableBalance;
   let pendingBalance;
   let totalBalance;
