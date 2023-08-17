@@ -38,7 +38,9 @@ export const SvMakePickPage = () => {
   }, [entryData, currentWeekNumber]);
 
   if (!googleJwt || !username) {
-    return <div className={classes.message}>Please sign in to make picks.</div>;
+    return (
+      <div className={classes.notSignedIn}>Please sign in to make a pick.</div>
+    );
   }
 
   const teamsUsed = entryData?.picks

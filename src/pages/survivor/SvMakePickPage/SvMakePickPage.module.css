@@ -11,10 +11,10 @@
   text-align: center;
 }
 
-.message {
-  font-size: 32px;
+.notSignedIn {
+  font-size: 36px;
   font-weight: bold;
-  margin: 5rem;
+  margin: 8rem;
   text-align: center;
 }
 
