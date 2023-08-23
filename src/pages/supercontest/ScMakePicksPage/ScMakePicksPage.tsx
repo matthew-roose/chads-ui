@@ -173,6 +173,9 @@ export const ScMakePicksPage = () => {
       {(!gameLinesData || !existingEntryWeekData) && <LoadingSpinner />}
       {gameLinesData && existingEntryWeekData && (
         <>
+          <div className={classes.currentPickCount}>
+            {currentPicks.length}/5 picks made
+          </div>
           <Group className={classes.currentPickLogoGroup} position="center">
             {currentPicksLogos}
           </Group>
@@ -186,6 +189,9 @@ export const ScMakePicksPage = () => {
             </thead>
             <tbody>{gameLines}</tbody>
           </Table>
+          <div className={classes.currentPickCount}>
+            {currentPicks.length}/5 picks made
+          </div>
           <Group className={classes.currentPickLogoGroup} position="center">
             {currentPicksLogos}
           </Group>

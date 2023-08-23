@@ -1,4 +1,4 @@
-import { Button, SimpleGrid, Table } from "@mantine/core";
+import { Button, Group, Table } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useSvGetUserEntryAndPicks } from "../../../hooks/survivor/useSvGetUserEntryAndPicks";
@@ -208,13 +208,12 @@ export const SvMakePickPage = () => {
           <div className={classes.teamsUsed}>
             Teams Used: {prevPickedTeamLogos?.length === 0 && "None"}
           </div>
-          <SimpleGrid
-            cols={8}
-            className={classes.prevPickedGrid}
-            breakpoints={[{ maxWidth: 1000, cols: 6 }]}
+          <Group
+            style={{ maxWidth: "600px", margin: "auto" }}
+            position="center"
           >
             {prevPickedTeamLogos}
-          </SimpleGrid>
+          </Group>
           {submitButton}
           <Table className={classes.table}>
             <thead>
