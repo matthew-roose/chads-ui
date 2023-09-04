@@ -40,7 +40,7 @@ export const SettingsPage = () => {
   useEffect(() => {
     if (savedUserPreferences) {
       setPhoneNumber(savedUserPreferences.phoneNumber);
-      setCarrier(savedUserPreferences.carrier);
+      setCarrier(savedUserPreferences.carrier || "Verizon");
       setOptInNewGamesNotification(
         savedUserPreferences.optInNewGamesNotification
       );

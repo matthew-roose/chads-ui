@@ -33,6 +33,8 @@ export const SvMakePickPage = () => {
       if (existingPick) {
         const { gameId, pickedTeam, result } = existingPick;
         setCurrentPick({ gameId, pickedTeam, result });
+      } else {
+        setCurrentPick(undefined);
       }
     }
   }, [entryData, currentWeekNumber]);
@@ -58,6 +60,27 @@ export const SvMakePickPage = () => {
       </div>
     );
   });
+
+  const currentPickLogoClasses = `${classes.currentPickLogo} ${
+    currentPick?.result
+      ? currentPick?.result === Result.WIN
+        ? classes.win
+        : currentPick?.result === Result.LOSS
+        ? classes.loss
+        : currentPick?.result === Result.PUSH
+        ? classes.push
+        : ""
+      : ""
+  }`;
+
+  const currentPickLogo = currentPick && (
+    <img
+      key={currentPick.pickedTeam}
+      className={currentPickLogoClasses}
+      src={AllTeamLogos[currentPick.pickedTeam] as unknown as string}
+      alt={currentPick.pickedTeam}
+    />
+  );
 
   const pickedGame = gameLinesData?.find(
     (game) => game.gameId === currentPick?.gameId
@@ -206,7 +229,7 @@ export const SvMakePickPage = () => {
       ) : (
         <>
           <div className={classes.teamsUsed}>
-            Teams Used: {prevPickedTeamLogos?.length === 0 && "None"}
+            Teams Already Used: {prevPickedTeamLogos?.length === 0 && "None"}
           </div>
           <Group
             style={{ maxWidth: "600px", margin: "auto" }}
@@ -214,6 +237,10 @@ export const SvMakePickPage = () => {
           >
             {prevPickedTeamLogos}
           </Group>
+          <div className={classes.currentPick} style={{ display: "flex" }}>
+            <div>{`Pick This Week: ${!currentPick ? "None" : ""}`}</div>
+            {currentPickLogo}
+          </div>
           {submitButton}
           <Table className={classes.table}>
             <thead>
