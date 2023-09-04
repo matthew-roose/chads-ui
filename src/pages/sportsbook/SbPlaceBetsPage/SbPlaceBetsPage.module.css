@@ -82,7 +82,8 @@
 }
 
 .buyPoints {
-  margin-top: 5px;
+  max-width: 350px;
+  margin: 5px auto;
 }
 
 .divider {
