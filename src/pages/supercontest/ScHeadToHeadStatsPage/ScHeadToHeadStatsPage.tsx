@@ -106,6 +106,7 @@ export const ScHeadToHeadStatsPage = () => {
     const {
       username: usernameCheck,
       gameId,
+      timestamp,
       weekNumber,
       homeSpread,
       homeTeam,
@@ -146,7 +147,7 @@ export const ScHeadToHeadStatsPage = () => {
       firstUserPushes++;
       fillClasses = classes.pushFill;
       textClasses = classes.pushText;
-    } else {
+    } else if (winner === secondUser.username) {
       firstUserLosses++;
       fillClasses = classes.lossFill;
       textClasses = classes.lossText;
@@ -156,34 +157,54 @@ export const ScHeadToHeadStatsPage = () => {
       <tr className={classes.row} key={gameId}>
         <td className={classes.hideSecondForMobile}>{weekNumber}</td>
         <td>
-          <div
-            className={`${classes.flexRow} ${classes.logoBackdrop} ${fillClasses}`}
-          >
-            <img
-              className={classes.logo}
-              src={AllTeamLogos[firstUser.pickedTeam] as unknown as string}
-              alt={firstUser.pickedTeam}
-            />
-            <span className={classes.spread}>
-              {firstUser.pickedTeam === homeTeam
-                ? formatSpread(homeSpread)
-                : formatSpread(homeSpread * -1)}
-            </span>
-          </div>
+          {timestamp <= Date.now() ? (
+            <div
+              className={`${classes.flexRow} ${classes.logoBackdrop} ${fillClasses}`}
+            >
+              <img
+                className={classes.logo}
+                src={AllTeamLogos[firstUser.pickedTeam] as unknown as string}
+                alt={firstUser.pickedTeam}
+              />
+              <span className={classes.spread}>
+                {firstUser.pickedTeam === homeTeam
+                  ? formatSpread(homeSpread)
+                  : formatSpread(homeSpread * -1)}
+              </span>
+            </div>
+          ) : (
+            <div className={classes.mysteryDiv}>
+              <img
+                className={classes.logo}
+                src={require("../../../assets/mystery_team.png")}
+                alt="Mystery"
+              />
+            </div>
+          )}
         </td>
         <td>
-          <div className={classes.flexRow}>
-            <img
-              className={classes.logo}
-              src={AllTeamLogos[secondUser.pickedTeam] as unknown as string}
-              alt={secondUser.pickedTeam}
-            />
-            <span className={classes.spread}>
-              {secondUser.pickedTeam === homeTeam
-                ? formatSpread(homeSpread)
-                : formatSpread(homeSpread * -1)}
-            </span>
-          </div>
+          {timestamp <= Date.now() ? (
+            <div className={classes.flexRow}>
+              <img
+                className={classes.logo}
+                src={AllTeamLogos[secondUser.pickedTeam] as unknown as string}
+                alt={secondUser.pickedTeam}
+              />
+              <span className={classes.spread}>
+                {secondUser.pickedTeam === homeTeam
+                  ? formatSpread(homeSpread)
+                  : formatSpread(homeSpread * -1)}
+              </span>
+            </div>
+          ) : (
+            <div className={classes.mysteryDiv}>
+              <img
+                className={classes.logo}
+                src={require("../../../assets/mystery_team.png")}
+                alt="Mystery"
+              />
+            </div>
+          )}
         </td>
         <td className={textClasses}>{score}</td>
         <td className={`${textClasses} ${classes.hideFirstForMobile}`}>
@@ -201,6 +222,7 @@ export const ScHeadToHeadStatsPage = () => {
     const {
       gameId,
       weekNumber,
+      timestamp,
       pickedTeam,
       homeSpread,
       homeTeam,
@@ -248,29 +270,47 @@ export const ScHeadToHeadStatsPage = () => {
       <tr className={classes.row} key={gameId}>
         <td className={classes.hideSecondForMobile}>{weekNumber}</td>
         <td>
-          <div
-            className={`${classes.flexRow} ${classes.logoBackdrop} ${fillClasses}`}
-          >
-            <img
-              className={classes.logo}
-              src={AllTeamLogos[pickedTeam] as unknown as string}
-              alt={pickedTeam}
-            />
-            <span className={classes.spread}>
-              {pickedTeam === homeTeam
-                ? formatSpread(homeSpread)
-                : formatSpread(homeSpread * -1)}
-            </span>
-          </div>
+          {timestamp <= Date.now() ? (
+            <div
+              className={`${classes.flexRow} ${classes.logoBackdrop} ${fillClasses}`}
+            >
+              <img
+                className={classes.logo}
+                src={AllTeamLogos[pickedTeam] as unknown as string}
+                alt={pickedTeam}
+              />
+              <span className={classes.spread}>
+                {pickedTeam === homeTeam
+                  ? formatSpread(homeSpread)
+                  : formatSpread(homeSpread * -1)}
+              </span>
+            </div>
+          ) : (
+            <div className={classes.mysteryDiv}>
+              <img
+                className={classes.logo}
+                src={require("../../../assets/mystery_team.png")}
+                alt="Mystery"
+              />
+            </div>
+          )}
         </td>
         <td>
-          <div>
+          {timestamp <= Date.now() ? (
             <img
               className={classes.logo}
               src={AllTeamLogos[opposingTeam] as unknown as string}
               alt={opposingTeam}
             />
-          </div>
+          ) : (
+            <div className={classes.mysteryDiv}>
+              <img
+                className={classes.logo}
+                src={require("../../../assets/mystery_team.png")}
+                alt="Mystery"
+              />
+            </div>
+          )}
         </td>
         <td className={textClasses}>{score}</td>
         <td className={`${textClasses} ${classes.hideFirstForMobile}`}>

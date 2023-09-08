@@ -5,6 +5,7 @@ export interface ScHeadToHeadStats {
   username: string;
   gameId: number;
   weekNumber: number;
+  timestamp: number;
   pickedTeam: keyof typeof AllTeamLogos;
   homeSpread: number;
   homeTeam: keyof typeof AllTeamLogos;

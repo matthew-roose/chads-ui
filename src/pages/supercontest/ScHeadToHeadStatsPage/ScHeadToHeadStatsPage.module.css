@@ -53,6 +53,16 @@
   align-items: center;
 }
 
+.mysteryDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.75rem;
+  width: 2.75rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
 .logo {
   height: 2rem;
   width: 2rem;

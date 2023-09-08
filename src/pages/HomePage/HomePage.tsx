@@ -67,7 +67,9 @@ export const HomePage = () => {
             {homeTeam.split("_").pop()} {formatSpread(homeSpread)}
           </div>
         </td>
-        <td>{displayScore}</td>
+        <td>
+          <div className={classes.text}>{displayScore}</div>
+        </td>
       </tr>
     );
   });
