@@ -52,7 +52,7 @@ export const SbDepositModal = ({
             toast
               .promise(deposit.mutateAsync({ googleJwt }), {
                 pending: "Depositing...",
-                success: "Successfully deposited $1000!",
+                success: "Successfully deposited $10,000!",
                 error: "Error depositing!",
               })
               .then(() => refetchUserBalances())

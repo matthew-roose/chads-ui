@@ -36,7 +36,7 @@ export const ScViewPicksGame = ({
     !pickedTeam ||
     !homeTeam ||
     !awayTeam ||
-    !homeSpread
+    homeSpread === null
   ) {
     return (
       <tr>
